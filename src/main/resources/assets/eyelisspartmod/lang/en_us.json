@@ -1,0 +1,10 @@
+{
+  "item.eyelisspartmod.slop": "Slop",
+  "item.eyelisspartmod.cooked_slop": "Cooked Slop",
+
+  "block.eyelisspartmod.slop_block": "Block of Slop",
+  "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",
+
+  "itemgroup.eyelisspartmod.eyeliss_items": "Eyeliss Items",
+  "itemgroup.eyelisspartmod.eyeliss_blocks": "Eyeliss Blocks"
+}

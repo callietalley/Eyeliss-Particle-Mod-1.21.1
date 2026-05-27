@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "eyelisspartmod:block/cooked_slop_block"
+  }
+}

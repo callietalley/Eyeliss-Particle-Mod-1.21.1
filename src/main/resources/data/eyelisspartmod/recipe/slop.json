@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "food",
+  "ingredients": [
+    {
+      "item": "eyelisspartmod:slop_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "eyelisspartmod:slop"
+  }
+}

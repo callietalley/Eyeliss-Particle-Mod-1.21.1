@@ -1,5 +1,8 @@
 package eyeliss.particle.mod;
 
+import eyeliss.particle.mod.block.ModBlocks;
+import eyeliss.particle.mod.item.ModItemGroups;
+import eyeliss.particle.mod.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -11,5 +14,9 @@ public class EyelisssParticleMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModItemGroups.registerItemGroups();
+
+		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
 	}
 }
