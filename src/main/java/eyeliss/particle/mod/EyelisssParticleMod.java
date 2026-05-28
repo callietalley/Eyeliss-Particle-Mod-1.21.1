@@ -3,6 +3,7 @@ package eyeliss.particle.mod;
 import eyeliss.particle.mod.block.ModBlocks;
 import eyeliss.particle.mod.item.ModItemGroups;
 import eyeliss.particle.mod.item.ModItems;
+import eyeliss.particle.mod.particle.ModParticles;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -18,5 +19,7 @@ public class EyelisssParticleMod implements ModInitializer {
 
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
+
+		ModParticles.registerParticles();
 	}
 }
