@@ -11,7 +11,7 @@
 		"homepage": "https://github.com/callietalley",
 		"sources": "https://github.com/callietalley/Eyeliss-Particle-Mod-1.21.1"
 	},
-	"license": "CC0-1.0",
+	"license": "GPLv3",
 	"icon": "assets/eyelisspartmod/icon.png",
 	"environment": "*",
 	"entrypoints": {
