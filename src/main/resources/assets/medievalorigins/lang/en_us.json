@@ -1,0 +1,5 @@
+{
+  "death.attack.in_fire": "%1$s was reduced to ashes by %2$s",
+  "death.attack.dragon_breath": "%1$s faced the wrath of %2$s's draconic breath",
+  "death.attack.sonic_shriek": "%1$s had their eardrums ruptured by %2$s"
+}
