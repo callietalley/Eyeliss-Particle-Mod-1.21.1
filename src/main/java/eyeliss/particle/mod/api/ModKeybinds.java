@@ -19,6 +19,7 @@ public class ModKeybinds {
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            //noinspection StatementWithEmptyBody
             while (quaternary_active.wasPressed()) {
                 // Literally does nothing on its own.
             }
