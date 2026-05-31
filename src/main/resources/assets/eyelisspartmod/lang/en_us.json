@@ -9,5 +9,13 @@
   "itemgroup.eyelisspartmod.eyeliss_blocks": "Eyeliss Blocks",
 
   "key.category.eyeliss_particle_mod.quaternary_active": "Eyeliss Keybinds",
-  "key.eyeliss_particle_mod.quaternary_active": "Quaternary Active"
+  "key.eyeliss_particle_mod.quaternary_active": "Quaternary Active",
+
+  "effect.eyelisspartmod.styx_poison": "Styx Poison",
+  "death.attack.styx_poison": "%1$s returned to the Styx",
+  "death.attack.styx_poison.player": "%1$s returned to the Styx while trying to escape %2$s",
+
+  "effect.eyelisspartmod.bleeding_out": "Bleeding Out",
+  "death.attack.bleeding_out": "%1$s bled to death",
+  "death.attack.bleeding_out.player": "%1$s bled out while trying to escape %2$s"
 }

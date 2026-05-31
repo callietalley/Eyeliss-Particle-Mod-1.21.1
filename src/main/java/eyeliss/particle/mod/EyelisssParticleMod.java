@@ -1,6 +1,7 @@
 	package eyeliss.particle.mod;
 
 	import eyeliss.particle.mod.block.ModBlocks;
+	import eyeliss.particle.mod.effect.ModEffects;
 	import eyeliss.particle.mod.item.ModItemGroups;
 	import eyeliss.particle.mod.item.ModItems;
 	import eyeliss.particle.mod.particle.ModParticles;
@@ -21,5 +22,6 @@
 			ModBlocks.registerModBlocks();
 
 			ModParticles.registerParticles();
+			ModEffects.register();
 		}
 	}
