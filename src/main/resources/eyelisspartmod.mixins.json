@@ -3,10 +3,10 @@
 	"package": "eyeliss.particle.mod.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
 	],
 	"client": [
-		"client.GameRendererMixin"
+		"client.GameRendererMixin",
+		"client.LivingEntityRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

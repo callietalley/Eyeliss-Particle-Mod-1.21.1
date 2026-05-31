@@ -10,6 +10,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import static eyeliss.particle.mod.item.ModItems.POWER_CORE;
+
 public class ModItemGroups {
     public static final ItemGroup EYELISS_ITEMS_GROUP = Registry.register(Registries.ITEM_GROUP,
             Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_items"),
@@ -18,6 +20,12 @@ public class ModItemGroups {
                     .entries((displayContext, entries) -> {
                         entries.add(ModItems.SLOP);
                         entries.add(ModItems.COOKED_SLOP);
+                        entries.add(ModItems.RED_POWER_STONE);
+                        entries.add(ModItems.BLUE_POWER_STONE);
+                        entries.add(ModItems.GREEN_POWER_STONE);
+                        entries.add(ModItems.YELLOW_POWER_STONE);
+                        entries.add(ModItems.PURPLE_POWER_STONE);
+                        entries.add(POWER_CORE);
 
                     }).build());
 

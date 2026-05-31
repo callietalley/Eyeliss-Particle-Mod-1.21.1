@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "eyelisspartmod:red_power_stone",
+    "eyelisspartmod:blue_power_stone",
+    "eyelisspartmod:green_power_stone",
+    "eyelisspartmod:yellow_power_stone",
+    "eyelisspartmod:purple_power_stone"
+  ]
+}

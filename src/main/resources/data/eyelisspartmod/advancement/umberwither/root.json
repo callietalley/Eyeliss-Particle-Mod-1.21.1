@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "id": "eyelisspartmod:power_core"
+    },
+    "title": "Umberwithering Heights",
+    "description": "Successfully kill an Umberwither.",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/block/end_stone.png"
+  },
+  "criteria": {
+    "kill_umberwither": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "eyelisspartmod:umberwither"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

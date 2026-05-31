@@ -20,7 +20,7 @@ public class StyxPoisonEffect extends StatusEffect {
             RegistryKey.of(RegistryKeys.DAMAGE_TYPE, net.minecraft.util.Identifier.of(EyelisssParticleMod.MOD_ID, "styx_poison"));
 
     public StyxPoisonEffect() {
-        super(StatusEffectCategory.NEUTRAL, 0x990066);
+        super(StatusEffectCategory.NEUTRAL, 0x168F56);
     }
 
     @Override

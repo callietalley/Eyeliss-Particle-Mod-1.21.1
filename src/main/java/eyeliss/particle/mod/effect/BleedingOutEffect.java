@@ -18,7 +18,7 @@ public class BleedingOutEffect extends StatusEffect {
             RegistryKey.of(RegistryKeys.DAMAGE_TYPE, net.minecraft.util.Identifier.of(EyelisssParticleMod.MOD_ID, "bleeding_out"));
 
     public BleedingOutEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x8A0303); // Deep Red Color
+        super(StatusEffectCategory.HARMFUL, 0x6D1108); // Deep Red Color
     }
 
     @Override

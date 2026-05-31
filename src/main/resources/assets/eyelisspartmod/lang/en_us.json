@@ -1,12 +1,20 @@
 {
   "item.eyelisspartmod.slop": "Slop",
   "item.eyelisspartmod.cooked_slop": "Cooked Slop",
+  "item.eyelisspartmod.red_power_stone": "Red Power Stone",
+  "item.eyelisspartmod.blue_power_stone": "Blue Power Stone",
+  "item.eyelisspartmod.green_power_stone": "Green Power Stone",
+  "item.eyelisspartmod.yellow_power_stone": "Yellow Power Stone",
+  "item.eyelisspartmod.purple_power_stone": "Purple Power Stone",
+  "item.eyelisspartmod.power_core": "Power Core",
 
   "block.eyelisspartmod.slop_block": "Block of Slop",
   "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",
 
   "itemgroup.eyelisspartmod.eyeliss_items": "Eyeliss Items",
   "itemgroup.eyelisspartmod.eyeliss_blocks": "Eyeliss Blocks",
+
+  "entity.eyelisspartmod.umberwither": "§5§lUmberwither",
 
   "key.category.eyeliss_particle_mod.quaternary_active": "Eyeliss Keybinds",
   "key.eyeliss_particle_mod.quaternary_active": "Quaternary Active",
