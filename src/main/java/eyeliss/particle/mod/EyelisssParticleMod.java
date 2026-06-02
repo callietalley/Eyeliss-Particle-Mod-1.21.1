@@ -34,10 +34,8 @@ public class EyelisssParticleMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// MUST register entities and attributes first to prevent NullPointerException crashes
 		ModEntities.registerEntities();
 
-		// Load the rest of your mod files
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
@@ -45,7 +43,6 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModEffects.register();
 		ModSounds.registerSounds();
 
-		// Register the item glow tick event
 		ServerTickEvents.START_SERVER_TICK.register(server -> {
 			Scoreboard scoreboard = server.getScoreboard();
 			Team purpleTeam = scoreboard.getTeam(TEAM_NAME);
@@ -60,11 +57,9 @@ public class EyelisssParticleMod implements ModInitializer {
 				for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, itemEntity -> true)) {
 
 					if (itemEntity.getStack().isIn(PURPLE_GLOW_TAG)) {
-						// FIX: Extracts the String identifier from the ItemEntity
 						String scoreHolderName = itemEntity.getNameForScoreboard();
 
 						if (!purpleTeam.getPlayerList().contains(scoreHolderName)) {
-							// FIX: Correctly passes the String instead of the Entity object
 							scoreboard.addScoreHolderToTeam(scoreHolderName, purpleTeam);
 						}
 
