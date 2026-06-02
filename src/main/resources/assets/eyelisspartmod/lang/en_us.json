@@ -8,6 +8,10 @@
   "item.eyelisspartmod.purple_power_stone": "Purple Power Stone",
   "item.eyelisspartmod.power_core": "Power Core",
   "item.eyelisspartmod.custom_bird": "Bird Icon",
+  "item.eyelisspartmod.shadow_feather": "Shadow Touched Feather",
+  "item.eyelisspartmod.bird_stone": "Bird Stone",
+
+  "tag.item.eyelisspartmod.is_power_stone": "Is Power Stone",
 
   "block.eyelisspartmod.slop_block": "Block of Slop",
   "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",

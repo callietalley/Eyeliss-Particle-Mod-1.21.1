@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import static eyeliss.particle.mod.item.ModItems.POWER_CORE;
+import static eyeliss.particle.mod.item.ModItems.SHADOW_TOUCHED_FEATHER;
 
 public class ModItemGroups {
     public static final ItemGroup EYELISS_ITEMS_GROUP = Registry.register(Registries.ITEM_GROUP,
@@ -25,7 +26,9 @@ public class ModItemGroups {
                         entries.add(ModItems.GREEN_POWER_STONE);
                         entries.add(ModItems.YELLOW_POWER_STONE);
                         entries.add(ModItems.PURPLE_POWER_STONE);
+                        entries.add(ModItems.BIRD_STONE);
                         entries.add(POWER_CORE);
+                        entries.add(SHADOW_TOUCHED_FEATHER);
 
                     }).build());
 
