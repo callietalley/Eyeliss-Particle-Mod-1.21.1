@@ -6,6 +6,7 @@ import eyeliss.particle.mod.entity.ModEntities; // Make sure this is imported!
 import eyeliss.particle.mod.item.ModItemGroups;
 import eyeliss.particle.mod.item.ModItems;
 import eyeliss.particle.mod.particle.ModParticles;
+import eyeliss.particle.mod.sound.ModSounds;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,5 +26,6 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModBlocks.registerModBlocks();
 		ModParticles.registerParticles();
 		ModEffects.register();
+		ModSounds.registerSounds();
 	}
 }

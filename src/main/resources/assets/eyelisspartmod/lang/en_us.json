@@ -7,6 +7,7 @@
   "item.eyelisspartmod.yellow_power_stone": "Yellow Power Stone",
   "item.eyelisspartmod.purple_power_stone": "Purple Power Stone",
   "item.eyelisspartmod.power_core": "Power Core",
+  "item.eyelisspartmod.custom_bird": "Bird Icon",
 
   "block.eyelisspartmod.slop_block": "Block of Slop",
   "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",
@@ -25,5 +26,7 @@
 
   "effect.eyelisspartmod.bleeding_out": "Bleeding Out",
   "death.attack.bleeding_out": "%1$s bled to death",
-  "death.attack.bleeding_out.player": "%1$s bled out while trying to escape %2$s"
+  "death.attack.bleeding_out.player": "%1$s bled out while trying to escape %2$s",
+
+  "subtitles.eyelisspartmod.flock": "Flock caws"
 }

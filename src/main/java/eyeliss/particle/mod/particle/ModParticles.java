@@ -11,6 +11,13 @@ public class ModParticles {
     public static final SimpleParticleType RAGE_PARTICLE =
             registerParticle("rage_particle", FabricParticleTypes.simple(true));
 
+    // Added the Flock Orbit Particle type
+    public static final SimpleParticleType FLOCK_ORBIT_PARTICLE =
+            registerParticle("flock_orbit_particle", FabricParticleTypes.simple(true));
+
+    public static final SimpleParticleType FLOCK_AURA_PARTICLE =
+            registerParticle("flock_aura_particle", FabricParticleTypes.simple(true));
+
 
     private static SimpleParticleType registerParticle(String name, SimpleParticleType particleType) {
         return Registry.register(Registries.PARTICLE_TYPE, Identifier.of(EyelisssParticleMod.MOD_ID, name), particleType);

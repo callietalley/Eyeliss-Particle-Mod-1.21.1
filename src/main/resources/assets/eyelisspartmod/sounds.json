@@ -1,0 +1,11 @@
+{
+  "flock": {
+    "subtitle": "subtitles.eyelisspartmod.flock",
+    "sounds": [
+      {
+        "name": "eyelisspartmod:flock",
+        "stream": false
+      }
+    ]
+  }
+}

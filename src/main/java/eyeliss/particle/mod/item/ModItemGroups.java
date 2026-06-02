@@ -42,6 +42,6 @@ public class ModItemGroups {
 
 
     public static void registerItemGroups() {
-        EyelisssParticleMod.LOGGER.info("Registering Item Groups for" + EyelisssParticleMod.MOD_ID);
+        EyelisssParticleMod.LOGGER.info("Registering Item Groups for " + EyelisssParticleMod.MOD_ID);
     }
 }

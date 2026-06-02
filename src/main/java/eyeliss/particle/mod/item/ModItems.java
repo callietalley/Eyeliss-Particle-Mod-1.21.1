@@ -40,6 +40,9 @@ public class ModItems {
     public static final Item POWER_CORE = registerItem("power_core",
             new PowerCoreItem(new Item.Settings()));
 
+    public static final Item CUSTOM_BIRD = registerItem("custom_bird",
+            new Item(new Item.Settings()));
+
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(EyelisssParticleMod.MOD_ID, name), item);
     }
