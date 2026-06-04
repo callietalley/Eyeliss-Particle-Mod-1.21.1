@@ -1,0 +1,47 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.eyelisspartmod.piercing"
+  },
+  "effects": {
+    "minecraft:armor_effectiveness": [
+      {
+        "effect": {
+          "type": "minecraft:add",
+          "value": {
+            "type": "minecraft:linear",
+            "base": -0.125,
+            "per_level_above_first": -0.125
+          }
+        }
+      }
+    ],
+    "minecraft:attributes": [
+      {
+        "id": "eyelisspartmod:enchantment.piercing.attack_speed",
+        "attribute": "minecraft:generic.attack_speed",
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -0.125,
+          "per_level_above_first": -0.075
+        },
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 65,
+    "per_level_above_first": 8
+  },
+  "max_level": 4,
+  "min_cost": {
+    "base": 18,
+    "per_level_above_first": 8
+  },
+  "primary_items": "#eyelisspartmod:dagger_weapon",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#eyelisspartmod:dagger_weapon",
+  "weight": 2
+}

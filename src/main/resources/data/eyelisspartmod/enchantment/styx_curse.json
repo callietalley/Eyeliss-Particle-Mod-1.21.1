@@ -1,0 +1,63 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.eyelisspartmod.styx_curse"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "minecraft:apply_mob_effect",
+          "max_amplifier": 3.0,
+          "max_duration": {
+            "type": "minecraft:linear",
+            "base": 1.5,
+            "per_level_above_first": 0.5
+          },
+          "min_amplifier": 0.0,
+          "min_duration": 4,
+          "to_apply": "eyelisspartmod:styx_poison"
+        },
+        "enchanted": "attacker",
+        "requirements": {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:random_chance_with_enchanted_bonus",
+              "enchantment": "eyelisspartmod:styx_curse",
+              "enchanted_chance": {
+                "type": "minecraft:linear",
+                "base": 0.10,
+                "per_level_above_first": 0.025
+              },
+              "unenchanted_chance": 0.0
+            },
+            {
+              "condition": "minecraft:damage_source_properties",
+              "predicate": {
+                "is_direct": true
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "exclusive_set": "#eyelisspartmod:exclusive_set/dagger_special_damage",
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 6
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 6
+  },
+  "primary_items": "#eyelisspartmod:dagger_weapon",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#eyelisspartmod:dagger_weapon",
+  "weight": 5
+}

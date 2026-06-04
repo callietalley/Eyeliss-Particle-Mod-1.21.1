@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "eyelisspartmod:entomophage",
+    "eyelisspartmod:turning",
+    "eyelisspartmod:razor_edge",
+    "eyelisspartmod:piercing",
+    "eyelisspartmod:filleting",
+    "eyelisspartmod:thousand_cuts"
+  ]
+}

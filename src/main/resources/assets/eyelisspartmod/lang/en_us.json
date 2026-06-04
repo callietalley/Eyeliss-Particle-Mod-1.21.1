@@ -11,8 +11,31 @@
   "item.eyelisspartmod.shadow_feather": "Shadow Touched Feather",
   "item.eyelisspartmod.bird_stone": "Bird Stone",
 
+  "item.eyelisspartmod.training_dagger": "Training Dagger",
+  "item.eyelisspartmod.copper_dagger": "Copper Dagger",
+  "item.eyelisspartmod.quartz_dagger": "Quartz Dagger",
+  "item.eyelisspartmod.amethyst_dagger": "Amethyst Dagger",
+  "item.eyelisspartmod.emerald_dagger": "Emerald Dagger",
+  "item.eyelisspartmod.netherite_dagger": "Netherite Dagger",
+
   "tag.item.eyelisspartmod.is_power_stone": "Is Power Stone",
   "tag.item.eyelisspartmod.glows_purple": "Glows Purple",
+
+  "enchantment.eyelisspartmod.filleting": "Filleting",
+  "enchantment.eyelisspartmod.entomophage": "Entomophage",
+  "enchantment.eyelisspartmod.razor_edge": "Razor Edge",
+  "enchantment.eyelisspartmod.turning": "Turning",
+  "enchantment.eyelisspartmod.piercing": "Piercing",
+  "enchantment.eyelisspartmod.thousand_cuts": "Thousand Cuts",
+  "enchantment.eyelisspartmod.styx_curse": "Styx Curse",
+
+  "enchantment.eyelisspartmod.filleting.desc": "Increases loot gained from mobs",
+  "enchantment.eyelisspartmod.entomophage.desc": "Increases damage to Arthropods",
+  "enchantment.eyelisspartmod.razor_edge.desc": "Increases damage overall",
+  "enchantment.eyelisspartmod.turning.desc": "Increases damage to Undead",
+  "enchantment.eyelisspartmod.piercing.desc": "Allows you to pierce through enemy armor, at the cost of swing speed",
+  "enchantment.eyelisspartmod.thousand_cuts.desc": "A 15(+5 per level) percent chance to apply Bleeding Out to the enemy for 2 seconds",
+  "enchantment.eyelisspartmod.styx_curse.desc": "A 10(+2.5 per level) percent chance to apply Styx Poison to the enemy for 4 seconds",
 
   "block.eyelisspartmod.slop_block": "Block of Slop",
   "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",

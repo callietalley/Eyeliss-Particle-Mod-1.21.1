@@ -10,8 +10,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import static eyeliss.particle.mod.item.ModItems.POWER_CORE;
-import static eyeliss.particle.mod.item.ModItems.SHADOW_TOUCHED_FEATHER;
+import static eyeliss.particle.mod.item.ModItems.*;
 
 public class ModItemGroups {
     public static final ItemGroup EYELISS_ITEMS_GROUP = Registry.register(Registries.ITEM_GROUP,
@@ -39,6 +38,20 @@ public class ModItemGroups {
                     .entries((displayContext, entries) -> {
                         entries.add(ModBlocks.SLOP_BLOCK);
                         entries.add(ModBlocks.COOKED_SLOP_BLOCK);
+
+                    }).build());
+
+    public static final ItemGroup EYELISS_WEAPONS_GROUP = Registry.register(Registries.ITEM_GROUP,
+            Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_weapons"),
+            FabricItemGroup.builder().icon(() -> new ItemStack(NETHERITE_DAGGER))
+                    .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_blocks"))
+                    .entries((displayContext, entries) -> {
+                        entries.add(TRAINING_DAGGER);
+                        entries.add(COPPER_DAGGER);
+                        entries.add(QUARTZ_DAGGER);
+                        entries.add(AMETHYST_DAGGER);
+                        entries.add(EMERALD_DAGGER);
+                        entries.add(NETHERITE_DAGGER);
 
                     }).build());
 
