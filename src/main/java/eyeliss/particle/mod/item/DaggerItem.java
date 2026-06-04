@@ -10,15 +10,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+import net.spell_engine.api.spell.SpellDataComponents;
+import net.spell_engine.api.spell.container.SpellContainers;
 
 public class DaggerItem extends Item {
     private final ToolMaterial material;
 
     public DaggerItem(ToolMaterial toolMaterial, Settings settings) {
-        // Clear out the ENCHANTABLE component entirely.
-        // Minecraft 1.20.5/1.20.6 uses the getEnchantability() method below!
         super(settings.maxDamage(toolMaterial.getDurability())
-                .component(DataComponentTypes.ATTRIBUTE_MODIFIERS, createDaggerAttributes(toolMaterial)));
+                .component(DataComponentTypes.ATTRIBUTE_MODIFIERS, createDaggerAttributes(toolMaterial))
+                .component(
+                        SpellDataComponents.SPELL_CONTAINER,
+                        SpellContainers.forMagicWeapon()
+                                .withSpell("rpg_series:fan_of_knives")
+                )
+        );
         this.material = toolMaterial;
     }
 
