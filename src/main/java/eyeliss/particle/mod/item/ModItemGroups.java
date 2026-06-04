@@ -44,7 +44,7 @@ public class ModItemGroups {
     public static final ItemGroup EYELISS_WEAPONS_GROUP = Registry.register(Registries.ITEM_GROUP,
             Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_weapons"),
             FabricItemGroup.builder().icon(() -> new ItemStack(NETHERITE_DAGGER))
-                    .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_blocks"))
+                    .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_weapons"))
                     .entries((displayContext, entries) -> {
                         entries.add(TRAINING_DAGGER);
                         entries.add(COPPER_DAGGER);
