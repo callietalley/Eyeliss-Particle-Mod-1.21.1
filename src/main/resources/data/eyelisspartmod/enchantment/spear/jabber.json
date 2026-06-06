@@ -1,0 +1,58 @@
+{
+  "description": {
+    "translate": "enchantment.eyelisspartmod.jabber"
+  },
+  "primary_items": "#eyelisspartmod:spear_weapon",
+  "supported_items": "#eyelisspartmod:spear_weapon",
+  "weight": 5,
+  "exclusive_set": "#eyelisspartmod:exclusive_set/spear_special",
+  "max_level": 1,
+  "min_cost": {
+    "base": 6,
+    "per_level_above_first": 10
+  },
+  "max_cost": {
+    "base": 40,
+    "per_level_above_first": 15
+  },
+  "anvil_cost": 4,
+  "slots": [
+    "mainhand"
+  ],
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "id": "eyelisspartmod:jabber_spell_haste",
+        "attribute": "spell_power:haste",
+        "amount": {
+          "type": "minecraft:lookup",
+          "values": [
+            1.0,
+            1.1875,
+            1.375,
+            1.5625,
+            1.75,
+            1.9375,
+            2.125,
+            2.3125,
+            2.5,
+            2.6875,
+            2.875,
+            3.0625,
+            3.25
+          ],
+          "fallback": 3.25
+        },
+        "operation": "add_multiplied_base"
+      }
+    ],
+    "minecraft:damage": [
+      {
+        "effect": {
+          "type": "minecraft:multiply",
+          "factor": 0.5
+        }
+      }
+    ]
+  }
+}

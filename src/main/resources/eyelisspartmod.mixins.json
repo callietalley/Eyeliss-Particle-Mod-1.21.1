@@ -3,6 +3,7 @@
 	"package": "eyeliss.particle.mod.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
+		"AnvilScreenHandlerMixin"
 	],
 	"client": [
 		"client.GameRendererMixin",

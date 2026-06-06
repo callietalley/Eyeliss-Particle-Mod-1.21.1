@@ -7,5 +7,14 @@
         "stream": false
       }
     ]
+  },
+  "weapon_dagger_swarm": {
+    "subtitle": "subtitles.eyelisspartmod.weapon_dagger_swarm",
+    "sounds": [
+      {
+        "name": "eyelisspartmod:weapon_dagger_swarm",
+        "stream": false
+      }
+    ]
   }
 }

@@ -8,7 +8,7 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import java.util.function.Supplier;
 
-public enum ModToolMaterials implements ToolMaterial {
+public enum ModDaggerMaterials implements ToolMaterial {
     TRAINING_DAGGER(BlockTags.INCORRECT_FOR_WOODEN_TOOL, 59, 2.0F, 0.0F, 15, () -> Ingredient.fromTag(net.minecraft.registry.tag.ItemTags.PLANKS)),
     COPPER_DAGGER(BlockTags.INCORRECT_FOR_STONE_TOOL, 160, 4.5F, 0.5F, 10, () -> Ingredient.ofItems(Items.COPPER_INGOT)),
     QUARTZ_DAGGER(BlockTags.INCORRECT_FOR_IRON_TOOL, 200, 6.0F, 1.25F, 18, () -> Ingredient.ofItems(Items.QUARTZ)),
@@ -23,7 +23,7 @@ public enum ModToolMaterials implements ToolMaterial {
     private final int enchantability;
     private final Supplier<Ingredient> repairIngredient;
 
-    ModToolMaterials(TagKey<Block> inverseTag, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
+    ModDaggerMaterials(TagKey<Block> inverseTag, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
         this.inverseTag = inverseTag;
         this.itemDurability = itemDurability;
         this.miningSpeed = miningSpeed;

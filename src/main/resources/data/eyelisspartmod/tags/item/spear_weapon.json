@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "eyelisspartmod:training_spear",
+    "eyelisspartmod:copper_spear",
+    "eyelisspartmod:quartz_spear",
+    "eyelisspartmod:amethyst_spear",
+    "eyelisspartmod:emerald_spear",
+    "eyelisspartmod:netherite_spear"
+  ]
+}

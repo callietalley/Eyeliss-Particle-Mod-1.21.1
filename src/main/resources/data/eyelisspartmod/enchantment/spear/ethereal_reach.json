@@ -1,0 +1,48 @@
+{
+  "description": {
+    "translate": "enchantment.eyelisspartmod.ethereal_reach"
+  },
+  "primary_items": "#eyelisspartmod:spear_weapon",
+  "supported_items": "#eyelisspartmod:spear_weapon",
+  "weight": 5,
+  "exclusive_set": "#eyelisspartmod:exclusive_set/spear_special",
+  "max_level": 1,
+  "min_cost": {
+    "base": 6,
+    "per_level_above_first": 10
+  },
+  "max_cost": {
+    "base": 40,
+    "per_level_above_first": 15
+  },
+  "anvil_cost": 4,
+  "slots": [
+    "mainhand"
+  ],
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "id": "eyelisspartmod:ethereal_reach_attack_range",
+        "attribute": "minecraft:player.entity_interaction_range",
+        "amount": {
+          "type": "minecraft:lookup",
+          "values": [
+            1.0,
+            1.5,
+            2.0,
+            2.5,
+            3.0
+          ],
+          "fallback": 3.0
+        },
+        "operation": "add_value"
+      },
+      {
+        "id": "eyelisspartmod:ethereal_reach_attack_speed",
+        "attribute": "minecraft:generic.attack_speed",
+        "amount": -0.1,
+        "operation": "add_multiplied_base"
+      }
+    ]
+  }
+}

@@ -3,14 +3,17 @@ package eyeliss.particle.mod.item;
 import eyeliss.particle.mod.EyelisssParticleMod;
 import eyeliss.particle.mod.block.ModBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.registry.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import static eyeliss.particle.mod.item.ModItems.*;
+import static eyeliss.particle.mod.item.ModWeapons.*;
 
 public class ModItemGroups {
     public static final ItemGroup EYELISS_ITEMS_GROUP = Registry.register(Registries.ITEM_GROUP,
@@ -46,18 +49,77 @@ public class ModItemGroups {
             FabricItemGroup.builder().icon(() -> new ItemStack(NETHERITE_DAGGER))
                     .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_weapons"))
                     .entries((displayContext, entries) -> {
+                        RegistryWrapper.WrapperLookup registries = displayContext.lookup();
+                        //Daggers
                         entries.add(TRAINING_DAGGER);
                         entries.add(COPPER_DAGGER);
                         entries.add(QUARTZ_DAGGER);
                         entries.add(AMETHYST_DAGGER);
                         entries.add(EMERALD_DAGGER);
                         entries.add(NETHERITE_DAGGER);
+                        //Spears
+                        entries.add(TRAINING_SPEAR);
+                        entries.add(COPPER_SPEAR);
+                        entries.add(QUARTZ_SPEAR);
+                        entries.add(AMETHYST_SPEAR);
+                        entries.add(EMERALD_SPEAR);
+                        entries.add(NETHERITE_SPEAR);
 
+                        //Dagger Enchantments
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/entomophage", 6, false, true);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/razor_edge", 6, false, true);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/turning", 6, false, true);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/filleting", 5, false, true);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/piercing", 3, false, true);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/thousand_cuts", 3, false, true);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/styx_curse", 3, false, true);
+                        //Spear Enchantments
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "spear/jabber", 1, false, false);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "spear/ethereal_reach", 1, false, false);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "spear/pointed", 5, false, true);
                     }).build());
-
-
 
     public static void registerItemGroups() {
         EyelisssParticleMod.LOGGER.info("Registering Item Groups for " + EyelisssParticleMod.MOD_ID);
+    }
+
+    private static void addEnchantedBook(ItemGroup.Entries entries, RegistryWrapper.WrapperLookup registries, String namespace, String path, int maxLevel, boolean allLevels, boolean extremeLevels) {
+        if (allLevels) {
+            // If allLevels is true, loop through every single level from 1 to maxLevel
+            for (int level = 1; level <= maxLevel; level++) {
+                entries.add(createEnchantedBook(registries, namespace, path, level));
+            }
+        } else {
+            // If allLevels is false, check the extremeLevels condition
+            if (extremeLevels && maxLevel > 1) {
+                // Adds level 1 AND the desired max level (skipping everything in between)
+                entries.add(createEnchantedBook(registries, namespace, path, 1));
+                entries.add(createEnchantedBook(registries, namespace, path, maxLevel));
+            } else {
+                // Otherwise, just add the single desired level
+                entries.add(createEnchantedBook(registries, namespace, path, maxLevel));
+            }
+        }
+    }
+
+    private static ItemStack createEnchantedBook(RegistryWrapper.WrapperLookup registries, String namespace, String path, int level) {
+        // 1. Create the base enchanted book stack
+        ItemStack enchantedBook = new ItemStack(net.minecraft.item.Items.ENCHANTED_BOOK);
+
+        // 2. Look up the Enchantment registry
+        var enchantmentLookup = registries.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+
+        // 3. Define the RegistryKey dynamically using the parameters
+        RegistryKey<Enchantment> customEnchantKey = RegistryKey.of(
+                RegistryKeys.ENCHANTMENT,
+                Identifier.of(namespace, path)
+        );
+
+        // 4. Build and apply the stored enchantment component
+        ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
+        builder.add(enchantmentLookup.getOrThrow(customEnchantKey), level);
+
+        enchantedBook.set(DataComponentTypes.STORED_ENCHANTMENTS, builder.build());
+        return enchantedBook;
     }
 }

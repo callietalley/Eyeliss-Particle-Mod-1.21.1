@@ -10,6 +10,7 @@
   "item.eyelisspartmod.custom_bird": "Bird Icon",
   "item.eyelisspartmod.shadow_feather": "Shadow Touched Feather",
   "item.eyelisspartmod.bird_stone": "Bird Stone",
+  "item.eyelisspartmod.shadow_book": "Shadow Book",
 
   "item.eyelisspartmod.training_dagger": "Training Dagger",
   "item.eyelisspartmod.copper_dagger": "Copper Dagger",
@@ -18,8 +19,18 @@
   "item.eyelisspartmod.emerald_dagger": "Emerald Dagger",
   "item.eyelisspartmod.netherite_dagger": "Netherite Dagger",
 
-  "tag.item.eyelisspartmod.is_power_stone": "Is Power Stone",
-  "tag.item.eyelisspartmod.glows_purple": "Glows Purple",
+  "item.eyelisspartmod.training_spear": "Training Spear",
+  "item.eyelisspartmod.copper_spear": "Copper Spear",
+  "item.eyelisspartmod.quartz_spear": "Quartz Spear",
+  "item.eyelisspartmod.amethyst_spear": "Amethyst Spear",
+  "item.eyelisspartmod.emerald_spear": "Emerald Spear",
+  "item.eyelisspartmod.netherite_spear": "Netherite Spear",
+
+  "spell.eyelisspartmod.spear_thrust.name": "Spear Thrust",
+  "spell.eyelisspartmod.spear_thrust.description": "Lunge forward, striking all enemies along your path, dealing your weapon's damage.",
+
+  "spell.eyelisspartmod.swarm_of_knives.description": "Throws twelve of your blades one after another, dealing {damage} damage each, and homing if directly looking at a target when casting.",
+  "spell.eyelisspartmod.swarm_of_knives.name": "Swarm of Knives",
 
   "enchantment.eyelisspartmod.filleting": "Filleting",
   "enchantment.eyelisspartmod.entomophage": "Entomophage",
@@ -29,6 +40,10 @@
   "enchantment.eyelisspartmod.thousand_cuts": "Thousand Cuts",
   "enchantment.eyelisspartmod.styx_curse": "Styx Curse",
 
+  "enchantment.eyelisspartmod.jabber": "Jabber",
+  "enchantment.eyelisspartmod.ethereal_reach": "Ethereal Reach",
+  "enchantment.eyelisspartmod.pointed": "Pointed",
+
   "enchantment.eyelisspartmod.filleting.desc": "Increases loot gained from mobs",
   "enchantment.eyelisspartmod.entomophage.desc": "Increases damage to Arthropods",
   "enchantment.eyelisspartmod.razor_edge.desc": "Increases damage overall",
@@ -36,6 +51,10 @@
   "enchantment.eyelisspartmod.piercing.desc": "Allows you to pierce through enemy armor, at the cost of swing speed",
   "enchantment.eyelisspartmod.thousand_cuts.desc": "A 15(+5 per level) percent chance to apply Bleeding Out to the enemy for 2 seconds",
   "enchantment.eyelisspartmod.styx_curse.desc": "A 10(+2.5 per level) percent chance to apply Styx Poison to the enemy for 4 seconds",
+
+  "enchantment.eyelisspartmod.jabber.desc": "Reduces cast duration. Reduces cooldown by half. Reduces damage by half.",
+  "enchantment.eyelisspartmod.ethereal_reach.desc": "Gives increased attack range, at the cost of lowering attack speed.",
+  "enchantment.eyelisspartmod.pointed.desc": "Increases attack damage of spears by a flat amount, more than sharpness.",
 
   "block.eyelisspartmod.slop_block": "Block of Slop",
   "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",

@@ -3,21 +3,15 @@ package eyeliss.particle.mod.item;
 import eyeliss.particle.mod.EyelisssParticleMod;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.type.FoodComponent;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 
 public class ModItems {
-    public static final Item TRAINING_DAGGER = registerItem("training_dagger", new DaggerItem(ModToolMaterials.TRAINING_DAGGER, new Item.Settings()));
-    public static final Item COPPER_DAGGER = registerItem("copper_dagger", new DaggerItem(ModToolMaterials.COPPER_DAGGER, new Item.Settings()));
-    public static final Item QUARTZ_DAGGER = registerItem("quartz_dagger", new DaggerItem(ModToolMaterials.QUARTZ_DAGGER, new Item.Settings()));
-    public static final Item AMETHYST_DAGGER = registerItem("amethyst_dagger", new DaggerItem(ModToolMaterials.AMETHYST_DAGGER, new Item.Settings()));
-    public static final Item EMERALD_DAGGER = registerItem("emerald_dagger", new DaggerItem(ModToolMaterials.EMERALD_DAGGER, new Item.Settings()));
-
-    public static final Item NETHERITE_DAGGER = registerItem("netherite_dagger", new DaggerItem(ModToolMaterials.NETHERITE_DAGGER, new Item.Settings().fireproof()));
-
     public static final Item SLOP = registerItem("slop", new Item(new Item.Settings()));
     public static final Item COOKED_SLOP = registerItem("cooked_slop", new Item(new Item.Settings()));
     public static final Item SHADOW_TOUCHED_FEATHER = registerItem("shadow_feather", new Item(new Item.Settings()));
@@ -41,21 +35,14 @@ public class ModItems {
         return Registry.register(Registries.ITEM, Identifier.of(EyelisssParticleMod.MOD_ID, name), item);
     }
 
+    public static final Item SHADOW_BOOK = registerItem("shadow_book", new EnchantedBookItem(new Item.Settings().maxCount(1).fireproof().rarity(Rarity.UNCOMMON)));
+
     public static void registerModItems () {
         EyelisssParticleMod.LOGGER.info("Registering Mod Items for " + EyelisssParticleMod.MOD_ID);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
             entries.add(SLOP);
             entries.add(COOKED_SLOP);
-        });
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
-            entries.add(TRAINING_DAGGER);
-            entries.add(COPPER_DAGGER);
-            entries.add(QUARTZ_DAGGER);
-            entries.add(AMETHYST_DAGGER);
-            entries.add(EMERALD_DAGGER);
-            entries.add(NETHERITE_DAGGER);
         });
     }
 }

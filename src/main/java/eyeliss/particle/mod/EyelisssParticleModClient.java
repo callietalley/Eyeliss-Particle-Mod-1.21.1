@@ -1,6 +1,7 @@
 package eyeliss.particle.mod;
 
 import eyeliss.particle.mod.api.ModKeybinds;
+import eyeliss.particle.mod.client.ShadowParticleHandler;
 import eyeliss.particle.mod.client.render.UmberwitherRenderer;
 import eyeliss.particle.mod.entity.ModEntities; // Import your entities class
 import eyeliss.particle.mod.particle.FlockAuraParticle;
@@ -16,17 +17,15 @@ public class EyelisssParticleModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        // Register your particles
+        ShadowParticleHandler.register();
         ParticleFactoryRegistry.getInstance().register(ModParticles.RAGE_PARTICLE, RageParticle.Factory::new);
 
         ParticleFactoryRegistry.getInstance().register(ModParticles.FLOCK_ORBIT_PARTICLE, FlockOrbitParticle.Factory::new);
 
         ParticleFactoryRegistry.getInstance().register(ModParticles.FLOCK_AURA_PARTICLE, FlockAuraParticle.Factory::new);
 
-        // Call your dedicated keybind registration class
         ModKeybinds.register();
 
-        // Directs the client to render the Umberwither using the vanilla Wither's model, animations, and textures
         EntityRendererRegistry.register(ModEntities.UMBERWITHER, UmberwitherRenderer::new);
     }
 }

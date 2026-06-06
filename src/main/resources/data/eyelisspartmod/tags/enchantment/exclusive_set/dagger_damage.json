@@ -1,7 +1,7 @@
 {
   "values": [
-    "eyelisspartmod:entomophage",
-    "eyelisspartmod:turning",
-    "eyelisspartmod:razor_edge"
+    "eyelisspartmod:dagger/entomophage",
+    "eyelisspartmod:dagger/turning",
+    "eyelisspartmod:dagger/razor_edge"
   ]
 }

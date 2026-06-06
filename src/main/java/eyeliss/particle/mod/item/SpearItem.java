@@ -3,30 +3,30 @@ package eyeliss.particle.mod.item;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.spell_engine.api.spell.SpellDataComponents;
 import net.spell_engine.api.spell.container.SpellChoice;
 import net.spell_engine.api.spell.container.SpellContainers;
 
-public class DaggerItem extends Item {
+public class SpearItem extends Item {
     private final ToolMaterial material;
 
-    public DaggerItem(ToolMaterial toolMaterial, Settings settings) {
+    public SpearItem(ToolMaterial toolMaterial, Settings settings) {
         super(settings.maxDamage(toolMaterial.getDurability())
-                .component(DataComponentTypes.ATTRIBUTE_MODIFIERS, createDaggerAttributes(toolMaterial))
+                .component(DataComponentTypes.ATTRIBUTE_MODIFIERS, createSpearAttributes(toolMaterial))
                 .component(
                         SpellDataComponents.SPELL_CONTAINER,
                         SpellContainers.forMagicWeapon()
                 )
                 .component(
                         SpellDataComponents.SPELL_CHOICE,
-                        new SpellChoice("eyelisspartmod:weapon/dagger_choice")
+                        new SpellChoice("eyelisspartmod:weapon/spear_choice")
                 )
         );
         this.material = toolMaterial;
@@ -43,9 +43,9 @@ public class DaggerItem extends Item {
         return true;
     }
 
-    private static AttributeModifiersComponent createDaggerAttributes(ToolMaterial material) {
-        double finalDamage = 3.0 + material.getAttackDamage();
-        double attackSpeedValue = -2.0;
+    private static AttributeModifiersComponent createSpearAttributes(ToolMaterial material) {
+        double finalDamage = 4.0 + material.getAttackDamage();
+        double attackSpeedValue = -2.8;
 
         return AttributeModifiersComponent.builder()
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE,
@@ -57,7 +57,7 @@ public class DaggerItem extends Item {
                         AttributeModifierSlot.MAINHAND
                 )
                 .add(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
-                        new EntityAttributeModifier(Identifier.of("item.attack_range"), -0.75, EntityAttributeModifier.Operation.ADD_VALUE),
+                        new EntityAttributeModifier(Identifier.of("item.attack_range"), 1.5, EntityAttributeModifier.Operation.ADD_VALUE),
                         AttributeModifierSlot.MAINHAND
                 )
                 .build();

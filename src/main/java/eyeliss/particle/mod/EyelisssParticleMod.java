@@ -1,10 +1,13 @@
 package eyeliss.particle.mod;
 
 import eyeliss.particle.mod.block.ModBlocks;
+import eyeliss.particle.mod.component.ModComponents;
 import eyeliss.particle.mod.effect.ModEffects;
 import eyeliss.particle.mod.entity.ModEntities;
+import eyeliss.particle.mod.event.ShadowCurseHandler;
 import eyeliss.particle.mod.item.ModItemGroups;
 import eyeliss.particle.mod.item.ModItems;
+import eyeliss.particle.mod.item.ModWeapons;
 import eyeliss.particle.mod.particle.ModParticles;
 import eyeliss.particle.mod.sound.ModSounds;
 import net.fabricmc.api.ModInitializer;
@@ -34,14 +37,17 @@ public class EyelisssParticleMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModComponents.registerComponents();
 		ModEntities.registerEntities();
 
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
+		ModWeapons.registerModWeapons();
 		ModBlocks.registerModBlocks();
 		ModParticles.registerParticles();
 		ModEffects.register();
 		ModSounds.registerSounds();
+		ShadowCurseHandler.register();
 
 		ServerTickEvents.START_SERVER_TICK.register(server -> {
 			Scoreboard scoreboard = server.getScoreboard();

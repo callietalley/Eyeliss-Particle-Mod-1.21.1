@@ -1,7 +1,7 @@
 {
   "anvil_cost": 2,
   "description": {
-    "translate": "enchantment.eyelisspartmod.thousand_cuts"
+    "translate": "enchantment.eyelisspartmod.styx_curse"
   },
   "effects": {
     "minecraft:post_attack": [
@@ -16,8 +16,8 @@
             "per_level_above_first": 0.5
           },
           "min_amplifier": 0.0,
-          "min_duration": 2,
-          "to_apply": "eyelisspartmod:bleeding_out"
+          "min_duration": 4,
+          "to_apply": "eyelisspartmod:styx_poison"
         },
         "enchanted": "attacker",
         "requirements": {
@@ -25,11 +25,11 @@
           "terms": [
             {
               "condition": "minecraft:random_chance_with_enchanted_bonus",
-              "enchantment": "eyelisspartmod:thousand_cuts",
+              "enchantment": "eyelisspartmod:dagger/styx_curse",
               "enchanted_chance": {
                 "type": "minecraft:linear",
-                "base": 0.15,
-                "per_level_above_first": 0.05
+                "base": 0.10,
+                "per_level_above_first": 0.025
               },
               "unenchanted_chance": 0.0
             },

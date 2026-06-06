@@ -1,11 +1,14 @@
 {
   "replace": false,
   "values": [
-    "eyelisspartmod:entomophage",
-    "eyelisspartmod:turning",
-    "eyelisspartmod:razor_edge",
-    "eyelisspartmod:piercing",
-    "eyelisspartmod:filleting",
-    "eyelisspartmod:thousand_cuts"
+    "eyelisspartmod:dagger/entomophage",
+    "eyelisspartmod:dagger/turning",
+    "eyelisspartmod:dagger/razor_edge",
+    "eyelisspartmod:dagger/piercing",
+    "eyelisspartmod:dagger/filleting",
+    "eyelisspartmod:dagger/thousand_cuts",
+    "eyelisspartmod:spear/jabber",
+    "eyelisspartmod:spear/ethereal_reach",
+    "eyelisspartmod:spear/pointed"
   ]
 }
