@@ -12,7 +12,6 @@ public class ModEffects {
             new StyxPoisonEffect()
     );
 
-    // Add Bleeding Out registration
     public static final StatusEffect BLEEDING_OUT = Registry.register(
             Registries.STATUS_EFFECT,
             net.minecraft.util.Identifier.of(EyelisssParticleMod.MOD_ID, "bleeding_out"),

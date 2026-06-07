@@ -31,6 +31,8 @@ public class ModItemGroups {
                         entries.add(ModItems.BIRD_STONE);
                         entries.add(POWER_CORE);
                         entries.add(SHADOW_TOUCHED_FEATHER);
+                        entries.add(LONG_STICK);
+                        entries.add(SHADOW_BOOK);
 
                     }).build());
 
@@ -79,43 +81,84 @@ public class ModItemGroups {
                         addEnchantedBook(entries, registries, "eyelisspartmod", "spear/pointed", 5, false, true);
                     }).build());
 
+    public static final ItemGroup EYELISS_FUN_GROUP = Registry.register(Registries.ITEM_GROUP,
+            Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_zfun"),
+            FabricItemGroup.builder().icon(() -> new ItemStack(CUSTOM_BIRD))
+                    .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_fun"))
+                    .entries((displayContext, entries) -> {
+                        RegistryWrapper.WrapperLookup registries = displayContext.lookup();
+                        //enchants
+                        addShadowBook(entries, registries, "eyelisspartmod", "spear/jabber", 10, true, false);
+                        addShadowBook(entries, registries, "eyelisspartmod", "spear/jabber", 20, false, false);
+                        addShadowBook(entries, registries, "eyelisspartmod", "spear/ethereal_reach", 5, true, false);
+                        addShadowBook(entries, registries, "eyelisspartmod", "dagger/thousand_cuts", 18, false, false);
+                        addShadowBook(entries, registries, "eyelisspartmod", "dagger/styx_curse", 35, false, false);
+                        entries.add(ModSpawnEggs.UMBERWITHER_SPAWN_EGG);
+
+                    }).build());
+
     public static void registerItemGroups() {
         EyelisssParticleMod.LOGGER.info("Registering Item Groups for " + EyelisssParticleMod.MOD_ID);
     }
 
+    private static void addShadowBook(ItemGroup.Entries entries, RegistryWrapper.WrapperLookup registries, String namespace, String path, int maxLevel, boolean allLevels, boolean extremeLevels) {
+        if (allLevels) {
+            for (int level = 1; level <= maxLevel; level++) {
+                entries.add(createShadowBook(registries, namespace, path, level));
+            }
+        } else {
+            if (extremeLevels && maxLevel > 1) {
+                entries.add(createShadowBook(registries, namespace, path, 1));
+                entries.add(createShadowBook(registries, namespace, path, maxLevel));
+            } else {
+                entries.add(createShadowBook(registries, namespace, path, maxLevel));
+            }
+        }
+    }
+
+    private static ItemStack createShadowBook(RegistryWrapper.WrapperLookup registries, String namespace, String path, int level) {
+        var shadowBookItem = Registries.ITEM.get(Identifier.of("eyelisspartmod", "shadow_book"));
+        ItemStack shadowBook = new ItemStack(shadowBookItem);
+
+        var enchantmentLookup = registries.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+
+        RegistryKey<Enchantment> customEnchantKey = RegistryKey.of(
+                RegistryKeys.ENCHANTMENT,
+                Identifier.of(namespace, path)
+        );
+
+        ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
+        builder.add(enchantmentLookup.getOrThrow(customEnchantKey), level);
+
+        shadowBook.set(DataComponentTypes.ENCHANTMENTS, builder.build());
+        return shadowBook;
+    }
+
     private static void addEnchantedBook(ItemGroup.Entries entries, RegistryWrapper.WrapperLookup registries, String namespace, String path, int maxLevel, boolean allLevels, boolean extremeLevels) {
         if (allLevels) {
-            // If allLevels is true, loop through every single level from 1 to maxLevel
             for (int level = 1; level <= maxLevel; level++) {
                 entries.add(createEnchantedBook(registries, namespace, path, level));
             }
         } else {
-            // If allLevels is false, check the extremeLevels condition
             if (extremeLevels && maxLevel > 1) {
-                // Adds level 1 AND the desired max level (skipping everything in between)
                 entries.add(createEnchantedBook(registries, namespace, path, 1));
                 entries.add(createEnchantedBook(registries, namespace, path, maxLevel));
             } else {
-                // Otherwise, just add the single desired level
                 entries.add(createEnchantedBook(registries, namespace, path, maxLevel));
             }
         }
     }
 
     private static ItemStack createEnchantedBook(RegistryWrapper.WrapperLookup registries, String namespace, String path, int level) {
-        // 1. Create the base enchanted book stack
         ItemStack enchantedBook = new ItemStack(net.minecraft.item.Items.ENCHANTED_BOOK);
 
-        // 2. Look up the Enchantment registry
         var enchantmentLookup = registries.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
 
-        // 3. Define the RegistryKey dynamically using the parameters
         RegistryKey<Enchantment> customEnchantKey = RegistryKey.of(
                 RegistryKeys.ENCHANTMENT,
                 Identifier.of(namespace, path)
         );
 
-        // 4. Build and apply the stored enchantment component
         ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
         builder.add(enchantmentLookup.getOrThrow(customEnchantKey), level);
 

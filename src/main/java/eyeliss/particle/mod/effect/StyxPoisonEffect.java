@@ -38,8 +38,6 @@ public class StyxPoisonEffect extends StatusEffect {
         if (duration % hitInterval == 0) {
 
             if (entity instanceof PlayerEntity) {
-                // FIXED: Retains 100% of vertical movement by passing entity.getVelocity().y cleanly.
-                // This stops the effect from halting jumps or freezing falling momentum.
                 entity.setVelocity(new Vec3d(0, entity.getVelocity().y, 0));
                 entity.velocityModified = true;
             }

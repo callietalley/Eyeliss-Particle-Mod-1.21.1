@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "eyelisspartmod:long_stick"
+    },
+    "I": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "I",
+    "#"
+  ],
+  "result": {
+    "count": 1,
+    "id": "eyelisspartmod:training_spear"
+  }
+}

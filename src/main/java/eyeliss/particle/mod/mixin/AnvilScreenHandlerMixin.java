@@ -7,6 +7,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.screen.ForgingScreenHandler;
@@ -35,10 +36,15 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         ItemStack leftStack = this.input.getStack(0);
         ItemStack rightStack = this.input.getStack(1);
 
-        // Verify that the right item slot contains the SHADOW_BOOK
-        if (!leftStack.isEmpty() && rightStack.isOf(ModItems.SHADOW_BOOK)) {
+        if (leftStack.isEmpty() || rightStack.isEmpty()) {
+            return;
+        }
 
-            // Fix Duplication: Force the output item copy stack count to exactly 1
+        boolean isItemWithShadowBook = !leftStack.isOf(ModItems.SHADOW_BOOK) && rightStack.isOf(ModItems.SHADOW_BOOK);
+        boolean isShadowBookWithEnchantedBook = leftStack.isOf(ModItems.SHADOW_BOOK) && rightStack.isOf(Items.ENCHANTED_BOOK);
+
+        if (isItemWithShadowBook || isShadowBookWithEnchantedBook) {
+
             ItemStack resultStack = leftStack.copy();
             resultStack.setCount(1);
 
@@ -49,26 +55,38 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
             boolean hasMutuallyExclusiveViolation = false;
             int cost = 0;
 
-            // 1. Loop through shadow book enchants to verify safety and compute costs
             for (var entry : rightEnchants.getEnchantmentEntries()) {
-                RegistryEntry<Enchantment> bookEnchantment = entry.getKey();
-                int bookLevel = entry.getIntValue();
-                int currentLevel = leftEnchants.getLevel(bookEnchantment);
+                RegistryEntry<Enchantment> rightEnchantment = entry.getKey();
+                int rightLevel = entry.getIntValue();
+                int leftLevel = leftEnchants.getLevel(rightEnchantment);
+                int maxLevel = rightEnchantment.value().getMaxLevel();
 
+                // 1. RULE CHANGE: Verify if the incoming enchantment is legally acceptable on this specific item type
+                // If it is completely invalid (like Sharpness on a Pickaxe), skip it entirely so it is not added
+                if (!rightEnchantment.value().isAcceptableItem(leftStack) && !leftStack.isOf(ModItems.SHADOW_BOOK)) {
+                    continue;
+                }
+
+                // 2. Mutual Exclusivity Check (e.g., Silk Touch vs Fortune)
+                // We still flag this as a violation, but we no longer block the merger from happening
                 for (var leftEntry : leftEnchants.getEnchantmentEntries()) {
                     RegistryEntry<Enchantment> leftEnchantment = leftEntry.getKey();
 
-                    if (!bookEnchantment.equals(leftEnchantment)) {
-                        if (bookEnchantment.value().exclusiveSet().contains(leftEnchantment)) {
+                    if (!rightEnchantment.equals(leftEnchantment)) {
+                        if (rightEnchantment.value().exclusiveSet().contains(leftEnchantment)) {
                             hasMutuallyExclusiveViolation = true;
                         }
                     }
                 }
 
-                int finalLevel = (currentLevel == bookLevel) ? bookLevel + 1 : Math.max(currentLevel, bookLevel);
-                int maxLevel = bookEnchantment.value().getMaxLevel();
-                if (finalLevel > maxLevel) {
-                    finalLevel = maxLevel;
+                int finalLevel;
+                if (leftLevel > maxLevel || rightLevel > maxLevel) {
+                    finalLevel = Math.max(leftLevel, rightLevel);
+                } else {
+                    finalLevel = (leftLevel == rightLevel) ? rightLevel + 1 : Math.max(leftLevel, rightLevel);
+                    if (finalLevel > maxLevel) {
+                        finalLevel = maxLevel;
+                    }
                 }
 
                 cost += finalLevel * 2;
@@ -76,17 +94,30 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
             }
 
             if (logicChanged) {
-                // 2. Apply changes to our working item copy
                 EnchantmentHelper.apply(resultStack, innerBuilder -> {
+                    for (var entry : leftEnchants.getEnchantmentEntries()) {
+                        innerBuilder.set(entry.getKey(), entry.getIntValue());
+                    }
+
                     for (var entry : rightEnchants.getEnchantmentEntries()) {
                         RegistryEntry<Enchantment> enchantment = entry.getKey();
-                        int bookLevel = entry.getIntValue();
-                        int currentLevel = leftEnchants.getLevel(enchantment);
-
-                        int finalLevel = (currentLevel == bookLevel) ? bookLevel + 1 : Math.max(currentLevel, bookLevel);
+                        int rightLevel = entry.getIntValue();
+                        int leftLevel = leftEnchants.getLevel(enchantment);
                         int maxLevel = enchantment.value().getMaxLevel();
-                        if (finalLevel > maxLevel) {
-                            finalLevel = maxLevel;
+
+                        // Enforce the same item acceptability checks during the application pass
+                        if (!enchantment.value().isAcceptableItem(leftStack) && !leftStack.isOf(ModItems.SHADOW_BOOK)) {
+                            continue;
+                        }
+
+                        int finalLevel;
+                        if (leftLevel > maxLevel || rightLevel > maxLevel) {
+                            finalLevel = Math.max(leftLevel, rightLevel);
+                        } else {
+                            finalLevel = (leftLevel == rightLevel) ? rightLevel + 1 : Math.max(leftLevel, rightLevel);
+                            if (finalLevel > maxLevel) {
+                                finalLevel = maxLevel;
+                            }
                         }
 
                         innerBuilder.set(enchantment, finalLevel);
@@ -98,12 +129,10 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                     cost += 15;
                 }
 
-                // Yarn/Mojang mappings dictate field_29577/field_29578 or similar for item costs.
-                // Anvil handles this natively if we pass structural completion, but setting the count
-                // on output ensures taking the output only subtracts 1 from your input stacks!
+                int finalAllowedCost = Math.clamp(cost, 1, 30);
 
                 this.output.setStack(0, resultStack);
-                this.levelCost.set(Math.max(1, cost));
+                this.levelCost.set(finalAllowedCost);
 
                 ci.cancel();
             }

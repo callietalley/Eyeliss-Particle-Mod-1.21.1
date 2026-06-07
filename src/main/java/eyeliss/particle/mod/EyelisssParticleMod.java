@@ -7,14 +7,17 @@ import eyeliss.particle.mod.entity.ModEntities;
 import eyeliss.particle.mod.event.ShadowCurseHandler;
 import eyeliss.particle.mod.item.ModItemGroups;
 import eyeliss.particle.mod.item.ModItems;
+import eyeliss.particle.mod.item.ModSpawnEggs;
 import eyeliss.particle.mod.item.ModWeapons;
 import eyeliss.particle.mod.particle.ModParticles;
 import eyeliss.particle.mod.sound.ModSounds;
+import eyeliss.particle.mod.util.ModLootTableModifiers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.scoreboard.Scoreboard;
@@ -39,9 +42,11 @@ public class EyelisssParticleMod implements ModInitializer {
 	public void onInitialize() {
 		ModComponents.registerComponents();
 		ModEntities.registerEntities();
+		ModLootTableModifiers.modifyLootTables();
 
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
+		ModSpawnEggs.registerModSpawnEggs();
 		ModWeapons.registerModWeapons();
 		ModBlocks.registerModBlocks();
 		ModParticles.registerParticles();
@@ -62,7 +67,10 @@ public class EyelisssParticleMod implements ModInitializer {
 			for (var world : server.getWorlds()) {
 				for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, itemEntity -> true)) {
 
-					if (itemEntity.getStack().isIn(PURPLE_GLOW_TAG)) {
+					ItemStack stack = itemEntity.getStack();
+
+					// Checks if the item has the tag OR if it has your custom component set to true
+					if (stack.isIn(PURPLE_GLOW_TAG) || Boolean.TRUE.equals(stack.get(ModComponents.IS_CURSED))) {
 						String scoreHolderName = itemEntity.getNameForScoreboard();
 
 						if (!purpleTeam.getPlayerList().contains(scoreHolderName)) {

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "eyelisspartmod:shadow_feather"
+    },
+    "I": {
+      "item": "minecraft:enchanted_book"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#I#",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "eyelisspartmod:shadow_book"
+  }
+}

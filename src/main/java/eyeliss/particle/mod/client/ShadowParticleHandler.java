@@ -23,10 +23,8 @@ public class ShadowParticleHandler {
 
     private static final Random RANDOM = new Random();
 
-    // Pure black dust particle effect parameter block (RGB: 0,0,0 | Scale: 1.0f)
     private static final DustParticleEffect BLACK_DUST = new DustParticleEffect(new Vector3f(0.0f, 0.0f, 0.0f), 1.0f);
 
-    // Custom Dark Purple dust effect with a smaller scale profile (RGB: 0.5, 0.0, 0.5 | Scale: 0.6f)
     private static final DustParticleEffect PURPLE_DUST = new DustParticleEffect(new Vector3f(0.5f, 0.0f, 0.5f), 0.6f);
 
     private static final TagKey<net.minecraft.item.Item> SPEAR_TAG = TagKey.of(
@@ -40,7 +38,6 @@ public class ShadowParticleHandler {
 
             ClientPlayerEntity localPlayer = client.player;
 
-            // Loop through all loaded entities in the client's current world
             for (Entity entity : client.world.getEntities()) {
                 if (entity instanceof LivingEntity livingEntity && livingEntity.isAlive()) {
 
@@ -52,7 +49,6 @@ public class ShadowParticleHandler {
 
                     if (!hasCursedMain && !hasCursedOff) continue;
 
-                    // Perspective filter for local player tracking parameters
                     if (livingEntity == localPlayer) {
                         if (client.options.getPerspective().isFirstPerson()) continue;
                     }
@@ -68,7 +64,6 @@ public class ShadowParticleHandler {
                         double forwardDirX = -Math.sin(bodyYawRadians);
                         double forwardDirZ = Math.cos(bodyYawRadians);
 
-                        // 1. Process Main Hand
                         if (hasCursedMain) {
                             BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModel(mainHand, livingEntity.getWorld(), livingEntity, livingEntity.getId());
                             double modelOffsetX = 0.0, modelOffsetY = 0.0, modelOffsetZ = 0.0;
@@ -90,14 +85,12 @@ public class ShadowParticleHandler {
                             double baseGridY = livingEntity.getY() + 0.9 + modelOffsetY;
                             double baseGridZ = livingEntity.getZ() + (Math.cos(handAngle) * handDistance) + (forwardDirZ * modelOffsetZ);
 
-                            // --- STANDARD BLACK DUST ---
                             double extBlack = mainHand.isIn(SPEAR_TAG) ? (RANDOM.nextDouble() * 2.0) - 1.0 : RANDOM.nextDouble();
                             double bx = baseGridX + (forwardDirX * extBlack) + (RANDOM.nextDouble() - 0.5) * 0.03;
                             double by = baseGridY + (RANDOM.nextDouble() - 0.5) * 0.12;
                             double bz = baseGridZ + (forwardDirZ * extBlack) + (RANDOM.nextDouble() - 0.5) * 0.03;
                             livingEntity.getWorld().addParticle(BLACK_DUST, bx, by, bz, velocityX, velocityY, velocityZ);
 
-                            // --- SMALLER & FREQUENT PURPLE DUST ---
                             for (int i = 0; i < 2; i++) {
                                 double extPurple = mainHand.isIn(SPEAR_TAG) ? (RANDOM.nextDouble() * 2.0) - 1.0 : RANDOM.nextDouble();
                                 double px = baseGridX + (forwardDirX * extPurple) + (RANDOM.nextDouble() - 0.5) * 0.02;
@@ -108,7 +101,6 @@ public class ShadowParticleHandler {
                             }
                         }
 
-                        // 2. Process Off-Hand
                         if (hasCursedOff) {
                             BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModel(offHand, livingEntity.getWorld(), livingEntity, livingEntity.getId());
                             double modelOffsetX = 0.0, modelOffsetY = 0.0, modelOffsetZ = 0.0;
@@ -130,14 +122,12 @@ public class ShadowParticleHandler {
                             double baseGridY = livingEntity.getY() + 0.9 + modelOffsetY;
                             double baseGridZ = livingEntity.getZ() + (Math.cos(handAngle) * handDistance) + (forwardDirZ * modelOffsetZ);
 
-                            // --- STANDARD BLACK DUST ---
                             double extBlack = offHand.isIn(SPEAR_TAG) ? (RANDOM.nextDouble() * 2.0) - 1.0 : RANDOM.nextDouble();
                             double bx = baseGridX + (forwardDirX * extBlack) + (RANDOM.nextDouble() - 0.5) * 0.03;
                             double by = baseGridY + (RANDOM.nextDouble() - 0.5) * 0.12;
                             double bz = baseGridZ + (forwardDirZ * extBlack) + (RANDOM.nextDouble() - 0.5) * 0.03;
                             livingEntity.getWorld().addParticle(BLACK_DUST, bx, by, bz, velocityX, velocityY, velocityZ);
 
-                            // --- SMALLER & FREQUENT PURPLE DUST ---
                             for (int i = 0; i < 2; i++) {
                                 double extPurple = offHand.isIn(SPEAR_TAG) ? (RANDOM.nextDouble() * 2.0) - 1.0 : RANDOM.nextDouble();
                                 double px = baseGridX + (forwardDirX * extPurple) + (RANDOM.nextDouble() - 0.5) * 0.02;

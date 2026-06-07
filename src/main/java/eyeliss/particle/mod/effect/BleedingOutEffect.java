@@ -43,8 +43,6 @@ public class BleedingOutEffect extends StatusEffect {
         if (duration % realDamageCooldown == 0) {
             entity.damage(source, 1.0f);
         } else if (amplifier < 4) {
-            // FALSE DAMAGE TICK SCALING
-            // Amp 0, 1, 2 -> every 3 ticks | Amp 3 -> every 2 ticks | Amp 4+ -> never procs
             int falseDamageCooldown = (amplifier == 3) ? 2 : 3;
 
             if (duration % falseDamageCooldown == 0) {

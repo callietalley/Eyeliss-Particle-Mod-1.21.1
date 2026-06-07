@@ -29,7 +29,6 @@ public class PowerCoreItem extends Item {
                     umberwither.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entity.getYaw(), entity.getPitch());
                     umberwither.setVelocity(entity.getVelocity());
 
-                    // Spawn the entity safely into the world
                     world.spawnEntity(umberwither);
 
                     world.playSound(null, entity.getX(), entity.getY(), entity.getZ(),

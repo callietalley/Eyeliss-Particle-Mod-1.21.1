@@ -22,7 +22,6 @@ public class ModEntities {
     public static void registerEntities() {
         EyelisssParticleMod.LOGGER.info("Registering Custom Entities for " + EyelisssParticleMod.MOD_ID);
 
-        // This is what fills "this.fallback" to stop the crash!
         FabricDefaultAttributeRegistry.register(UMBERWITHER, UmberwitherEntity.createUmberwitherAttributes());
     }
 }

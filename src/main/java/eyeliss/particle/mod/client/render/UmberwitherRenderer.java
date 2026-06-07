@@ -17,7 +17,6 @@ public class UmberwitherRenderer extends WitherEntityRenderer {
 
     @Override
     public Identifier getTexture(WitherEntity witherEntity) {
-        // Check if the boss is currently in its charging/invulnerable state
         int invulTime = witherEntity.getInvulnerableTimer();
         if (invulTime > 0 && (invulTime > 80 || invulTime / 5 % 2 != 1)) {
             return INVULNERABLE_TEXTURE;

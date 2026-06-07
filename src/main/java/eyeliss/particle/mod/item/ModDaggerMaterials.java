@@ -32,7 +32,6 @@ public enum ModDaggerMaterials implements ToolMaterial {
         this.repairIngredient = repairIngredient;
     }
 
-    // 2. Override interface methods to feed attributes seamlessly to our weapon objects
     @Override
     public int getDurability() {
         return this.itemDurability;

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "I": {
+      "item": "minecraft:lapis_lazuli"
+    }
+  },
+  "pattern": [
+    " # ",
+    "I# ",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "eyelisspartmod:long_stick"
+  }
+}

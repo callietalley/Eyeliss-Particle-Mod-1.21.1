@@ -20,11 +20,9 @@ import java.util.Random;
 public class UmberwitherEntity extends WitherEntity {
     private static final Random RANDOM = new Random();
 
-    // 8 seconds * 20 ticks per second = 160 ticks total countdown
     private int spawnTimerTicks = 160;
     private boolean hasExploded = false;
 
-    // Custom bright red dust effect handler (RGB: 1.0, 0.0, 0.0 at scale 2.0F)
     private static final DustParticleEffect RED_DUST = new DustParticleEffect(new Vector3f(1.0F, 0.0F, 0.0F), 2.0F);
 
     private static final Item[] POWER_STONES = {
@@ -81,7 +79,6 @@ public class UmberwitherEntity extends WitherEntity {
         super.tickMovement();
 
         if (this.getWorld().isClient()) {
-            // Standard ambient purple particles across 2x width boundaries
             if (this.random.nextFloat() < 0.15F) {
                 for (int i = 0; i < 3; i++) {
                     double xOffset = this.getX() + (this.random.nextDouble() - 0.5D) * this.getWidth() * 2.0D;
@@ -92,14 +89,11 @@ public class UmberwitherEntity extends WitherEntity {
                 }
             }
 
-            // Lock-state active updates
             if (this.spawnTimerTicks > 0) {
-                // Ambient charging smoke layer
                 if (this.random.nextFloat() < 0.4f) {
                     this.getWorld().addParticle(ParticleTypes.LARGE_SMOKE, this.getX() + (this.random.nextDouble() - 0.5D) * this.getWidth(), this.getY() + this.random.nextDouble() * this.getHeight(), this.getZ() + (this.random.nextDouble() - 0.5D) * this.getWidth(), 0.0D, 0.0D, 0.0D);
                 }
 
-                // CRITICAL: Spawns a ring/cloud burst of red dust particles exactly every 5 ticks
                 if (this.spawnTimerTicks % 5 == 0) {
                     for (int i = 0; i < 10; i++) { // Spawns 10 dust dots simultaneously per wave
                         double xOffset = this.getX() + (this.random.nextDouble() - 0.5D) * this.getWidth() * 2.0D;

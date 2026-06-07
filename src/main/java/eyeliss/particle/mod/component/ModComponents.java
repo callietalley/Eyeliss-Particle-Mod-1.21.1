@@ -9,7 +9,6 @@ import net.minecraft.util.Identifier;
 
 public class ModComponents {
 
-    // Matches the frozen fallback key seen in your crash logs: "eyeliss_particle_mod:is_cursed"
     public static final ComponentType<Boolean> IS_CURSED = Registry.register(
             Registries.DATA_COMPONENT_TYPE,
             Identifier.of("eyeliss_particle_mod", "is_cursed"),
@@ -17,7 +16,6 @@ public class ModComponents {
     );
 
     public static void registerComponents() {
-        // Triggering this method forces Java to load the static block definitions above early
         System.out.println("Initializing Shadow Curse Data Components for " + EyelisssParticleMod.MOD_ID);
     }
 }

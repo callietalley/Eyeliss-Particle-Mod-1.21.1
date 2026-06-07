@@ -11,6 +11,8 @@
   "item.eyelisspartmod.shadow_feather": "Shadow Touched Feather",
   "item.eyelisspartmod.bird_stone": "Bird Stone",
   "item.eyelisspartmod.shadow_book": "Shadow Book",
+  "item.eyelisspartmod.long_stick": "Long Stick",
+  "item.eyelisspartmod.umberwither_spawn_egg": "Umberwither Spawn Egg",
 
   "item.eyelisspartmod.training_dagger": "Training Dagger",
   "item.eyelisspartmod.copper_dagger": "Copper Dagger",
@@ -62,6 +64,7 @@
   "itemgroup.eyelisspartmod.eyeliss_items": "Eyeliss Items",
   "itemgroup.eyelisspartmod.eyeliss_blocks": "Eyeliss Blocks",
   "itemgroup.eyelisspartmod.eyeliss_weapons": "Eyeliss Weapons",
+  "itemgroup.eyelisspartmod.eyeliss_fun": "Eyeliss Fun",
 
   "entity.eyelisspartmod.umberwither": "§5§lUmberwither",
 
@@ -76,5 +79,6 @@
   "death.attack.bleeding_out": "%1$s bled to death",
   "death.attack.bleeding_out.player": "%1$s bled out while trying to escape %2$s",
 
-  "subtitles.eyelisspartmod.flock": "Flock caws"
+  "subtitles.eyelisspartmod.flock": "Flock Caws",
+  "subtitles.eyelisspartmod.weapon_dagger_swarm": "Flurry of Daggers"
 }

@@ -28,13 +28,11 @@ public class GameRendererMixin {
         boolean isBleeding = player.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(ModEffects.BLEEDING_OUT));
         boolean isPoisoned = player.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(ModEffects.STYX_POISON));
 
-        // If either effect is active, apply the exact same dampened screen shake rules
         if (isBleeding || isPoisoned) {
             float f = (float) player.hurtTime - tickDelta;
             if (f >= 0.0F) {
                 f /= (float) player.maxHurtTime;
 
-                // Scaled to your custom dampening value (0.1f) for both Bleed and Styx Poison
                 float shakeIntensity = 0.1f;
                 float angle = MathHelper.sin(f * f * f * f * (float) Math.PI) * f * 14.0F * shakeIntensity;
 
