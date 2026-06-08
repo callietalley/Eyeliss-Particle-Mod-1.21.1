@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "eyelisspartmod:item/shadow_bundle"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "filled": 1.0
+      },
+      "model": "eyelisspartmod:item/shadow_bundle_filled"
+    }
+  ]
+}

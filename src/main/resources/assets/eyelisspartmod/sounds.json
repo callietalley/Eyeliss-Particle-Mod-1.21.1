@@ -16,5 +16,30 @@
         "stream": false
       }
     ]
+  },
+  "item.shadow_bundle.insert": {
+    "category": "player",
+    "subtitle": "subtitles.eyelisspartmod.item.shadow_bundle.insert",
+    "sounds": [
+      "eyelisspartmod:item/shadow_bundle_insert1",
+      "eyelisspartmod:item/shadow_bundle_insert2",
+      "eyelisspartmod:item/shadow_bundle_insert3"
+    ]
+  },
+  "item.shadow_bundle.withdraw": {
+    "category": "player",
+    "subtitle": "subtitles.eyelisspartmod.item.shadow_bundle.withdraw",
+    "sounds": [
+      "eyelisspartmod:item/shadow_bundle_withdraw1",
+      "eyelisspartmod:item/shadow_bundle_withdraw2",
+      "eyelisspartmod:item/shadow_bundle_withdraw3"
+    ]
+  },
+  "item.shadow_bundle.insert_fail": {
+    "category": "player",
+    "subtitle": "subtitles.eyelisspartmod.item.shadow_bundle.insert_fail",
+    "sounds": [
+      "eyelisspartmod:item/shadow_bundle_insert_fail"
+    ]
   }
 }

@@ -3,9 +3,12 @@ package eyeliss.particle.mod.component;
 import eyeliss.particle.mod.EyelisssParticleMod;
 import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 public class ModComponents {
 
@@ -15,7 +18,16 @@ public class ModComponents {
             ComponentType.<Boolean>builder().codec(Codec.BOOL).build()
     );
 
+    // New component storing the shadow bundle's item contents
+    public static final ComponentType<List<ItemStack>> SHADOW_BUNDLE_CONTENTS = Registry.register(
+            Registries.DATA_COMPONENT_TYPE,
+            Identifier.of("eyeliss_particle_mod", "shadow_bundle_contents"),
+            ComponentType.<List<ItemStack>>builder()
+                    .codec(ItemStack.CODEC.listOf())
+                    .build()
+    );
+
     public static void registerComponents() {
-        System.out.println("Initializing Shadow Curse Data Components for " + EyelisssParticleMod.MOD_ID);
+        System.out.println("Initializing Data Components for " + EyelisssParticleMod.MOD_ID);
     }
 }

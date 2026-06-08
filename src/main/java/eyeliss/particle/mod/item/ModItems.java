@@ -1,22 +1,31 @@
 package eyeliss.particle.mod.item;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
-import eyeliss.particle.mod.entity.ModEntities;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
 public class ModItems {
+    public static final Item SHADOW_BUNDLE = registerItem("shadow_bundle",
+            new ShadowBundleItem(new Item.Settings()
+                    .maxCount(1)
+                    .component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT)
+                    .rarity(Rarity.RARE)
+                    .fireproof()
+            )
+    );
+
     public static final Item SLOP = registerItem("slop", new Item(new Item.Settings()));
     public static final Item COOKED_SLOP = registerItem("cooked_slop", new Item(new Item.Settings()));
-    public static final Item SHADOW_TOUCHED_FEATHER = registerItem("shadow_feather", new Item(new Item.Settings()));
+    public static final Item SHADOW_TOUCHED_FEATHER = registerItem("shadow_feather", new Item(new Item.Settings().rarity(Rarity.RARE)));
     public static final Item CUSTOM_BIRD = registerItem("custom_bird", new Item(new Item.Settings()));
     public static final Item LONG_STICK = registerItem("long_stick", new Item(new Item.Settings().maxCount(16)));
 

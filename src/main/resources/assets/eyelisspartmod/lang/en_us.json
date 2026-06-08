@@ -12,6 +12,7 @@
   "item.eyelisspartmod.bird_stone": "Bird Stone",
   "item.eyelisspartmod.shadow_book": "Shadow Book",
   "item.eyelisspartmod.long_stick": "Long Stick",
+  "item.eyelisspartmod.shadow_bundle": "Shadow Bundle",
   "item.eyelisspartmod.umberwither_spawn_egg": "Umberwither Spawn Egg",
 
   "item.eyelisspartmod.training_dagger": "Training Dagger",
@@ -80,5 +81,8 @@
   "death.attack.bleeding_out.player": "%1$s bled out while trying to escape %2$s",
 
   "subtitles.eyelisspartmod.flock": "Flock Caws",
-  "subtitles.eyelisspartmod.weapon_dagger_swarm": "Flurry of Daggers"
+  "subtitles.eyelisspartmod.weapon_dagger_swarm": "Flurry of Daggers",
+  "subtitles.eyelisspartmod.item.shadow_bundle.withdraw": "Item leaves Shadow Bundle",
+  "subtitles.eyelisspartmod.item.shadow_bundle.insert": "Item enters Shadow Bundle",
+  "subtitles.eyelisspartmod.item.shadow_bundle.insert_fail": "Shadow Bundle rejects item"
 }

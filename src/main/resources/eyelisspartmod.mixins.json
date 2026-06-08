@@ -3,11 +3,15 @@
 	"package": "eyeliss.particle.mod.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"AnvilScreenHandlerMixin"
+		"AnvilScreenHandlerMixin",
+		"VanillaBundleRejectionMixin"
 	],
 	"client": [
 		"client.GameRendererMixin",
-		"client.LivingEntityRendererMixin"
+		"client.LivingEntityRendererMixin",
+		"client.TooltipComponentMixin",
+		"client.HandledScreenMixin",
+		"client.HandledScreenAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

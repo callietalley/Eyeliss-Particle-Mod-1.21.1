@@ -33,6 +33,7 @@ public class ModItemGroups {
                         entries.add(SHADOW_TOUCHED_FEATHER);
                         entries.add(LONG_STICK);
                         entries.add(SHADOW_BOOK);
+                        entries.add(SHADOW_BUNDLE);
 
                     }).build());
 

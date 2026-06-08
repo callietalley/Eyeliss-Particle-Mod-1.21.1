@@ -5,15 +5,17 @@ import eyeliss.particle.mod.component.ModComponents;
 import eyeliss.particle.mod.effect.ModEffects;
 import eyeliss.particle.mod.entity.ModEntities;
 import eyeliss.particle.mod.event.ShadowCurseHandler;
-import eyeliss.particle.mod.item.ModItemGroups;
-import eyeliss.particle.mod.item.ModItems;
-import eyeliss.particle.mod.item.ModSpawnEggs;
-import eyeliss.particle.mod.item.ModWeapons;
+import eyeliss.particle.mod.item.*;
+import eyeliss.particle.mod.network.ShadowBundleScrollPayload; // Added packet import
 import eyeliss.particle.mod.particle.ModParticles;
 import eyeliss.particle.mod.sound.ModSounds;
 import eyeliss.particle.mod.util.ModLootTableModifiers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry; // Added networking imports
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;
@@ -22,11 +24,14 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Formatting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EyelisssParticleMod implements ModInitializer {
 	public static final String MOD_ID = "eyelisspartmod";
@@ -43,6 +48,7 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModComponents.registerComponents();
 		ModEntities.registerEntities();
 		ModLootTableModifiers.modifyLootTables();
+		VanillaItemGroupAdditions.registerItemGroups();
 
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
@@ -53,6 +59,49 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModEffects.register();
 		ModSounds.registerSounds();
 		ShadowCurseHandler.register();
+
+		// ====== SHADOW BUNDLE NETWORKING REGISTRATION ======
+		// 1. Declare payload blueprints to the Clientbound/Serverbound channels
+		PayloadTypeRegistry.configurationC2S().register(ShadowBundleScrollPayload.ID, ShadowBundleScrollPayload.CODEC);
+		PayloadTypeRegistry.playC2S().register(ShadowBundleScrollPayload.ID, ShadowBundleScrollPayload.CODEC);
+
+		// 2. Setup the Server play receiver mapping to rearrange item array indices safely on the server thread
+		ServerPlayNetworking.registerGlobalReceiver(ShadowBundleScrollPayload.ID, (payload, context) -> {
+			context.server().execute(() -> {
+				var player = context.player();
+				if (player.currentScreenHandler != null) {
+					int targetSlotId = payload.slotId();
+
+					if (targetSlotId >= 0 && targetSlotId < player.currentScreenHandler.slots.size()) {
+						Slot serverSlot = player.currentScreenHandler.getSlot(targetSlotId);
+
+						if (serverSlot.hasStack() && serverSlot.getStack().isOf(ModItems.SHADOW_BUNDLE)) {
+							ItemStack bundleStack = serverSlot.getStack();
+							BundleContentsComponent contents = bundleStack.get(DataComponentTypes.BUNDLE_CONTENTS);
+
+							if (contents != null && !contents.isEmpty()) {
+								List<ItemStack> itemArrayList = new ArrayList<>(contents.stream().toList());
+
+								if (itemArrayList.size() > 1) {
+									if (payload.scrollUp()) {
+										// Inverted: Scroll UP moves forward on the server thread
+										ItemStack firstItem = itemArrayList.remove(0);
+										itemArrayList.add(firstItem);
+									} else {
+										// Inverted: Scroll DOWN moves backward on the server thread
+										ItemStack lastItem = itemArrayList.remove(itemArrayList.size() - 1);
+										itemArrayList.add(0, lastItem);
+									}
+									// Synchronize the server component state down to the player's connection stream
+									bundleStack.set(DataComponentTypes.BUNDLE_CONTENTS, new BundleContentsComponent(itemArrayList));
+								}
+							}
+						}
+					}
+				}
+			});
+		});
+		// ===================================================
 
 		ServerTickEvents.START_SERVER_TICK.register(server -> {
 			Scoreboard scoreboard = server.getScoreboard();
