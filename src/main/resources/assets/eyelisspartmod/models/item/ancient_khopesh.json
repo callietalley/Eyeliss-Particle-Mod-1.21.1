@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "eyelisspartmod:item/ancient_khopesh"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, -90, 58],
+      "translation": [0, 5.5, 0.5],
+      "scale": [1.15, 1.15, 1.15]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, 90, -58],
+      "translation": [0, 5.5, 0.5],
+      "scale": [1.15, 1.15, 1.15]
+    }
+  }
+}

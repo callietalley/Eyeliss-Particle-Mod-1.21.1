@@ -29,11 +29,22 @@
   "item.eyelisspartmod.emerald_spear": "Emerald Spear",
   "item.eyelisspartmod.netherite_spear": "Netherite Spear",
 
+  "item.eyelisspartmod.ancient_khopesh": "Ancient Khopesh",
+
   "spell.eyelisspartmod.spear_thrust.name": "Spear Thrust",
   "spell.eyelisspartmod.spear_thrust.description": "Lunge forward, striking all enemies along your path, dealing your weapon's damage.",
 
   "spell.eyelisspartmod.swarm_of_knives.description": "Throws twelve of your blades one after another, dealing {damage} damage each, and homing if directly looking at a target when casting.",
   "spell.eyelisspartmod.swarm_of_knives.name": "Swarm of Knives",
+
+  "spell.eyelisspartmod.swing_spam.description": "Swing your weapon in front of you four times, dealing half damage each swing.",
+  "spell.eyelisspartmod.swing_spam.name": "Swing Spam",
+
+  "spell.eyelisspartmod.disarm.description": "Do a spin attack that disables shields, or applies weakness if not blocked.",
+  "spell.eyelisspartmod.disarm.name": "Disarming Strike",
+
+  "spell.eyelisspartmod.melee_weakness_effect.description": "Disarming Strike applies weakness.",
+  "spell.eyelisspartmod.melee_weakness_effect.name": "Passive",
 
   "enchantment.eyelisspartmod.filleting": "Filleting",
   "enchantment.eyelisspartmod.entomophage": "Entomophage",
@@ -47,6 +58,8 @@
   "enchantment.eyelisspartmod.ethereal_reach": "Ethereal Reach",
   "enchantment.eyelisspartmod.pointed": "Pointed",
 
+  "enchantment.eyelisspartmod.hooking": "Hooking",
+
   "enchantment.eyelisspartmod.filleting.desc": "Increases loot gained from mobs",
   "enchantment.eyelisspartmod.entomophage.desc": "Increases damage to Arthropods",
   "enchantment.eyelisspartmod.razor_edge.desc": "Increases damage overall",
@@ -55,9 +68,11 @@
   "enchantment.eyelisspartmod.thousand_cuts.desc": "A 15(+5 per level) percent chance to apply Bleeding Out to the enemy for 2 seconds",
   "enchantment.eyelisspartmod.styx_curse.desc": "A 10(+2.5 per level) percent chance to apply Styx Poison to the enemy for 4 seconds",
 
-  "enchantment.eyelisspartmod.jabber.desc": "Reduces cast duration. Reduces cooldown by half. Reduces damage by half.",
-  "enchantment.eyelisspartmod.ethereal_reach.desc": "Gives increased attack range, at the cost of lowering attack speed.",
-  "enchantment.eyelisspartmod.pointed.desc": "Increases attack damage of spears by a flat amount, more than sharpness.",
+  "enchantment.eyelisspartmod.jabber.desc": "Reduces cast duration. Reduces cooldown by half. Reduces damage by half",
+  "enchantment.eyelisspartmod.ethereal_reach.desc": "Gives increased attack range, at the cost of lowering attack speed",
+  "enchantment.eyelisspartmod.pointed.desc": "Increases attack damage of spears by a flat amount, more than sharpness",
+
+  "enchantment.eyelisspartmod.hooking.desc": "Gives a 25% chance to apply weakness on hits",
 
   "block.eyelisspartmod.slop_block": "Block of Slop",
   "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",

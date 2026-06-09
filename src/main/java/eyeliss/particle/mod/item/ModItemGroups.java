@@ -68,6 +68,9 @@ public class ModItemGroups {
                         entries.add(EMERALD_SPEAR);
                         entries.add(NETHERITE_SPEAR);
 
+                        //Special
+                        entries.add(ANCIENT_KHOPESH);
+
                         //Dagger Enchantments
                         addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/entomophage", 6, false, true);
                         addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/razor_edge", 6, false, true);

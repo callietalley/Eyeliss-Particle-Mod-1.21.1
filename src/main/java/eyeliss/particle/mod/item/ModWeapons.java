@@ -1,6 +1,8 @@
 package eyeliss.particle.mod.item;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
+import eyeliss.particle.mod.item.specialweapons.KhopeshItem;
+import eyeliss.particle.mod.item.specialweapons.ModKhopeshMaterials;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -25,6 +27,8 @@ public class ModWeapons {
 
     public static final Item NETHERITE_SPEAR = registerItem("netherite_spear", new SpearItem(ModSpearMaterials.NETHERITE_SPEAR, new Item.Settings().fireproof()));
 
+    public static final Item ANCIENT_KHOPESH = registerItem("ancient_khopesh", new KhopeshItem(ModKhopeshMaterials.ANCIENT_KHOPESH, new Item.Settings().fireproof()));
+
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(EyelisssParticleMod.MOD_ID, name), item);
     }
@@ -47,6 +51,8 @@ public class ModWeapons {
             entries.add(AMETHYST_SPEAR);
             entries.add(EMERALD_SPEAR);
             entries.add(NETHERITE_SPEAR);
+            //Special
+            entries.add(ANCIENT_KHOPESH);
         });
     }
 }

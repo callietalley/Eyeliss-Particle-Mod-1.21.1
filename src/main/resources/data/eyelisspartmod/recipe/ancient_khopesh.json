@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "N": {
+      "item": "minecraft:netherite_scrap"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    " NG",
+    "NG ",
+    "#G "
+  ],
+  "result": {
+    "count": 1,
+    "id": "eyelisspartmod:ancient_khopesh"
+  }
+}
