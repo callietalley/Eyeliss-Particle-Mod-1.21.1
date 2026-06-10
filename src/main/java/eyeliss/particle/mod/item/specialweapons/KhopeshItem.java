@@ -3,16 +3,21 @@ package eyeliss.particle.mod.item.specialweapons;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.spell_engine.api.spell.SpellDataComponents;
 import net.spell_engine.api.spell.container.SpellChoice;
 import net.spell_engine.api.spell.container.SpellContainers;
+
+import java.util.List;
 
 public class KhopeshItem extends Item {
     private final ToolMaterial material;
@@ -27,6 +32,16 @@ public class KhopeshItem extends Item {
                 .component(
                         SpellDataComponents.SPELL_CHOICE,
                         new SpellChoice("eyelisspartmod:weapon/khopesh_choice")
+                )
+                .component(
+                        DataComponentTypes.LORE,
+                        new LoreComponent(List.of(
+                                Text.literal("The further you are from an enemy")
+                                        .setStyle(Text.literal("").getStyle().withItalic(false).withExclusiveFormatting(Formatting.GRAY)),
+
+                                Text.literal("the more damage you deal with this")
+                                        .setStyle(Text.literal("").getStyle().withItalic(false).withExclusiveFormatting(Formatting.GRAY))
+                        ))
                 )
         );
         this.material = toolMaterial;
@@ -44,7 +59,7 @@ public class KhopeshItem extends Item {
     }
 
     private static AttributeModifiersComponent createKhopeshAttributes(ToolMaterial material) {
-        double finalDamage = 8.5 + material.getAttackDamage();
+        double finalDamage = 6.0 + material.getAttackDamage();
         double attackSpeedValue = -2.5;
 
         return AttributeModifiersComponent.builder()
