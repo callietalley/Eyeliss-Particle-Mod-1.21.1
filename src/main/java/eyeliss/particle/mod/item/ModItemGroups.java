@@ -83,6 +83,7 @@ public class ModItemGroups {
                         addEnchantedBook(entries, registries, "eyelisspartmod", "spear/jabber", 1, false, false);
                         addEnchantedBook(entries, registries, "eyelisspartmod", "spear/ethereal_reach", 1, false, false);
                         addEnchantedBook(entries, registries, "eyelisspartmod", "spear/pointed", 5, false, true);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "khopesh/hooking", 1, false, false);
                     }).build());
 
     public static final ItemGroup EYELISS_FUN_GROUP = Registry.register(Registries.ITEM_GROUP,
@@ -97,6 +98,7 @@ public class ModItemGroups {
                         addShadowBook(entries, registries, "eyelisspartmod", "spear/ethereal_reach", 5, true, false);
                         addShadowBook(entries, registries, "eyelisspartmod", "dagger/thousand_cuts", 18, false, false);
                         addShadowBook(entries, registries, "eyelisspartmod", "dagger/styx_curse", 35, false, false);
+                        addEnchantedBook(entries, registries, "eyelisspartmod", "khopesh/hooking", 4, false, false);
                         entries.add(ModSpawnEggs.UMBERWITHER_SPAWN_EGG);
 
                     }).build());

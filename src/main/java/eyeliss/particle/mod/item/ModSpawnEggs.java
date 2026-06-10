@@ -9,17 +9,14 @@ import net.minecraft.util.Identifier;
 
 public class ModSpawnEggs {
 
-    // 1. Instantiate the spawn egg using 1.21.1 property builders
-    // Parameters: Primary background color (hex), Secondary spots color (hex)
     public static final Item UMBERWITHER_SPAWN_EGG = new SpawnEggItem(
-            ModEntities.UMBERWITHER, // Your custom EntityType reference
-            0xFFFFFF,                // Primary color (Dark Umber Brown)
-            0x5C4033,                // Secondary color (Lighter Accent Brown)
+            ModEntities.UMBERWITHER,
+            0xFFFFFF,
+            0x5C4033,
             new Item.Settings()
     );
 
     public static void registerModSpawnEggs() {
-        // 2. Register the item under your mod's namespace
         Registry.register(
                 Registries.ITEM,
                 Identifier.of("eyelisspartmod", "umberwither_spawn_egg"),

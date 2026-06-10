@@ -41,22 +41,17 @@ public class HandledScreenMixin {
                         if (itemArrayList.size() > 1) {
                             boolean isScrollUp = verticalAmount > 0;
 
-                            // 1. Predict order modification locally on the client for smooth instant feedback
                             if (isScrollUp) {
-                                // Scroll UP now moves forward: Pushes the front element down to the back of the queue
                                 ItemStack firstItem = itemArrayList.remove(0);
                                 itemArrayList.add(firstItem);
                             } else {
-                                // Scroll DOWN now moves backward: Pulls the trailing element and places it at index 0
                                 ItemStack lastItem = itemArrayList.remove(itemArrayList.size() - 1);
                                 itemArrayList.add(0, lastItem);
                             }
                             bundleStack.set(DataComponentTypes.BUNDLE_CONTENTS, new BundleContentsComponent(itemArrayList));
 
-                            // 2. Send the data over the network. The server processes it and prevents snap-back rollbars.
                             ClientPlayNetworking.send(new ShadowBundleScrollPayload(focusedSlot.id, isScrollUp));
 
-                            // 3. Halt hardware event execution so background slots are untouched
                             ci.cancel();
                         }
                     }

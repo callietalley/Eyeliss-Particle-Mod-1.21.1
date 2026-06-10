@@ -21,7 +21,6 @@ public interface TooltipComponentMixin {
             BundleContentsComponent originalContents = shadowData.contents();
             List<ItemStack> visualCombinedList = new ArrayList<>();
 
-            // Loops through all hidden split slots and merges them visually on your screen
             for (ItemStack realStack : originalContents.stream().toList()) {
                 boolean visuallyMerged = false;
                 for (ItemStack existingVisualStack : visualCombinedList) {
@@ -36,7 +35,6 @@ public interface TooltipComponentMixin {
                 }
             }
 
-            // Feeds the visually stacked array directly to Minecraft's rendering grid window
             cir.setReturnValue(new BundleTooltipComponent(new BundleContentsComponent(visualCombinedList)));
         }
     }

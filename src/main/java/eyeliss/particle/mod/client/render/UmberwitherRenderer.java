@@ -7,7 +7,6 @@ import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.util.Identifier;
 
 public class UmberwitherRenderer extends WitherEntityRenderer {
-    // Defines paths for your standard and invulnerable (shielded) textures
     private static final Identifier TEXTURE = Identifier.of(EyelisssParticleMod.MOD_ID, "textures/entity/umberwither/umberwither.png");
     private static final Identifier INVULNERABLE_TEXTURE = Identifier.of(EyelisssParticleMod.MOD_ID, "textures/entity/umberwither/umberwither_invulnerable.png");
 

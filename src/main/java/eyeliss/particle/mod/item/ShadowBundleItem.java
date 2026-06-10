@@ -37,19 +37,14 @@ public class ShadowBundleItem extends Item {
         return Optional.of(new ShadowBundleTooltipData(contents));
     }
 
-    /**
-     * Safety helper to check if an item type is explicitly blacklisted from being nested inside.
-     */
     private boolean isBannedItem(ItemStack stack) {
         if (stack.isEmpty()) return false;
         Item item = stack.getItem();
 
-        // 1. Rejects vanilla Bundle Items and your custom Shadow Bundle Items
         if (item instanceof BundleItem || item instanceof ShadowBundleItem) {
             return true;
         }
 
-        // 2. Rejects any color variant of Shulker Boxes by reading their block class properties
         if (item instanceof BlockItem blockItem) {
             Block block = blockItem.getBlock();
             if (block instanceof ShulkerBoxBlock) {
@@ -79,7 +74,6 @@ public class ShadowBundleItem extends Item {
                     player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), ModSounds.SHADOW_BUNDLE_WITHDRAW_EVENT, SoundCategory.PLAYERS, 0.8F, 1.0F);
                 }
             } else {
-                // NESTING CHECK REJECTION
                 if (isBannedItem(slotStack)) {
                     player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), ModSounds.SHADOW_BUNDLE_INSERT_FAIL_EVENT, SoundCategory.PLAYERS, 0.8F, 1.0F);
                     return true;
@@ -115,7 +109,6 @@ public class ShadowBundleItem extends Item {
                     player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), ModSounds.SHADOW_BUNDLE_WITHDRAW_EVENT, SoundCategory.PLAYERS, 0.8F, 1.0F);
                 }
             } else {
-                // NESTING CHECK REJECTION
                 if (isBannedItem(otherStack)) {
                     player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(), ModSounds.SHADOW_BUNDLE_INSERT_FAIL_EVENT, SoundCategory.PLAYERS, 0.8F, 1.0F);
                     return true;
@@ -174,18 +167,12 @@ public class ShadowBundleItem extends Item {
         }
         return false;
     }
-    /**
-     * Tells Minecraft whether it should render a fullness/durability bar under the item icon.
-     */
     @Override
     public boolean isItemBarVisible(ItemStack stack) {
         BundleContentsComponent contents = stack.get(DataComponentTypes.BUNDLE_CONTENTS);
         return contents != null && !contents.isEmpty();
     }
 
-    /**
-     * Calculates the horizontal scale length of the fill bar (ranges from 0 to 13 pixels).
-     */
     @Override
     public int getItemBarStep(ItemStack stack) {
         BundleContentsComponent contents = stack.get(DataComponentTypes.BUNDLE_CONTENTS);
@@ -193,14 +180,10 @@ public class ShadowBundleItem extends Item {
             return 0;
         }
 
-        // Loop through all structural sub-slots and get the current occupancy raw fraction
         float currentOccupancy = contents.getOccupancy().floatValue();
 
-        // Divide by 27.0f since our shadow bundle holds up to 27x a normal bundle's capacity
         float fullnessPercentage = Math.min(1.0F, currentOccupancy / 27.0F);
-        // Scale the calculated float percentage across Minecraft's 13-pixel GUI bar layout width
         return Math.round(fullnessPercentage * 13.0F);}
-        /*** Determines the exact color hex mapping for the fill bar.* Maps to a clean vibrant purple to fit the shadow magic aesthetic.*/
         @Override
         public int getItemBarColor(ItemStack stack) {return 0xD665FF;}
     }

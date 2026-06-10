@@ -18,7 +18,6 @@ public class ModComponents {
             ComponentType.<Boolean>builder().codec(Codec.BOOL).build()
     );
 
-    // New component storing the shadow bundle's item contents
     public static final ComponentType<List<ItemStack>> SHADOW_BUNDLE_CONTENTS = Registry.register(
             Registries.DATA_COMPONENT_TYPE,
             Identifier.of("eyeliss_particle_mod", "shadow_bundle_contents"),

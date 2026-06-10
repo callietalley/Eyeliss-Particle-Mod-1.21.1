@@ -20,7 +20,6 @@ public class ShadowCurseHandler {
             if (tickCounter % 10 != 0) return;
 
             for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                // Skip tracking if the player is dead or currently spectating
                 if (player.isSpectator() || !player.isAlive()) continue;
 
                 int cursedItemCount = 0;
