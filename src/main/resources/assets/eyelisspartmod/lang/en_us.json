@@ -87,6 +87,8 @@
   "key.category.eyeliss_particle_mod.quaternary_active": "Eyeliss Keybinds",
   "key.eyeliss_particle_mod.quaternary_active": "Quaternary Active",
 
+  "effect.eyelisspartmod.overhealth": "Armored",
+
   "effect.eyelisspartmod.styx_poison": "Styx Poison",
   "death.attack.styx_poison": "%1$s returned to the Styx",
   "death.attack.styx_poison.player": "%1$s returned to the Styx while trying to escape %2$s",

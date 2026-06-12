@@ -2,20 +2,28 @@ package eyeliss.particle.mod.effect;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 
 public class ModEffects {
     public static final StatusEffect STYX_POISON = Registry.register(
             Registries.STATUS_EFFECT,
-            net.minecraft.util.Identifier.of(EyelisssParticleMod.MOD_ID, "styx_poison"),
+            Identifier.of(EyelisssParticleMod.MOD_ID, "styx_poison"),
             new StyxPoisonEffect()
     );
 
     public static final StatusEffect BLEEDING_OUT = Registry.register(
             Registries.STATUS_EFFECT,
-            net.minecraft.util.Identifier.of(EyelisssParticleMod.MOD_ID, "bleeding_out"),
+            Identifier.of(EyelisssParticleMod.MOD_ID, "bleeding_out"),
             new BleedingOutEffect()
+    );
+
+    public static final StatusEffect OVERHEALTH = Registry.register(
+            Registries.STATUS_EFFECT,
+            Identifier.of(EyelisssParticleMod.MOD_ID, "overhealth"),
+            new OverhealthEffect()
     );
 
     public static void register() {

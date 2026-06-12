@@ -172,46 +172,35 @@ public class FlockOrbitParticle extends Particle {
 
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
-        // 1. Calculate camera relative coordinates
         Vec3d cameraPos = camera.getPos();
         float renderX = (float) (MathHelper.lerp(tickDelta, this.prevPosX, this.x) - cameraPos.getX());
         float renderY = (float) (MathHelper.lerp(tickDelta, this.prevPosY, this.y) - cameraPos.getY());
         float renderZ = (float) (MathHelper.lerp(tickDelta, this.prevPosZ, this.z) - cameraPos.getZ());
 
-        // 2. Prepare Minecraft's 3D matrix stack for rendering
         net.minecraft.client.util.math.MatrixStack matrices = new net.minecraft.client.util.math.MatrixStack();
         matrices.push();
 
-        // Translate model to its current space position
         matrices.translate(renderX, renderY, renderZ);
 
-        // 3. Handle Orbit & Spin Transformations via Quaternions
         Quaternionf finalRotation = new Quaternionf();
 
-        // Base orbit alignment facing forward along the path
         finalRotation.rotationY((float) (-this.orbitAngle - (Math.PI / 2.0)));
 
-        // FIX: Turn the model 90 degrees (Math.PI / 2.0 radians) to its right
         finalRotation.rotateY((float) (-Math.PI / 2.0));
 
-        // Apply your original rolling/spinning animation on top of the turn
         finalRotation.rotateZ(this.age * this.rotationSpeed);
 
         matrices.multiply(finalRotation);
 
-        // Apply scale modifications smoothly
         matrices.scale(this.scale, this.scale, this.scale);
 
-        // 4. Retrieve dummy item stack containing your custom Blockbench json model
         net.minecraft.item.ItemStack itemStack = new net.minecraft.item.ItemStack(ModItems.CUSTOM_BIRD);
 
         int lightmapValue = this.getBrightness(tickDelta);
         var client = MinecraftClient.getInstance();
 
-        // 5. Hand the matrix off to the ItemRenderer using a dedicated, forced-flush buffer
         var bufferBuilders = client.getBufferBuilders().getEntityVertexConsumers();
 
-        // Render the item model into the buffer
         client.getItemRenderer().renderItem(
                 itemStack,
                 net.minecraft.client.render.model.json.ModelTransformationMode.GROUND, // Changed from NONE to GROUND to prevent model flattening
@@ -223,7 +212,6 @@ public class FlockOrbitParticle extends Particle {
                 0
         );
 
-        // CRUCIAL FIX: Force the global buffer to immediately flush and draw your custom particle pass
         bufferBuilders.draw();
 
         matrices.pop();
@@ -231,7 +219,6 @@ public class FlockOrbitParticle extends Particle {
 
     @Override
     public ParticleTextureSheet getType() {
-        // MUST return CUSTOM when using explicit render buffers, otherwise Minecraft crashes trying to batch it with quads
         return ParticleTextureSheet.CUSTOM;
     }
 
@@ -243,7 +230,6 @@ public class FlockOrbitParticle extends Particle {
         }
 
         @Override
-        // Added annotation wrapper block to explicitly clear IntelliJ's velocityX parameter warning
         @SuppressWarnings("unused")
         public @Nullable Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             int targetId = (int) Math.round(velocityX);

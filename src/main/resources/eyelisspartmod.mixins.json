@@ -6,14 +6,16 @@
 		"AnvilScreenHandlerMixin",
 		"VanillaBundleRejectionMixin",
 		"ShulkerBoxRejectionMixin",
-		"KhopeshDamageMixin"
+		"KhopeshDamageMixin",
+		"OverhealthImmunityMixin"
 	],
 	"client": [
 		"client.GameRendererMixin",
 		"client.LivingEntityRendererMixin",
 		"client.TooltipComponentMixin",
 		"client.HandledScreenMixin",
-		"client.HandledScreenAccessor"
+		"client.HandledScreenAccessor",
+		"client.OverhealthHealthBarFreezeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

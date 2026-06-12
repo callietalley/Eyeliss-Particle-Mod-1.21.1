@@ -4,12 +4,15 @@ import eyeliss.particle.mod.block.ModBlocks;
 import eyeliss.particle.mod.component.ModComponents;
 import eyeliss.particle.mod.effect.ModEffects;
 import eyeliss.particle.mod.entity.ModEntities;
+import eyeliss.particle.mod.event.OverhealthHandler;
 import eyeliss.particle.mod.event.ShadowCurseHandler;
 import eyeliss.particle.mod.item.*;
+import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.network.ShadowBundleScrollPayload; // Added packet import
 import eyeliss.particle.mod.particle.ModParticles;
 import eyeliss.particle.mod.sound.ModSounds;
 import eyeliss.particle.mod.util.ModLootTableModifiers;
+import eyeliss.particle.mod.util.OverhealthSpawningHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry; // Added networking imports
@@ -50,6 +53,10 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModLootTableModifiers.modifyLootTables();
 		VanillaItemGroupAdditions.registerItemGroups();
 
+
+		OverhealthHandler.register();
+		OverhealthSpawningHandler.register();
+
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
 		ModSpawnEggs.registerModSpawnEggs();
@@ -59,6 +66,8 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModEffects.register();
 		ModSounds.registerSounds();
 		ShadowCurseHandler.register();
+
+		PayloadTypeRegistry.playS2C().register(OverhealthSyncPayload.ID, OverhealthSyncPayload.CODEC);
 
 		// ====== SHADOW BUNDLE NETWORKING REGISTRATION ======
 		// 1. Declare payload blueprints to the Clientbound/Serverbound channels
