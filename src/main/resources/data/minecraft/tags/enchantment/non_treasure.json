@@ -10,6 +10,9 @@
     "eyelisspartmod:spear/jabber",
     "eyelisspartmod:spear/ethereal_reach",
     "eyelisspartmod:spear/pointed",
-    "eyelisspartmod:khopesh/hooking"
+    "eyelisspartmod:khopesh/hooking",
+    "eyelisspartmod:syringe/chemical_burst",
+    "eyelisspartmod:syringe/chemical_infusion",
+    "eyelisspartmod:syringe/ranged_delivery"
   ]
 }
