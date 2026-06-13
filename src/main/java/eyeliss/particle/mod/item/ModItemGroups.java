@@ -2,15 +2,18 @@ package eyeliss.particle.mod.item;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
 import eyeliss.particle.mod.block.ModBlocks;
+import eyeliss.particle.mod.potion.ModPotions;
+import eyeliss.particle.mod.util.tab.EnchantedBookTabHelper;
+import eyeliss.particle.mod.util.tab.PotionTabHelper;
+import eyeliss.particle.mod.util.tab.ShadowBookTabHelper;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 import static eyeliss.particle.mod.item.ModItems.*;
 import static eyeliss.particle.mod.item.ModWeapons.*;
@@ -70,20 +73,23 @@ public class ModItemGroups {
 
                         //Special
                         entries.add(ANCIENT_KHOPESH);
+                        entries.add(SYRINGE);
 
                         //Dagger Enchantments
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/entomophage", 6, false, true);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/razor_edge", 6, false, true);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/turning", 6, false, true);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/filleting", 5, false, true);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/piercing", 3, false, true);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/thousand_cuts", 3, false, true);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "dagger/styx_curse", 3, false, true);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "dagger/entomophage", 6, false, true);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "dagger/razor_edge", 6, false, true);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "dagger/turning", 6, false, true);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "dagger/filleting", 5, false, true);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "dagger/piercing", 3, false, true);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "dagger/thousand_cuts", 3, false, true);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "dagger/styx_curse", 3, false, true);
                         //Spear Enchantments
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "spear/jabber", 1, false, false);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "spear/ethereal_reach", 1, false, false);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "spear/pointed", 5, false, true);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "khopesh/hooking", 1, false, false);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "spear/jabber", 1, false, false);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "spear/ethereal_reach", 1, false, false);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "spear/pointed", 5, false, true);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "khopesh/hooking", 1, false, false);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "syringe/chemical_infusion", 1, false, false);
+                        EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "syringe/chemical_burst", 1, false, false);
                     }).build());
 
     public static final ItemGroup EYELISS_FUN_GROUP = Registry.register(Registries.ITEM_GROUP,
@@ -93,82 +99,27 @@ public class ModItemGroups {
                     .entries((displayContext, entries) -> {
                         RegistryWrapper.WrapperLookup registries = displayContext.lookup();
                         //enchants
-                        addShadowBook(entries, registries, "eyelisspartmod", "spear/jabber", 10, true, false);
-                        addShadowBook(entries, registries, "eyelisspartmod", "spear/jabber", 20, false, false);
-                        addShadowBook(entries, registries, "eyelisspartmod", "spear/ethereal_reach", 5, true, false);
-                        addShadowBook(entries, registries, "eyelisspartmod", "dagger/thousand_cuts", 18, false, false);
-                        addShadowBook(entries, registries, "eyelisspartmod", "dagger/styx_curse", 35, false, false);
-                        addEnchantedBook(entries, registries, "eyelisspartmod", "khopesh/hooking", 4, false, false);
+                        ShadowBookTabHelper.addShadowBooks(entries, registries, "eyelisspartmod", "spear/jabber", 10, true, false);
+                        ShadowBookTabHelper.addShadowBooks(entries, registries, "eyelisspartmod", "spear/jabber", 20, false, false);
+                        ShadowBookTabHelper.addShadowBooks(entries, registries, "eyelisspartmod", "spear/ethereal_reach", 5, true, false);
+                        ShadowBookTabHelper.addShadowBooks(entries, registries, "eyelisspartmod", "dagger/thousand_cuts", 18, false, false);
+                        ShadowBookTabHelper.addShadowBooks(entries, registries, "eyelisspartmod", "dagger/styx_curse", 35, false, false);
+                        ShadowBookTabHelper.addShadowBooks(entries, registries, "eyelisspartmod", "khopesh/hooking", 4, false, false);
                         entries.add(ModSpawnEggs.UMBERWITHER_SPAWN_EGG);
-
+                        PotionTabHelper.addGroupedPotionTiers(entries, List.of(
+                                ModPotions.STYX_POISON_POTION,
+                                ModPotions.STYX_POISON_IV_POTION
+                        ));
+                        PotionTabHelper.addGroupedPotionTiers(entries, List.of(
+                                ModPotions.BLEEDING_OUT_POTION,
+                                ModPotions.BLEEDING_OUT_III_POTION
+                        ));
+                        PotionTabHelper.addGroupedPotionTiers(entries, List.of(
+                                ModPotions.OVERHEALTH_POTION
+                        ));
                     }).build());
 
     public static void registerItemGroups() {
         EyelisssParticleMod.LOGGER.info("Registering Item Groups for " + EyelisssParticleMod.MOD_ID);
-    }
-
-    private static void addShadowBook(ItemGroup.Entries entries, RegistryWrapper.WrapperLookup registries, String namespace, String path, int maxLevel, boolean allLevels, boolean extremeLevels) {
-        if (allLevels) {
-            for (int level = 1; level <= maxLevel; level++) {
-                entries.add(createShadowBook(registries, namespace, path, level));
-            }
-        } else {
-            if (extremeLevels && maxLevel > 1) {
-                entries.add(createShadowBook(registries, namespace, path, 1));
-                entries.add(createShadowBook(registries, namespace, path, maxLevel));
-            } else {
-                entries.add(createShadowBook(registries, namespace, path, maxLevel));
-            }
-        }
-    }
-
-    private static ItemStack createShadowBook(RegistryWrapper.WrapperLookup registries, String namespace, String path, int level) {
-        var shadowBookItem = Registries.ITEM.get(Identifier.of("eyelisspartmod", "shadow_book"));
-        ItemStack shadowBook = new ItemStack(shadowBookItem);
-
-        var enchantmentLookup = registries.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
-
-        RegistryKey<Enchantment> customEnchantKey = RegistryKey.of(
-                RegistryKeys.ENCHANTMENT,
-                Identifier.of(namespace, path)
-        );
-
-        ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
-        builder.add(enchantmentLookup.getOrThrow(customEnchantKey), level);
-
-        shadowBook.set(DataComponentTypes.ENCHANTMENTS, builder.build());
-        return shadowBook;
-    }
-
-    private static void addEnchantedBook(ItemGroup.Entries entries, RegistryWrapper.WrapperLookup registries, String namespace, String path, int maxLevel, boolean allLevels, boolean extremeLevels) {
-        if (allLevels) {
-            for (int level = 1; level <= maxLevel; level++) {
-                entries.add(createEnchantedBook(registries, namespace, path, level));
-            }
-        } else {
-            if (extremeLevels && maxLevel > 1) {
-                entries.add(createEnchantedBook(registries, namespace, path, 1));
-                entries.add(createEnchantedBook(registries, namespace, path, maxLevel));
-            } else {
-                entries.add(createEnchantedBook(registries, namespace, path, maxLevel));
-            }
-        }
-    }
-
-    private static ItemStack createEnchantedBook(RegistryWrapper.WrapperLookup registries, String namespace, String path, int level) {
-        ItemStack enchantedBook = new ItemStack(net.minecraft.item.Items.ENCHANTED_BOOK);
-
-        var enchantmentLookup = registries.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
-
-        RegistryKey<Enchantment> customEnchantKey = RegistryKey.of(
-                RegistryKeys.ENCHANTMENT,
-                Identifier.of(namespace, path)
-        );
-
-        ItemEnchantmentsComponent.Builder builder = new ItemEnchantmentsComponent.Builder(ItemEnchantmentsComponent.DEFAULT);
-        builder.add(enchantmentLookup.getOrThrow(customEnchantKey), level);
-
-        enchantedBook.set(DataComponentTypes.STORED_ENCHANTMENTS, builder.build());
-        return enchantedBook;
     }
 }

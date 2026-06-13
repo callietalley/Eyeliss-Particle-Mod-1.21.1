@@ -31,6 +31,8 @@
 
   "item.eyelisspartmod.ancient_khopesh": "Ancient Khopesh",
 
+  "item.eyelisspartmod.syringe": "The Doctoring Arm",
+
   "spell.eyelisspartmod.spear_thrust.name": "Spear Thrust",
   "spell.eyelisspartmod.spear_thrust.description": "Lunge forward, striking all enemies along your path, dealing your weapon's damage.",
 
@@ -60,6 +62,10 @@
 
   "enchantment.eyelisspartmod.hooking": "Hooking",
 
+  "enchantment.eyelisspartmod.chemical_infusion": "Chemical Infusion",
+  "enchantment.eyelisspartmod.chemical_burst": "Chemical Burst",
+  "enchantment.eyelisspartmod.ranged_delivery": "Ranged Delivery",
+
   "enchantment.eyelisspartmod.filleting.desc": "Increases loot gained from mobs",
   "enchantment.eyelisspartmod.entomophage.desc": "Increases damage to Arthropods",
   "enchantment.eyelisspartmod.razor_edge.desc": "Increases damage overall",
@@ -73,6 +79,10 @@
   "enchantment.eyelisspartmod.pointed.desc": "Increases attack damage of spears by a flat amount, more than sharpness",
 
   "enchantment.eyelisspartmod.hooking.desc": "Gives a 25% chance to apply weakness on hits",
+
+  "enchantment.eyelisspartmod.chemical_infusion.desc": "Allows you to put up to 3 potions in the Arm",
+  "enchantment.eyelisspartmod.chemical_burst.desc": "Halves the duration of potions in the arm, but increases their level by 1",
+  "enchantment.eyelisspartmod.ranged_delivery.desc": "Allows you to charge up the Arm and throw it, with a 12s cooldown",
 
   "block.eyelisspartmod.slop_block": "Block of Slop",
   "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",
@@ -88,12 +98,27 @@
   "key.eyeliss_particle_mod.quaternary_active": "Quaternary Active",
 
   "effect.eyelisspartmod.overhealth": "Armored",
+  "item.minecraft.potion.effect.overhealth": "Potion of Armor",
+  "item.minecraft.splash_potion.effect.overhealth": "Splash Potion of Armor",
+  "item.minecraft.lingering_potion.effect.overhealth": "Lingering Potion of Armor",
 
   "effect.eyelisspartmod.styx_poison": "Styx Poison",
+  "item.minecraft.potion.effect.styx_poison": "Potion of Styx Poison",
+  "item.minecraft.splash_potion.effect.styx_poison": "Splash Potion of Styx Poison",
+  "item.minecraft.lingering_potion.effect.styx_poison": "Lingering Potion of Styx Poison",
+  "item.minecraft.potion.effect.styx_poison_iv": "Potion of Styx Poison IV",
+  "item.minecraft.splash_potion.effect.styx_poison_iv": "Splash Potion of Styx Poison IV",
+  "item.minecraft.lingering_potion.effect.styx_poison_iv": "Lingering Potion of Styx Poison IV",
   "death.attack.styx_poison": "%1$s returned to the Styx",
   "death.attack.styx_poison.player": "%1$s returned to the Styx while trying to escape %2$s",
 
   "effect.eyelisspartmod.bleeding_out": "Bleeding Out",
+  "item.minecraft.potion.effect.bleeding_out": "Potion of Styx Bleeding",
+  "item.minecraft.splash_potion.effect.bleeding_out": "Splash Potion of Bleeding",
+  "item.minecraft.lingering_potion.effect.bleeding_out": "Lingering Potion of Bleeding",
+  "item.minecraft.potion.effect.bleeding_out_iii": "Potion of Bleeding III",
+  "item.minecraft.splash_potion.effect.bleeding_out_iii": "Splash Potion of Bleeding III",
+  "item.minecraft.lingering_potion.effect.bleeding_out_iii": "Lingering Potion of Bleeding III",
   "death.attack.bleeding_out": "%1$s bled to death",
   "death.attack.bleeding_out.player": "%1$s bled out while trying to escape %2$s",
 

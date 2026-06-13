@@ -37,7 +37,7 @@ public class KhopeshDamageMixin {
                 // Configure your distance bounds
                 double minReachDistance = 1.75;
                 double maxReachDistance = 3.5;
-                float maxMultiplier = 0.833333334f;
+                float maxMultiplier = 0.60f;
 
                 float progress = (float) ((distance - minReachDistance) / (maxReachDistance - minReachDistance));
                 float clampedProgress = Math.clamp(progress, 0.0f, 1.0f);

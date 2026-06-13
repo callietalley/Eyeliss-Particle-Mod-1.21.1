@@ -3,6 +3,7 @@ package eyeliss.particle.mod;
 import eyeliss.particle.mod.block.ModBlocks;
 import eyeliss.particle.mod.component.ModComponents;
 import eyeliss.particle.mod.effect.ModEffects;
+import eyeliss.particle.mod.enchantment.ModEnchantments;
 import eyeliss.particle.mod.entity.ModEntities;
 import eyeliss.particle.mod.event.OverhealthHandler;
 import eyeliss.particle.mod.event.ShadowCurseHandler;
@@ -10,6 +11,8 @@ import eyeliss.particle.mod.item.*;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.network.ShadowBundleScrollPayload; // Added packet import
 import eyeliss.particle.mod.particle.ModParticles;
+import eyeliss.particle.mod.potion.ModPotions;
+import eyeliss.particle.mod.recipe.ModRecipes;
 import eyeliss.particle.mod.sound.ModSounds;
 import eyeliss.particle.mod.util.ModLootTableModifiers;
 import eyeliss.particle.mod.util.OverhealthSpawningHandler;
@@ -48,10 +51,14 @@ public class EyelisssParticleMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModEffects.register();
+		ModPotions.registerPotions();
 		ModComponents.registerComponents();
 		ModEntities.registerEntities();
 		ModLootTableModifiers.modifyLootTables();
 		VanillaItemGroupAdditions.registerItemGroups();
+		ModRecipes.registerRecipes();
+		ModEnchantments.registerEnchantments();
 
 
 		OverhealthHandler.register();
@@ -63,18 +70,14 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModWeapons.registerModWeapons();
 		ModBlocks.registerModBlocks();
 		ModParticles.registerParticles();
-		ModEffects.register();
 		ModSounds.registerSounds();
 		ShadowCurseHandler.register();
 
 		PayloadTypeRegistry.playS2C().register(OverhealthSyncPayload.ID, OverhealthSyncPayload.CODEC);
 
-		// ====== SHADOW BUNDLE NETWORKING REGISTRATION ======
-		// 1. Declare payload blueprints to the Clientbound/Serverbound channels
 		PayloadTypeRegistry.configurationC2S().register(ShadowBundleScrollPayload.ID, ShadowBundleScrollPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(ShadowBundleScrollPayload.ID, ShadowBundleScrollPayload.CODEC);
 
-		// 2. Setup the Server play receiver mapping to rearrange item array indices safely on the server thread
 		ServerPlayNetworking.registerGlobalReceiver(ShadowBundleScrollPayload.ID, (payload, context) -> {
 			context.server().execute(() -> {
 				var player = context.player();
@@ -93,15 +96,12 @@ public class EyelisssParticleMod implements ModInitializer {
 
 								if (itemArrayList.size() > 1) {
 									if (payload.scrollUp()) {
-										// Inverted: Scroll UP moves forward on the server thread
 										ItemStack firstItem = itemArrayList.remove(0);
 										itemArrayList.add(firstItem);
 									} else {
-										// Inverted: Scroll DOWN moves backward on the server thread
 										ItemStack lastItem = itemArrayList.remove(itemArrayList.size() - 1);
 										itemArrayList.add(0, lastItem);
 									}
-									// Synchronize the server component state down to the player's connection stream
 									bundleStack.set(DataComponentTypes.BUNDLE_CONTENTS, new BundleContentsComponent(itemArrayList));
 								}
 							}
@@ -110,7 +110,6 @@ public class EyelisssParticleMod implements ModInitializer {
 				}
 			});
 		});
-		// ===================================================
 
 		ServerTickEvents.START_SERVER_TICK.register(server -> {
 			Scoreboard scoreboard = server.getScoreboard();
@@ -127,7 +126,6 @@ public class EyelisssParticleMod implements ModInitializer {
 
 					ItemStack stack = itemEntity.getStack();
 
-					// Checks if the item has the tag OR if it has your custom component set to true
 					if (stack.isIn(PURPLE_GLOW_TAG) || Boolean.TRUE.equals(stack.get(ModComponents.IS_CURSED))) {
 						String scoreHolderName = itemEntity.getNameForScoreboard();
 

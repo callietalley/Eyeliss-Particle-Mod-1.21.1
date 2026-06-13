@@ -19,6 +19,16 @@ public class ModEntities {
                     .build()
     );
 
+    public static final EntityType<ThrownSyringeEntity> THROWN_SYRINGE = Registry.register(
+            Registries.ENTITY_TYPE,
+            Identifier.of(EyelisssParticleMod.MOD_ID, "thrown_syringe"),
+            EntityType.Builder.<ThrownSyringeEntity>create(ThrownSyringeEntity::new, SpawnGroup.MISC)
+                    .dimensions(0.5F, 0.5F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(20)
+                    .build()
+    );
+
     public static void registerEntities() {
         EyelisssParticleMod.LOGGER.info("Registering Custom Entities for " + EyelisssParticleMod.MOD_ID);
 

@@ -3,6 +3,7 @@ package eyeliss.particle.mod.item;
 import eyeliss.particle.mod.EyelisssParticleMod;
 import eyeliss.particle.mod.item.specialweapons.KhopeshItem;
 import eyeliss.particle.mod.item.specialweapons.ModKhopeshMaterials;
+import eyeliss.particle.mod.item.specialweapons.SyringeItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -28,6 +29,14 @@ public class ModWeapons {
     public static final Item NETHERITE_SPEAR = registerItem("netherite_spear", new SpearItem(ModSpearMaterials.NETHERITE_SPEAR, new Item.Settings().fireproof()));
 
     public static final Item ANCIENT_KHOPESH = registerItem("ancient_khopesh", new KhopeshItem(ModKhopeshMaterials.ANCIENT_KHOPESH, new Item.Settings().fireproof()));
+
+    public static final Item SYRINGE = registerItem("syringe", new SyringeItem(
+            250,      // Max Durability
+            3.0,      // Base Attack Damage
+            -1.8,     // Attack Speed modifier
+            22,       // Enchantability rating
+            new Item.Settings()
+    ));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(EyelisssParticleMod.MOD_ID, name), item);

@@ -7,7 +7,8 @@
 		"VanillaBundleRejectionMixin",
 		"ShulkerBoxRejectionMixin",
 		"KhopeshDamageMixin",
-		"OverhealthImmunityMixin"
+		"OverhealthImmunityMixin",
+		"GrindstoneScreenHandlerMixin"
 	],
 	"client": [
 		"client.GameRendererMixin",

@@ -1,0 +1,137 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "eyelisspartmod:item/syringe/main_model",
+		"1": "eyelisspartmod:item/syringe/contents",
+		"particle": "eyelisspartmod:item/syringe/main_model"
+	},
+	"elements": [
+		{
+			"name": "inside",
+			"from": [6.75, 2.25, 6.75],
+			"to": [9.25, 11, 9.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.5, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 2.5, 5], "texture": "#1", "tintindex": 1},
+				"east": {"uv": [3, 0, 5.5, 5], "texture": "#1", "tintindex": 1},
+				"south": {"uv": [0, 5, 2.5, 10], "texture": "#1", "tintindex": 1},
+				"west": {"uv": [3, 5, 5.5, 10], "texture": "#1", "tintindex": 1},
+				"up": {"uv": [8.5, 2.5, 6, 0], "texture": "#1", "tintindex": 1},
+				"down": {"uv": [8.5, 3, 6, 5.5], "texture": "#1", "tintindex": 1}
+			}
+		},
+		{
+			"name": "needle",
+			"from": [7.75, 0, 7.75],
+			"to": [8.25, 2, 8.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 7]},
+			"faces": {
+				"north": {"uv": [3, 13, 3.5, 15], "texture": "#0"},
+				"east": {"uv": [4, 13, 4.5, 15], "texture": "#0"},
+				"south": {"uv": [5, 13, 5.5, 15], "texture": "#0"},
+				"west": {"uv": [6, 13, 6.5, 15], "texture": "#0"},
+				"up": {"uv": [13.5, 13.5, 13, 13], "texture": "#0"},
+				"down": {"uv": [0.5, 14, 0, 14.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "reservoir",
+			"from": [6.5, 2, 6.5],
+			"to": [9.5, 12, 9.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.5, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 10], "texture": "#0"},
+				"east": {"uv": [3, 0, 6, 10], "texture": "#0"},
+				"south": {"uv": [6, 0, 9, 10], "texture": "#0"},
+				"west": {"uv": [9, 0, 12, 10], "texture": "#0"},
+				"up": {"uv": [15, 3, 12, 0], "texture": "#0"},
+				"down": {"uv": [15, 3, 12, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "plug",
+			"from": [6.5, 14, 6.5],
+			"to": [9.5, 15, 9.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 11.5, 8]},
+			"faces": {
+				"north": {"uv": [12, 10, 15, 11], "texture": "#0"},
+				"east": {"uv": [12, 11, 15, 12], "texture": "#0"},
+				"south": {"uv": [12, 12, 15, 13], "texture": "#0"},
+				"west": {"uv": [0, 13, 3, 14], "texture": "#0"},
+				"up": {"uv": [9, 13, 6, 10], "texture": "#0"},
+				"down": {"uv": [12, 10, 9, 13], "texture": "#0"}
+			}
+		},
+		{
+			"name": "connector",
+			"from": [7.5, 13, 7.5],
+			"to": [8.5, 14, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 13.5, 8]},
+			"faces": {
+				"north": {"uv": [7, 13, 8, 14], "texture": "#0"},
+				"east": {"uv": [8, 13, 9, 14], "texture": "#0"},
+				"south": {"uv": [9, 13, 10, 14], "texture": "#0"},
+				"west": {"uv": [10, 13, 11, 14], "texture": "#0"},
+				"up": {"uv": [12, 14, 11, 13], "texture": "#0"},
+				"down": {"uv": [13, 13, 12, 14], "texture": "#0"}
+			}
+		},
+		{
+			"name": "back",
+			"from": [6.5, 12, 6.5],
+			"to": [9.5, 13, 9.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9.5, 8]},
+			"faces": {
+				"north": {"uv": [12, 6, 15, 7], "texture": "#0"},
+				"east": {"uv": [12, 7, 15, 8], "texture": "#0"},
+				"south": {"uv": [12, 8, 15, 9], "texture": "#0"},
+				"west": {"uv": [12, 9, 15, 10], "texture": "#0"},
+				"up": {"uv": [3, 13, 0, 10], "texture": "#0"},
+				"down": {"uv": [6, 10, 3, 13], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [87, 0, 0],
+			"translation": [0, 2, 7.5],
+			"scale": [1.45, 1.45, 1.45]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [87, 0, 0],
+			"translation": [0, 2, 7.5],
+			"scale": [1.45, 1.45, 1.45]
+		},
+		"firstperson_righthand": {
+			"rotation": [111, -25, 0],
+			"translation": [2, -0.25, 0],
+			"scale": [1.33, 1.33, 1.33]
+		},
+		"firstperson_lefthand": {
+			"rotation": [111, -25, 0],
+			"translation": [2, -0.25, 0],
+			"scale": [1.33, 1.33, 1.33]
+		},
+		"ground": {
+			"rotation": [0, 0, 74]
+		},
+		"gui": {
+			"rotation": [0, -142, 45]
+		},
+		"head": {
+			"rotation": [66, 0, 0],
+			"translation": [0, 6, 15.75],
+			"scale": [1.5, 1.5, 1.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "weapon",
+			"origin": [8, 9.5, 8],
+			"scope": 0,
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5]
+		}
+	]
+}

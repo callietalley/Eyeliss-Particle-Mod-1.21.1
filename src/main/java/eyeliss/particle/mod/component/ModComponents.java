@@ -2,7 +2,7 @@ package eyeliss.particle.mod.component;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
 import com.mojang.serialization.Codec;
-import net.minecraft.component.ComponentType;
+import net.minecraft.component.ComponentType; // 💡 Yarn mappings use ComponentType universally
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -24,6 +24,13 @@ public class ModComponents {
             ComponentType.<List<ItemStack>>builder()
                     .codec(ItemStack.CODEC.listOf())
                     .build()
+    );
+
+    // 💡 FIX: Swapped DataComponentType to ComponentType to perfectly match your environment mappings
+    public static final ComponentType<SyringeContents> SYRINGE_CONTENTS = Registry.register(
+            Registries.DATA_COMPONENT_TYPE,
+            Identifier.of(EyelisssParticleMod.MOD_ID, "syringe_contents"),
+            ComponentType.<SyringeContents>builder().codec(SyringeContents.CODEC).build()
     );
 
     public static void registerComponents() {
