@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:gold_block"
+    },
+    "N": {
+      "item": "minecraft:netherite_scrap"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "GNG",
+    "NBN",
+    "GNG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "eyelisspartmod:midas_gold"
+  }
+}
