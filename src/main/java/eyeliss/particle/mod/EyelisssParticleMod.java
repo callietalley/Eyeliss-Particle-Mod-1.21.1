@@ -8,6 +8,7 @@ import eyeliss.particle.mod.entity.ModEntities;
 import eyeliss.particle.mod.event.OverhealthHandler;
 import eyeliss.particle.mod.event.ShadowCurseHandler;
 import eyeliss.particle.mod.item.*;
+import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.network.ShadowBundleScrollPayload; // Added packet import
 import eyeliss.particle.mod.particle.ModParticles;
@@ -66,6 +67,7 @@ public class EyelisssParticleMod implements ModInitializer {
 
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
+		ModTrinkets.registerModTrinkets();
 		ModSpawnEggs.registerModSpawnEggs();
 		ModWeapons.registerModWeapons();
 		ModBlocks.registerModBlocks();

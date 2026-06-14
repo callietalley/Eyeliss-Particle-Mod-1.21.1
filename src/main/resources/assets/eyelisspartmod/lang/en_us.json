@@ -88,6 +88,7 @@
   "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",
 
   "itemgroup.eyelisspartmod.eyeliss_items": "Eyeliss Items",
+  "itemgroup.eyelisspartmod.eyeliss_trinkets": "Eyeliss Trinkets",
   "itemgroup.eyelisspartmod.eyeliss_blocks": "Eyeliss Blocks",
   "itemgroup.eyelisspartmod.eyeliss_weapons": "Eyeliss Weapons",
   "itemgroup.eyelisspartmod.eyeliss_fun": "Eyeliss Fun",
@@ -121,6 +122,10 @@
   "item.minecraft.lingering_potion.effect.bleeding_out_iii": "Lingering Potion of Bleeding III",
   "death.attack.bleeding_out": "%1$s bled to death",
   "death.attack.bleeding_out.player": "%1$s bled out while trying to escape %2$s",
+
+  "item.eyelisspartmod.midas_gold": "Midas' Gold",
+
+  "trinkets.slot.legs.pocket": "Pocket",
 
   "subtitles.eyelisspartmod.flock": "Flock Caws",
   "subtitles.eyelisspartmod.weapon_dagger_swarm": "Flurry of Daggers",

@@ -2,6 +2,7 @@ package eyeliss.particle.mod.item;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
 import eyeliss.particle.mod.block.ModBlocks;
+import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import eyeliss.particle.mod.potion.ModPotions;
 import eyeliss.particle.mod.util.tab.EnchantedBookTabHelper;
 import eyeliss.particle.mod.util.tab.PotionTabHelper;
@@ -20,7 +21,7 @@ import static eyeliss.particle.mod.item.ModWeapons.*;
 
 public class ModItemGroups {
     public static final ItemGroup EYELISS_ITEMS_GROUP = Registry.register(Registries.ITEM_GROUP,
-            Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_items"),
+            Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_aitems"),
             FabricItemGroup.builder().icon(() -> new ItemStack(ModItems.SLOP))
                     .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_items"))
                     .entries((displayContext, entries) -> {
@@ -40,8 +41,21 @@ public class ModItemGroups {
 
                     }).build());
 
+    public static final ItemGroup EYELISS_TRINKETS_GROUP = Registry.register(Registries.ITEM_GROUP,
+            Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_btrinkets"),
+            FabricItemGroup.builder()
+                    .icon(() -> new ItemStack(ModTrinkets.MIDAS_GOLD)) // Lazy-loaded icon
+                    .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_trinkets"))
+                    .entries((displayContext, entries) -> {
+                        entries.add(ModTrinkets.MIDAS_GOLD);
+                        entries.add(ModTrinkets.SADIMS_IRON);
+                    })
+                    .build()
+    );
+
+
     public static final ItemGroup EYELISS_BLOCKS_GROUP = Registry.register(Registries.ITEM_GROUP,
-            Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_blocks"),
+            Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_cblocks"),
             FabricItemGroup.builder().icon(() -> new ItemStack(ModBlocks.SLOP_BLOCK))
                     .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_blocks"))
                     .entries((displayContext, entries) -> {
@@ -51,7 +65,7 @@ public class ModItemGroups {
                     }).build());
 
     public static final ItemGroup EYELISS_WEAPONS_GROUP = Registry.register(Registries.ITEM_GROUP,
-            Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_weapons"),
+            Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_dweapons"),
             FabricItemGroup.builder().icon(() -> new ItemStack(NETHERITE_DAGGER))
                     .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_weapons"))
                     .entries((displayContext, entries) -> {

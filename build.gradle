@@ -8,10 +8,18 @@ group = project.maven_group
 
 repositories {
 	maven { url 'https://isxander.dev' }
-	maven { url "https://terraformersmc.com" }
+	// FIXED: Ensure the URL uses "maven." so Loom can find the real file directory
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
 	maven { url "https://fabricmc.net" }
 	maven { url "https://cursemaven.com" }
+
+	// FIXED: Updated Ladysnake Maven URL required for Cardinal Components 6.x
+	maven { url "https://maven.ladysnake.org/releases" }
 }
+
 
 fabricApi {
 	configureDataGeneration {
@@ -20,17 +28,17 @@ fabricApi {
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-
 	modImplementation "curse.maven:spell-engine-807653:7789264"
+
+	modImplementation "dev.emi:trinkets:3.10.0"
 }
+
 
 processResources {
 	def version = project.version

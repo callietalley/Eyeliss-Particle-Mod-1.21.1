@@ -1,6 +1,7 @@
 package eyeliss.particle.mod.item;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
+import eyeliss.particle.mod.item.trinkets.MidasGoldItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BundleContentsComponent;
@@ -20,6 +21,13 @@ public class ModItems {
                     .component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT)
                     .rarity(Rarity.RARE)
                     .fireproof()
+            )
+    );
+
+    public static final Item MIDAS_GOLD = registerItem("midas_gold",
+            new MidasGoldItem(new Item.Settings()
+                    .maxCount(1)
+                    .rarity(Rarity.EPIC)
             )
     );
 

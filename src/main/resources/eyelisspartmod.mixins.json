@@ -8,7 +8,10 @@
 		"ShulkerBoxRejectionMixin",
 		"KhopeshDamageMixin",
 		"OverhealthImmunityMixin",
-		"GrindstoneScreenHandlerMixin"
+		"GrindstoneScreenHandlerMixin",
+		"MidasSadimMixin",
+		"MidasMobLootMixin",
+		"TrinketEquipMixin"
 	],
 	"client": [
 		"client.GameRendererMixin",
