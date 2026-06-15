@@ -9,6 +9,9 @@
   "item.eyelisspartmod.power_core": "Power Core",
   "item.eyelisspartmod.custom_bird": "Bird Icon",
   "item.eyelisspartmod.shadow_feather": "Shadow Touched Feather",
+  "item.eyelisspartmod.suspenseful_essence": "Suspenseful Essence",
+  "item.eyelisspartmod.dimensional_dust": "Dimensional Dust",
+  "item.eyelisspartmod.harmonious_essence": "Harmonious Essence",
   "item.eyelisspartmod.bird_stone": "Bird Stone",
   "item.eyelisspartmod.shadow_book": "Shadow Book",
   "item.eyelisspartmod.long_stick": "Long Stick",
@@ -96,12 +99,20 @@
   "entity.eyelisspartmod.umberwither": "§5§lUmberwither",
 
   "key.category.eyeliss_particle_mod.quaternary_active": "Eyeliss Keybinds",
-  "key.eyeliss_particle_mod.quaternary_active": "Quaternary Active",
+  "key.eyeliss_particle_mod.quaternary_active": "Special Power",
 
   "effect.eyelisspartmod.overhealth": "Armored",
   "item.minecraft.potion.effect.overhealth": "Potion of Armor",
   "item.minecraft.splash_potion.effect.overhealth": "Splash Potion of Armor",
   "item.minecraft.lingering_potion.effect.overhealth": "Lingering Potion of Armor",
+
+  "effect.eyelisspartmod.sundered": "Sundered",
+  "item.minecraft.potion.effect.sundered": "Potion of Sundering",
+  "item.minecraft.splash_potion.effect.sundered": "Splash Potion of Sundering",
+  "item.minecraft.lingering_potion.effect.sundered": "Lingering Potion of Sundering",
+  "item.minecraft.potion.effect.sundered_iii": "Potion of Sundering III",
+  "item.minecraft.splash_potion.effect.sundered_iii": "Splash Potion of Sundering III",
+  "item.minecraft.lingering_potion.effect.sundered_iii": "Lingering Potion of Sundering III",
 
   "effect.eyelisspartmod.styx_poison": "Styx Poison",
   "item.minecraft.potion.effect.styx_poison": "Potion of Styx Poison",
@@ -132,5 +143,6 @@
   "subtitles.eyelisspartmod.weapon_dagger_swarm": "Flurry of Daggers",
   "subtitles.eyelisspartmod.item.shadow_bundle.withdraw": "Item leaves Shadow Bundle",
   "subtitles.eyelisspartmod.item.shadow_bundle.insert": "Item enters Shadow Bundle",
-  "subtitles.eyelisspartmod.item.shadow_bundle.insert_fail": "Shadow Bundle rejects item"
+  "subtitles.eyelisspartmod.item.shadow_bundle.insert_fail": "Shadow Bundle rejects item",
+  "subtitles.eyelisspartmod.item.harmonious_essence.musical": "Harmonious hum"
 }

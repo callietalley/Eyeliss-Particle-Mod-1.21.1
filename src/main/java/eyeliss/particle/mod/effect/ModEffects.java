@@ -26,6 +26,12 @@ public class ModEffects {
             new OverhealthEffect()
     );
 
+    public static final StatusEffect SUNDERED = Registry.register(
+            Registries.STATUS_EFFECT,
+            Identifier.of(EyelisssParticleMod.MOD_ID, "sundered"),
+            new SunderedEffect()
+    );
+
     public static void register() {
         EyelisssParticleMod.LOGGER.info("Registering Status Effects for " + EyelisssParticleMod.MOD_ID);
     }

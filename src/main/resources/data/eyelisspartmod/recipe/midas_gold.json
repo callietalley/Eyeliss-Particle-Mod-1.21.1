@@ -10,12 +10,15 @@
     },
     "G": {
       "item": "minecraft:gold_ingot"
+    },
+    "D": {
+      "item": "eyelisspartmod:dimensional_dust"
     }
   },
   "pattern": [
-    "GNG",
+    "DNG",
     "NBN",
-    "GNG"
+    "GND"
   ],
   "result": {
     "count": 1,

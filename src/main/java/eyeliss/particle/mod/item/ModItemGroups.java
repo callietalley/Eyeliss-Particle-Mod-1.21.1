@@ -35,6 +35,9 @@ public class ModItemGroups {
                         entries.add(ModItems.BIRD_STONE);
                         entries.add(POWER_CORE);
                         entries.add(SHADOW_TOUCHED_FEATHER);
+                        entries.add(DIMENSIONAL_DUST);
+                        entries.add(SUSPENSEFUL_ESSENCE);
+                        entries.add(HARMONIOUS_ESSENCE);
                         entries.add(LONG_STICK);
                         entries.add(SHADOW_BOOK);
                         entries.add(SHADOW_BUNDLE);
@@ -130,6 +133,10 @@ public class ModItemGroups {
                         ));
                         PotionTabHelper.addGroupedPotionTiers(entries, List.of(
                                 ModPotions.OVERHEALTH_POTION
+                        ));
+                        PotionTabHelper.addGroupedPotionTiers(entries, List.of(
+                                ModPotions.SUNDERED_POTION,
+                                ModPotions.SUNDERED_III_POTION
                         ));
                     }).build());
 

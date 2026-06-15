@@ -11,7 +11,12 @@
 		"GrindstoneScreenHandlerMixin",
 		"MidasSadimMixin",
 		"MidasMobLootMixin",
-		"TrinketEquipMixin"
+		"TrinketEquipMixin",
+		"SunderingMixin",
+		"CreeperUniqueMixin",
+		"OverhealthExclusionMixin",
+		"JukeboxRitualMixin",
+		"HarmoniousItemSoundMixin"
 	],
 	"client": [
 		"client.GameRendererMixin",

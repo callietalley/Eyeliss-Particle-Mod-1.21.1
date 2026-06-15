@@ -22,6 +22,9 @@ public class ModSounds {
     public static final Identifier SHADOW_BUNDLE_WITHDRAW_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "item.shadow_bundle.withdraw");
     public static final SoundEvent SHADOW_BUNDLE_WITHDRAW_EVENT = SoundEvent.of(SHADOW_BUNDLE_WITHDRAW_ID);
 
+    public static final Identifier HARMONIOUS_ESSENCE_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "item.harmonious_essence.music");
+    public static final SoundEvent HARMONIOUS_ESSENCE_EVENT = SoundEvent.of(HARMONIOUS_ESSENCE_ID);
+
     public static void registerSounds() {
         Registry.register(Registries.SOUND_EVENT, FLOCK_ID, FLOCK_EVENT);
         Registry.register(Registries.SOUND_EVENT, SWARM_ID, SWARM_EVENT);

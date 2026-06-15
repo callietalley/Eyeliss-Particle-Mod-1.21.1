@@ -31,6 +31,26 @@ public class ModPotions {
             ))
     );
 
+    public static final RegistryEntry.Reference<Potion> SUNDERED_POTION = Registry.registerReference(
+            Registries.POTION,
+            Identifier.of(EyelisssParticleMod.MOD_ID, "sundered"),
+            new Potion("sundered", new StatusEffectInstance(
+                    Registries.STATUS_EFFECT.getEntry(ModEffects.SUNDERED),
+                    1200,
+                    0
+            ))
+    );
+
+    public static final RegistryEntry.Reference<Potion> SUNDERED_III_POTION = Registry.registerReference(
+            Registries.POTION,
+            Identifier.of(EyelisssParticleMod.MOD_ID, "sundered_iii"),
+            new Potion("sundered", new StatusEffectInstance(
+                    Registries.STATUS_EFFECT.getEntry(ModEffects.SUNDERED),
+                    240,
+                    2
+            ))
+    );
+
     public static final RegistryEntry.Reference<Potion> BLEEDING_OUT_POTION = Registry.registerReference(
             Registries.POTION,
             Identifier.of(EyelisssParticleMod.MOD_ID, "bleeding_out"),

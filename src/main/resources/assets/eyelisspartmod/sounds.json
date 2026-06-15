@@ -41,5 +41,29 @@
     "sounds": [
       "eyelisspartmod:item/shadow_bundle_insert_fail"
     ]
+  },
+  "item.harmonious_essence.music": {
+    "category": "player",
+    "subtitle": "subtitles.eyelisspartmod.item.harmonious_essence.musical",
+    "sounds": [
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex1", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex2", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex3", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex4", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex5", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex6", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex7", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex8", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex9", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex10", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex11", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex12", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex13", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex14", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex15", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex16", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex17", "stream": true },
+      { "name": "eyelisspartmod:item/harmonious_essence/sibex18", "stream": true }
+    ]
   }
 }

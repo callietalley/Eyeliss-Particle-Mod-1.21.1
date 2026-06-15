@@ -7,6 +7,7 @@ import eyeliss.particle.mod.enchantment.ModEnchantments;
 import eyeliss.particle.mod.entity.ModEntities;
 import eyeliss.particle.mod.event.OverhealthHandler;
 import eyeliss.particle.mod.event.ShadowCurseHandler;
+import eyeliss.particle.mod.event.UniqueDrops;
 import eyeliss.particle.mod.item.*;
 import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
@@ -56,6 +57,7 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModPotions.registerPotions();
 		ModComponents.registerComponents();
 		ModEntities.registerEntities();
+		UniqueDrops.registerDrops();
 		ModLootTableModifiers.modifyLootTables();
 		VanillaItemGroupAdditions.registerItemGroups();
 		ModRecipes.registerRecipes();

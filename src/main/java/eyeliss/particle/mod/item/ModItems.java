@@ -9,10 +9,15 @@ import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+
+import java.util.List;
 
 public class ModItems {
     public static final Item SHADOW_BUNDLE = registerItem("shadow_bundle",
@@ -33,7 +38,36 @@ public class ModItems {
 
     public static final Item SLOP = registerItem("slop", new Item(new Item.Settings()));
     public static final Item COOKED_SLOP = registerItem("cooked_slop", new Item(new Item.Settings()));
-    public static final Item SHADOW_TOUCHED_FEATHER = registerItem("shadow_feather", new Item(new Item.Settings().rarity(Rarity.RARE)));
+    public static final Item DIMENSIONAL_DUST = registerItem("dimensional_dust", new Item(new Item.Settings()) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Obtained by killing a Ghast in the end with a 100% chance").formatted(Formatting.GRAY));
+            tooltip.add(Text.literal("Or by killing an Endermite in the Nether with a 5% chance").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
+    public static final Item SUSPENSEFUL_ESSENCE = registerItem("suspenseful_essence", new Item(new Item.Settings()) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Obtained by killing a Creeper that is 75%").formatted(Formatting.GRAY));
+            tooltip.add(Text.literal("or more through it's exploding process").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
+
+    public static final Item HARMONIOUS_ESSENCE = registerItem("harmonious_essence",
+            new HarmoniousEssenceItem(new Item.Settings()));
+    public static final Item SHADOW_TOUCHED_FEATHER = registerItem("shadow_feather", new Item(new Item.Settings().rarity(Rarity.RARE)) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            // Adds the text line and tints it light purple (aqua/purple/italic styles look great for end loot!)
+            tooltip.add(Text.literal("Obtained by killing a chicken, with a low chance").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
     public static final Item CUSTOM_BIRD = registerItem("custom_bird", new Item(new Item.Settings()));
     public static final Item LONG_STICK = registerItem("long_stick", new Item(new Item.Settings().maxCount(16)));
 

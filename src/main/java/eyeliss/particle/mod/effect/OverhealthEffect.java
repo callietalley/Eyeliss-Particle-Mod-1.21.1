@@ -1,6 +1,5 @@
 package eyeliss.particle.mod.effect;
 
-import eyeliss.particle.mod.effect.ModEffects;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.particle.ModParticles;
 import eyeliss.particle.mod.util.OverhealthTracker;
@@ -16,7 +15,7 @@ import net.minecraft.server.world.ServerWorld;
 public class OverhealthEffect extends StatusEffect {
 
     public OverhealthEffect() {
-        super(StatusEffectCategory.BENEFICIAL, 0xFF69B4);
+        super(StatusEffectCategory.BENEFICIAL, 0x00FF8C);
     }
 
     @Override
