@@ -37,13 +37,11 @@ public class UniqueDrops {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1.0f))
                         .with(ItemEntry.builder(ModItems.DIMENSIONAL_DUST))
-                        // Condition A: Must be in the Nether
                         .conditionally(LocationCheckLootCondition.builder(
                                 LocationPredicate.Builder.create()
                                         .dimension(RegistryKey.of(RegistryKeys.WORLD, Identifier.of("minecraft", "the_nether")))
                         ))
-                        // Condition B: 5% chance (0.05f)
-                        .conditionally(RandomChanceLootCondition.builder(0.05f));
+                        .conditionally(RandomChanceLootCondition.builder(0.0025f));
 
                 tableBuilder.pool(poolBuilder);
             }

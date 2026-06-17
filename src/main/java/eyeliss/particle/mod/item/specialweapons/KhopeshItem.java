@@ -77,8 +77,4 @@ public class KhopeshItem extends Item {
                 )
                 .build();
     }
-
-    public ToolMaterial getMaterial() {
-        return this.material;
-    }
 }

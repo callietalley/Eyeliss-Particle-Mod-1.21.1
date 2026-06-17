@@ -41,6 +41,7 @@ public class ModItemGroups {
                         entries.add(LONG_STICK);
                         entries.add(SHADOW_BOOK);
                         entries.add(SHADOW_BUNDLE);
+                        entries.add(DEPLETED_ESSENCE);
 
                     }).build());
 
@@ -104,6 +105,7 @@ public class ModItemGroups {
                         EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "spear/jabber", 1, false, false);
                         EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "spear/ethereal_reach", 1, false, false);
                         EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "spear/pointed", 5, false, true);
+                        //Special Enchantments
                         EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "khopesh/hooking", 1, false, false);
                         EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "syringe/chemical_infusion", 1, false, false);
                         EnchantedBookTabHelper.addEnchantedBooks(entries, registries, "eyelisspartmod", "syringe/chemical_burst", 1, false, false);

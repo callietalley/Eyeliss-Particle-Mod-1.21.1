@@ -5,6 +5,7 @@ import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,6 +16,7 @@ public class CreeperUniqueMixin {
     @Shadow private int currentFuseTime;
     @Shadow private int fuseTime;
 
+    @Unique
     private boolean droppedSuspensefulEssence = false;
 
     @Inject(method = "tick", at = @At("HEAD"))

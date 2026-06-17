@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 public class ShadowBookTabHelper {
 
     /**
-     * Dynamically populates your custom shadow books with specific level filters into a creative tab entries loop.
+     * Dynamically populates custom shadow books with specific level filters into a creative tab entries loop.
      *
      * @param entries         The Creative Tab entries manager list provider
      * @param registries      The RegistryWrapper context tracker required for data-driven 1.21.1 lookups

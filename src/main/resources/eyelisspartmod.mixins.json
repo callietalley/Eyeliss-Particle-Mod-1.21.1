@@ -16,7 +16,9 @@
 		"CreeperUniqueMixin",
 		"OverhealthExclusionMixin",
 		"JukeboxRitualMixin",
-		"HarmoniousItemSoundMixin"
+		"HarmoniousItemSoundMixin",
+		"RecipeLimitSlotMixin",
+		"RecipeLimiterScreenHandlerMixin"
 	],
 	"client": [
 		"client.GameRendererMixin",

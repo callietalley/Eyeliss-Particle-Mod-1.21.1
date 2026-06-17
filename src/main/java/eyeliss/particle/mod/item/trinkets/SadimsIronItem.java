@@ -23,18 +23,20 @@ public class SadimsIronItem extends TrinketItem {
 
     @Override
     public Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> getModifiers(ItemStack stack, SlotReference slot, LivingEntity entity, Identifier slotIdentifier) {
-        var modifiers = super.getModifiers(stack, slot, entity, slotIdentifier);
+        Multimap<RegistryEntry<EntityAttribute>, EntityAttributeModifier> modifiers = com.google.common.collect.HashMultimap.create(super.getModifiers(stack, slot, entity, slotIdentifier));
 
         if (slot.inventory().getSlotType().getId().endsWith("legs/pocket")) {
+            Identifier speedId = Identifier.of(eyeliss.particle.mod.EyelisssParticleMod.MOD_ID, "trinket_sadim_speed");
+            Identifier damageId = Identifier.of(eyeliss.particle.mod.EyelisssParticleMod.MOD_ID, "trinket_sadim_damage");
 
             modifiers.put(EntityAttributes.GENERIC_MOVEMENT_SPEED, new EntityAttributeModifier(
-                    slotIdentifier.withPrefixedPath("sadim_speed"),
+                    speedId,
                     -0.10,
                     EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
             ));
 
             modifiers.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(
-                    slotIdentifier.withPrefixedPath("sadim_damage"),
+                    damageId,
                     0.15,
                     EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
             ));

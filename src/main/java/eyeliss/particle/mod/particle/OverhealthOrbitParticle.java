@@ -56,7 +56,7 @@ public class OverhealthOrbitParticle extends Particle {
         double angleOffset = shieldIndex * ((Math.PI * 2.0) / 3.0);
         this.orbitAngle = angleOffset;
 
-        this.maxAge = 70; // 3.5-second max lifecycle window
+        this.maxAge = 70;
 
         this.baseScale = 1.68f;
         this.currentRenderScale = 0.0f;
@@ -70,12 +70,11 @@ public class OverhealthOrbitParticle extends Particle {
         if (this.targetEntity instanceof LivingEntity livingTarget) {
             var overhealthEntry = Registries.STATUS_EFFECT.getEntry(ModEffects.OVERHEALTH);
             if (!livingTarget.hasStatusEffect(overhealthEntry)) {
-                this.markDead(); // Clear vertices instantly this frame
+                this.markDead();
                 return;
             }
         }
 
-        // Standard validation safety fallback check
         if (this.age++ >= this.maxAge || this.targetEntity == null || !this.targetEntity.isAlive()) {
             this.markDead();
             return;

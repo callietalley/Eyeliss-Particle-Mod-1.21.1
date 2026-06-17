@@ -29,20 +29,12 @@ public abstract class JukeboxRitualMixin {
     @Unique
     private int harmoniusRitualTimer = 0;
 
-    /**
-     * 💿 FIXED RESET HOOK: Triggers instantly whenever an inventory modification occurs.
-     * This forces an immediate wipeout of the timer progress when a disc is either
-     * taken out or pushed in, completely avoiding stale cached integer values!
-     */
     @Inject(method = "setStack", at = @At("HEAD"))
     private void onInventoryChanged(ItemStack stack, CallbackInfo ci) {
         // Reset the ritual progress back to absolute zero on the spot
         this.harmoniusRitualTimer = 0;
     }
 
-    /**
-     * Core server ritual processing engine
-     */
     @Inject(method = "tick", at = @At("TAIL"))
     private static void tickRitualLogic(World world, BlockPos pos, BlockState state, JukeboxBlockEntity blockEntity, CallbackInfo ci) {
         // Strict safety guard: check both world and the blockEntity itself
@@ -52,7 +44,6 @@ public abstract class JukeboxRitualMixin {
 
         JukeboxRitualMixin instance = (JukeboxRitualMixin) (Object) blockEntity;
 
-        // 💿 FIXED: Call the static check, passing the blockEntity directly
         if (isMusicDiscPresent(blockEntity)) {
             Box searchArea = new Box(pos).expand(5.0);
             List<ParrotEntity> parrots = world.getEntitiesByClass(ParrotEntity.class, searchArea, parrot -> true);
@@ -79,7 +70,6 @@ public abstract class JukeboxRitualMixin {
         }
     }
 
-    // 💿 FIXED: Changed to static and added an explicit check against the blockEntity object
     @Unique
     private static boolean isMusicDiscPresent(JukeboxBlockEntity blockEntity) {
         if (blockEntity == null) return false;

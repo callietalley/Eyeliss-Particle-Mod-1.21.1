@@ -60,7 +60,6 @@ public class SyringeLoadingRecipe extends SpecialCraftingRecipe {
             boolean hasEnchantment = enchantEntry.isPresent() &&
                     net.minecraft.enchantment.EnchantmentHelper.getLevel(enchantEntry.get(), syringeStack) > 0;
 
-            // ❌ INFUSION BLOCKER CHECK: Reject recipe if loading instant effects into an infused syringe
             PotionContentsComponent potionContents = potionStack.get(DataComponentTypes.POTION_CONTENTS);
             if (potionContents != null && hasEnchantment) {
                 for (StatusEffectInstance effectInstance : potionContents.getEffects()) {
@@ -112,7 +111,6 @@ public class SyringeLoadingRecipe extends SpecialCraftingRecipe {
                 lookup.getWrapperOrThrow(net.minecraft.registry.RegistryKeys.ENCHANTMENT).getOptional(ModEnchantments.CHEMICAL_INFUSION);
         boolean hasEnchantment = infusionEntry.isPresent() && net.minecraft.enchantment.EnchantmentHelper.getLevel(infusionEntry.get(), syringeStack) > 0;
 
-        // ❌ RUNTIME INFUSION BLOCKER SAFETY NET
         PotionContentsComponent potionContents = potionStack.get(DataComponentTypes.POTION_CONTENTS);
         if (potionContents != null && hasEnchantment) {
             for (StatusEffectInstance effectInstance : potionContents.getEffects()) {
@@ -180,8 +178,6 @@ public class SyringeLoadingRecipe extends SpecialCraftingRecipe {
                 addedDuration = addedDuration / 2;
             }
 
-            // 🧪 5-USE DURATION REDUCTION: Sets flat 10 ticks capacity (0.5 seconds)
-            // This ensures that dividing by 5 reduces it exactly by 2 ticks per strike!
             int finalDurationPool;
             if (isInstantPotion) {
                 finalDurationPool = 10;

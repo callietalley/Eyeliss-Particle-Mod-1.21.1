@@ -8,7 +8,6 @@ import java.util.UUID;
 public class OverhealthTracker {
     private static final Map<UUID, Float> CURRENT_SHIELDS = new HashMap<>();
     private static final Map<UUID, Float> MAX_SHIELDS = new HashMap<>();
-    // Stores the absolute last confirmed ticking duration value
     private static final Map<UUID, Integer> HISTORICAL_DURATIONS = new HashMap<>();
 
     public static void grantOverhealth(LivingEntity entity, int amplifier) {

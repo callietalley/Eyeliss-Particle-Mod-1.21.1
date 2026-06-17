@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(BundleItem.class) // Targets the vanilla BundleItem class
+@Mixin(BundleItem.class)
 public class VanillaBundleRejectionMixin {
 
     @Inject(method = "onClicked", at = @At("HEAD"), cancellable = true)
@@ -30,7 +30,6 @@ public class VanillaBundleRejectionMixin {
     private void rejectVanillaBundleDropOntoShadowBundle(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
         if (slot.hasStack() && slot.getStack().isOf(ModItems.SHADOW_BUNDLE)) {
 
-            // Execute failure rejection audio parameters
             player.getWorld().playSound(player, player.getX(), player.getY(), player.getZ(),
                     ModSounds.SHADOW_BUNDLE_INSERT_FAIL_EVENT, SoundCategory.PLAYERS, 0.8F, 1.0F);
 

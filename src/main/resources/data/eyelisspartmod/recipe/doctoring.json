@@ -1,27 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "G": {
-      "item": "minecraft:glass"
+  "type": "eyelisspartmod:hard_limited",
+  "limit": 3,
+  "shaped_data": {
+    "category": "misc",
+    "key": {
+      "G": { "item": "minecraft:glass" },
+      "S": { "item": "minecraft:netherite_scrap" },
+      "P": { "tag": "minecraft:planks" },
+      "B": { "item": "minecraft:glass_bottle" },
+      "E": { "item": "eyelisspartmod:suspenseful_essence" }
     },
-    "S": {
-      "item": "minecraft:netherite_scrap"
-    },
-    "P": {
-      "tag": "minecraft:planks"
-    },
-    "B": {
-      "item": "minecraft:glass_bottle"
+    "pattern": [
+      "EPE",
+      "GBG",
+      " S "
+    ],
+    "result": {
+      "count": 1,
+      "id": "eyelisspartmod:syringe"
     }
-  },
-  "pattern": [
-    "PPP",
-    "GBG",
-    " S "
-  ],
-  "result": {
-    "count": 1,
-    "id": "eyelisspartmod:syringe"
   }
 }

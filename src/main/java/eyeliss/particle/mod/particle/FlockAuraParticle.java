@@ -38,28 +38,20 @@ public class FlockAuraParticle extends SpriteBillboardParticle {
 
         this.updateAuraPosition();
 
-        int fadeStartTick = this.maxAge - 10; // Trigger final fade at tick 70
+        int fadeStartTick = this.maxAge - 10;
 
         if (this.age < fadeStartTick) {
-            // Normal fluctuation phase: smoothly wave back and forth between 0.2f and 0.5f opacity
             double alphaOscillation = Math.sin((double) this.age * 0.15);
             this.alpha = (float) (0.35 + (alphaOscillation * 0.15));
         } else {
-            // Fade out phase: calculate the exact alpha value it held at the moment tick 70 struck
             double alphaAtFadeStart = 0.35 + (Math.sin((double) fadeStartTick * 0.15) * 0.15);
 
-            // Calculate progress through the final half-second window (0.0 at tick 70, 1.0 at tick 80)
             float fadeProgress = (float) (this.age - fadeStartTick) / 10.0f;
 
-            // Linearly drop to zero from its active starting opacity position
             this.alpha = (float) (alphaAtFadeStart * (1.0f - fadeProgress));
         }
     }
 
-    /**
-     * Forces Minecraft to scale this particle up.
-     * Reduced by exactly one-third from its previous 2.2f layout down to 1.466f.
-     */
     @Override
     public float getSize(float tickDelta) {
         return 1.8f;
@@ -74,7 +66,6 @@ public class FlockAuraParticle extends SpriteBillboardParticle {
             this.targetEntity = MinecraftClient.getInstance().player;
         }
 
-        // Anchors cleanly to the dead-center point of the tracking player
         double targetX = (this.targetEntity != null) ? this.targetEntity.getX() : this.spawnX;
         double targetY = (this.targetEntity != null) ? this.targetEntity.getY() + 1.0 : this.spawnY;
         double targetZ = (this.targetEntity != null) ? this.targetEntity.getZ() : this.spawnZ;

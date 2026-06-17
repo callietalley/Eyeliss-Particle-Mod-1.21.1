@@ -1,7 +1,6 @@
 package eyeliss.particle.mod.item;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
-import eyeliss.particle.mod.item.trinkets.MidasGoldItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BundleContentsComponent;
@@ -29,11 +28,8 @@ public class ModItems {
             )
     );
 
-    public static final Item MIDAS_GOLD = registerItem("midas_gold",
-            new MidasGoldItem(new Item.Settings()
-                    .maxCount(1)
-                    .rarity(Rarity.EPIC)
-            )
+    public static final Item DEPLETED_ESSENCE = registerItem("depleted_essence",
+            new DepletedEssenceItem(new Item.Settings())
     );
 
     public static final Item SLOP = registerItem("slop", new Item(new Item.Settings()));
@@ -42,7 +38,7 @@ public class ModItems {
         @Override
         public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
             tooltip.add(Text.literal("Obtained by killing a Ghast in the end with a 100% chance").formatted(Formatting.GRAY));
-            tooltip.add(Text.literal("Or by killing an Endermite in the Nether with a 5% chance").formatted(Formatting.GRAY));
+            tooltip.add(Text.literal("Or by killing an Endermite in the Nether with a 0.25% chance").formatted(Formatting.GRAY));
 
             super.appendTooltip(stack, context, tooltip, type);
         }

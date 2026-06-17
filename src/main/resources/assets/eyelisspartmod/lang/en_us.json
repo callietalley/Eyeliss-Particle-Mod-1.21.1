@@ -9,6 +9,7 @@
   "item.eyelisspartmod.power_core": "Power Core",
   "item.eyelisspartmod.custom_bird": "Bird Icon",
   "item.eyelisspartmod.shadow_feather": "Shadow Touched Feather",
+  "item.eyelisspartmod.depleted_essence": "Depleted Essence",
   "item.eyelisspartmod.suspenseful_essence": "Suspenseful Essence",
   "item.eyelisspartmod.dimensional_dust": "Dimensional Dust",
   "item.eyelisspartmod.harmonious_essence": "Harmonious Essence",
@@ -34,6 +35,7 @@
 
   "item.eyelisspartmod.ancient_khopesh": "Ancient Khopesh",
 
+  "recipe.eyelisspartmod.doctoring": "Doctoring Arm",
   "item.eyelisspartmod.syringe": "The Doctoring Arm",
 
   "spell.eyelisspartmod.spear_thrust.name": "Spear Thrust",

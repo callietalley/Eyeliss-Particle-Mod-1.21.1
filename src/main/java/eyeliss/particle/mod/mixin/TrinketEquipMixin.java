@@ -20,19 +20,15 @@ public class TrinketEquipMixin {
         TrinketInventory inventory = (TrinketInventory) (Object) this;
         World world = inventory.getComponent().getEntity().getWorld();
 
-        // Check if we are running on the server side and an item is actually arriving
         if (!world.isClient() && !stack.isEmpty()) {
 
-            // Fetch whatever item is CURRENTLY sitting inside the slot index
             ItemStack existingStack = inventory.getStack(slot);
 
-            // Only play audio cues if the slot was completely empty beforehand (prevents inventory sync echo glitches)
             if (existingStack.isEmpty()) {
                 var entity = inventory.getComponent().getEntity();
                 String slotId = inventory.getSlotType().getId();
 
                 if (slotId.endsWith("legs/pocket")) {
-                    // 1. MIDAS' GOLD: High pitch metallic gold ring
                     if (stack.getItem() instanceof MidasGoldItem) {
                         world.playSound(
                                 null,
@@ -42,7 +38,6 @@ public class TrinketEquipMixin {
                                 1.0F, 0.2F
                         );
                     }
-                    // 2. SADIM'S IRON: Low pitch heavy iron lock clonk
                     else if (stack.getItem() instanceof SadimsIronItem) {
                         world.playSound(
                                 null,

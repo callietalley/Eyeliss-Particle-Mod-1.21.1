@@ -10,6 +10,7 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 
 public class ModWeapons {
     public static final Item TRAINING_DAGGER = registerItem("training_dagger", new DaggerItem(ModDaggerMaterials.TRAINING_DAGGER, new Item.Settings()));
@@ -35,7 +36,7 @@ public class ModWeapons {
             3.0,      // Base Attack Damage
             -1.8,     // Attack Speed modifier
             22,       // Enchantability rating
-            new Item.Settings()
+            new Item.Settings().fireproof().rarity(Rarity.UNCOMMON)
     ));
 
     private static Item registerItem(String name, Item item) {

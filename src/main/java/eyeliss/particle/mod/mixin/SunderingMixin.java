@@ -23,13 +23,10 @@ public class SunderingMixin {
         LivingEntity entity = (LivingEntity) (Object) this;
         float currentDamage = cir.getReturnValue();
 
-        // 1. Fetch the RegistryEntry wrapper
         RegistryEntry<StatusEffect> sunderedEntry = Registries.STATUS_EFFECT.getEntry(SUNDERED);
 
-        // 2. Fetch the effect instance safely instead of checking twice
         StatusEffectInstance sunderedInstance = entity.getStatusEffect(sunderedEntry);
 
-        // 3. Null-check the instance directly to satisfy the IDE and prevent crashes
         if (sunderedInstance != null) {
             int sunderedAmplifier = sunderedInstance.getAmplifier() + 1;
 
@@ -48,7 +45,6 @@ public class SunderingMixin {
                 }
             }
 
-            // 4. Apply the 10% damage increase per level based on the base damage
             float damageIncrease = originalDamage * (sunderedAmplifier * 0.10F);
             float finalDamage = currentDamage + damageIncrease;
 

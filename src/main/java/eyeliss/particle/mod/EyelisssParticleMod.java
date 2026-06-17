@@ -14,6 +14,7 @@ import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.network.ShadowBundleScrollPayload; // Added packet import
 import eyeliss.particle.mod.particle.ModParticles;
 import eyeliss.particle.mod.potion.ModPotions;
+import eyeliss.particle.mod.recipe.LimitedRecipes;
 import eyeliss.particle.mod.recipe.ModRecipes;
 import eyeliss.particle.mod.sound.ModSounds;
 import eyeliss.particle.mod.util.ModLootTableModifiers;
@@ -33,6 +34,7 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Formatting;
@@ -46,6 +48,8 @@ public class EyelisssParticleMod implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	private static final String TEAM_NAME = "purple_glow_team";
 
+	public static MinecraftServer CURRENT_SERVER = null;
+
 	private static final TagKey<Item> PURPLE_GLOW_TAG = TagKey.of(
 			RegistryKeys.ITEM,
 			Identifier.of(MOD_ID, "glows_purple")
@@ -53,6 +57,7 @@ public class EyelisssParticleMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LimitedRecipes.registerLimits();
 		ModEffects.register();
 		ModPotions.registerPotions();
 		ModComponents.registerComponents();

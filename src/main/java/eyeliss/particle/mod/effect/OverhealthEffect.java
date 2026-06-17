@@ -34,20 +34,15 @@ public class OverhealthEffect extends StatusEffect {
 
             OverhealthTracker.setHistoricalDuration(entity, activeDuration);
 
-            // =========================================================================
-            //   ⏱️ 3-SECOND TRI-SHIELD SPAWNER PASS (NO OVERWRITE LOOPS)
-            // =========================================================================
             if (!entity.getWorld().isClient() && entity.getWorld() instanceof ServerWorld serverWorld) {
-                // FIXED TIMER: Changed from % 120 down to % 60.
-                // This forces a brand-new defensive ring refresh exactly every 3 seconds (60 ticks)!
                 if (activeDuration % 60 == 0) {
                     serverWorld.spawnParticles(
                             ModParticles.OVERHEALTH_ORBIT,
                             entity.getX(), entity.getBodyY(0.4), entity.getZ(),
-                            3,                       // Count=3: Forces the engine to tell the client to spawn 3 items on this frame!
-                            (double) entity.getId(), // velocityX: Safely beams the tracking entity's anchor ID down to the client
+                            3,
+                            (double) entity.getId(),
                             0.0, 0.0,
-                            0.0                      // Speed parameter multiplier locked at 0
+                            0.0
                     );
                 }
             }

@@ -43,22 +43,15 @@ public abstract class HarmoniousItemSoundMixin {
         }
     }
 
-    /**
-     * Triggers the exact microsecond a player overlaps the item entity to pick it up.
-     */
     @Inject(method = "onPlayerCollision", at = @At("HEAD"))
     private void stopFloorSoundOnPickup(PlayerEntity player, CallbackInfo ci) {
         ItemEntity entity = (ItemEntity) (Object) this;
         World world = entity.getWorld();
 
-        // Check if the item hitting the player is the Harmonious Essence on the client side
         if (world.isClient() && this.getStack().getItem() instanceof HarmoniousEssenceItem) {
 
-            // Access Minecraft's active client sound engine
             MinecraftClient client = MinecraftClient.getInstance();
 
-            // Tell the engine to forcefully kill all sound emitters matching your sound event
-            // that are currently playing right around this item's specific pickup location!
             client.getSoundManager().stopSounds(
                     ModSounds.HARMONIOUS_ESSENCE_EVENT.getId(),
                     SoundCategory.AMBIENT
