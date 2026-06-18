@@ -25,7 +25,6 @@ public class BloodStoneTickHandler {
     private static final Map<UUID, Integer> COOLDOWNS = new HashMap<>();
 
     public static void register() {
-        // 1. COOLDOWN TICKER ONLY
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                 UUID playerId = player.getUuid();
@@ -37,7 +36,6 @@ public class BloodStoneTickHandler {
             }
         });
 
-        // 2. 🩸 RETALIATION DAMAGE TRIGGER
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((damagedEntity, damageSource, damageAmount) -> {
             if (damagedEntity instanceof ServerPlayerEntity targetPlayer) {
                 UUID targetPlayerId = targetPlayer.getUuid();
@@ -64,7 +62,6 @@ public class BloodStoneTickHandler {
             return true;
         });
 
-        // 3. ON KILL REGENERATION BUFF
         ServerLivingEntityEvents.AFTER_DEATH.register((target, damageSource) -> {
             if (damageSource.getAttacker() instanceof ServerPlayerEntity player && target.getMaxHealth() > 10.0f) {
                 boolean hasBloodStone = TrinketsApi.getTrinketComponent(player)
@@ -87,7 +84,6 @@ public class BloodStoneTickHandler {
             }
         });
 
-        // 4. VISUAL RECONNECT SYNC
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             ServerPlayerEntity player = handler.getPlayer();
             UUID playerId = player.getUuid();

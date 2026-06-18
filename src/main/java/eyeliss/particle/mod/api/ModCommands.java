@@ -21,7 +21,6 @@ public class ModCommands {
 
     private static void buildTree(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess access, CommandManager.RegistrationEnvironment env) {
 
-        // --- 1. SQUASHED RECIPE LIMIT BRANCH ---
         var limitBranch = CommandManager.literal("limit")
                 .then(CommandManager.literal("reset")
                         .executes(CraftLimitClearCommand::resetAllCounters)
@@ -34,7 +33,6 @@ public class ModCommands {
                                 .then(CommandManager.argument("amount", IntegerArgumentType.integer(0))
                                         .executes(CraftLimitClearCommand::setSpecificCounter))));
 
-        // --- 2. SQUASHED TRINKETS COOLDOWN BRANCH ---
         var cooldownBranch = CommandManager.literal("cooldown")
                 .then(CommandManager.literal("reset")
                         .then(CommandManager.literal("bloodstone")
@@ -53,7 +51,6 @@ public class ModCommands {
                                     return 0;
                                 })));
 
-        // --- 3. MOUNT BOTH TO ROOT TREE ---
         dispatcher.register(CommandManager.literal("eyeliss")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(limitBranch)

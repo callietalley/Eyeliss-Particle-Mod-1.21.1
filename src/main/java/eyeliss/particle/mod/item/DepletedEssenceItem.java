@@ -36,31 +36,24 @@ public class DepletedEssenceItem extends Item {
         if (!world.isClient() && world instanceof ServerWorld serverWorld) {
             TagKey<Item> chosenPoolTag = (world.getRandom().nextFloat() < 0.90f) ? COMMON_POOL : RARE_POOL;
 
-            // Gather the list of elements sitting inside the selected tag collection
             var entriesStream = Registries.ITEM.iterateEntries(chosenPoolTag);
             var entryList = new java.util.ArrayList<net.minecraft.registry.entry.RegistryEntry<Item>>();
             entriesStream.forEach(entryList::add);
 
-            // ================== FAILSAFE INTERCEPTOR ==================
-            // If the pool has 0 items (missing JSON or empty list arrays),
-            // HALT execution instantly without consuming or changing anything.
             if (entryList.isEmpty()) {
                 EyelisssParticleMod.LOGGER.warn("Failsafe triggered: Depleted Essence tag pool was empty or missing. Item consumption cancelled.");
                 return TypedActionResult.pass(heldStack);
             }
-            // ==========================================================
 
             int randomIndex = world.getRandom().nextInt(entryList.size());
             var selectedItemEntry = entryList.get(randomIndex);
             Item droppedItem = selectedItemEntry.value();
 
-            // Construct and hand out reward stack safely
             ItemStack rewardStack = new ItemStack(droppedItem, 1);
             if (!user.getInventory().insertStack(rewardStack)) {
                 user.dropItem(rewardStack, false);
             }
 
-            // Play transformation audio FX
             world.playSound(
                     null,
                     user.getX(), user.getY(), user.getZ(),
@@ -70,7 +63,6 @@ public class DepletedEssenceItem extends Item {
                     1.4F
             );
 
-            // Directional dust particle cloud
             Random rand = serverWorld.getRandom();
             Vector3f targetDarkGray = new Vector3f(0.15F, 0.15F, 0.15F);
             Vec3d lookDir = user.getRotationVector();
@@ -101,7 +93,6 @@ public class DepletedEssenceItem extends Item {
                 );
             }
 
-            // Decrement item stack directly after verifying successful drop generation
             heldStack.decrement(1);
             user.incrementStat(Stats.USED.getOrCreateStat(this));
             return TypedActionResult.consume(heldStack);

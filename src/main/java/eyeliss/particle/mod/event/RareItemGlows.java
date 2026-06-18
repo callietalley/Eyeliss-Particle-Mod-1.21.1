@@ -34,7 +34,6 @@ public class RareItemGlows {
         ServerTickEvents.START_SERVER_TICK.register(server -> {
             Scoreboard scoreboard = server.getScoreboard();
 
-            // 1. Maintain Purple Team Structures
             Team purpleTeam = scoreboard.getTeam(PURPLE_TEAM_NAME);
             if (purpleTeam == null) {
                 purpleTeam = scoreboard.addTeam(PURPLE_TEAM_NAME);
@@ -42,7 +41,6 @@ public class RareItemGlows {
                 purpleTeam.setDisplayName(Text.literal("Purple Glow Team"));
             }
 
-            // 2. Maintain Red Team Structures
             Team redTeam = scoreboard.getTeam(RED_TEAM_NAME);
             if (redTeam == null) {
                 redTeam = scoreboard.addTeam(RED_TEAM_NAME);
@@ -50,13 +48,11 @@ public class RareItemGlows {
                 redTeam.setDisplayName(Text.literal("Red Glow Team"));
             }
 
-            // 3. Scan Dropped Ground Items
             for (var world : server.getWorlds()) {
                 for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, itemEntity -> true)) {
                     ItemStack stack = itemEntity.getStack();
                     String scoreHolderName = itemEntity.getNameForScoreboard();
 
-                    // Process Purple Glow / Curse Conditions
                     if (stack.isIn(PURPLE_GLOW_TAG) || Boolean.TRUE.equals(stack.get(ModComponents.IS_CURSED))) {
                         if (redTeam.getPlayerList().contains(scoreHolderName)) {
                             scoreboard.removeScoreHolderFromTeam(scoreHolderName, redTeam);
@@ -66,7 +62,6 @@ public class RareItemGlows {
                         }
                         itemEntity.setGlowing(true);
 
-                        // Process Red Glow Conditions (Blood Stone / Shard)
                     } else if (stack.isIn(RED_GLOW_TAG)) {
                         if (purpleTeam.getPlayerList().contains(scoreHolderName)) {
                             scoreboard.removeScoreHolderFromTeam(scoreHolderName, purpleTeam);
