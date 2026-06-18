@@ -1,8 +1,7 @@
 {
   "replace": false,
   "values": [
-    "eyelisspartmod:midas_gold",
-    "eyelisspartmod:sadims_iron",
+    "eyelisspartmod:blood_shard",
     "eyelisspartmod:bloodstone"
   ]
 }

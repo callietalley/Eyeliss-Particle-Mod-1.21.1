@@ -53,9 +53,9 @@ public class RecipeLimitSlotMixin {
                             int updatedCount = currentCount + 1;
 
                             server.getPlayerManager().broadcast(
-                                    Text.literal("")
+                                    Text.literal("A ")
                                             .append(HardLimitedRecipe.getTranslatableName(recipeId).formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD))
-                                            .append(" engineered! Only " + (maxLimit - updatedCount) + "/" + maxLimit + " can ever be built."),
+                                            .append(" has been crafted! Only " + (maxLimit - updatedCount) + " more can be crafted."),
                                     true
                             );
 

@@ -38,6 +38,7 @@ public class ModItemGroups {
                         entries.add(DIMENSIONAL_DUST);
                         entries.add(SUSPENSEFUL_ESSENCE);
                         entries.add(HARMONIOUS_ESSENCE);
+                        entries.add(BLOOD_SHARD);
                         entries.add(LONG_STICK);
                         entries.add(SHADOW_BOOK);
                         entries.add(SHADOW_BUNDLE);
@@ -48,11 +49,12 @@ public class ModItemGroups {
     public static final ItemGroup EYELISS_TRINKETS_GROUP = Registry.register(Registries.ITEM_GROUP,
             Identifier.of(EyelisssParticleMod.MOD_ID, "eyeliss_btrinkets"),
             FabricItemGroup.builder()
-                    .icon(() -> new ItemStack(ModTrinkets.MIDAS_GOLD)) // Lazy-loaded icon
+                    .icon(() -> new ItemStack(ModTrinkets.MIDAS_GOLD))
                     .displayName(Text.translatable("itemgroup.eyelisspartmod.eyeliss_trinkets"))
                     .entries((displayContext, entries) -> {
                         entries.add(ModTrinkets.MIDAS_GOLD);
                         entries.add(ModTrinkets.SADIMS_IRON);
+                        entries.add(ModTrinkets.BLOOD_STONE_ITEM);
                     })
                     .build()
     );

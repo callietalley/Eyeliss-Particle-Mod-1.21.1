@@ -34,6 +34,10 @@ public class EyelisssParticleModClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.FLOCK_ORBIT_PARTICLE, FlockOrbitParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.FLOCK_AURA_PARTICLE, FlockAuraParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.OVERHEALTH_ORBIT, OverhealthOrbitParticle.Factory::new);
+        net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry.getInstance().register(
+                eyeliss.particle.mod.particle.ModParticles.BLOOD_SMOKE,
+                BloodSmokeParticle.Factory::new
+        );
 
         ModKeybinds.register();
 

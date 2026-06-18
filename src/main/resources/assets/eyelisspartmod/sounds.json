@@ -65,5 +65,19 @@
       { "name": "eyelisspartmod:item/harmonious_essence/sibex17", "stream": true },
       { "name": "eyelisspartmod:item/harmonious_essence/sibex18", "stream": true }
     ]
+  },
+  "item.bloodstone.steal": {
+    "category": "player",
+    "subtitle": "subtitles.eyelisspartmod.item.bloodstone.steal",
+    "sounds": [
+      { "name": "eyelisspartmod:item/bloodstone/steal", "stream": true }
+    ]
+  },
+  "item.bloodstone.activate": {
+    "category": "player",
+    "subtitle": "subtitles.eyelisspartmod.item.bloodstone.activate",
+    "sounds": [
+      { "name": "eyelisspartmod:item/bloodstone/activate", "stream": true }
+    ]
   }
 }

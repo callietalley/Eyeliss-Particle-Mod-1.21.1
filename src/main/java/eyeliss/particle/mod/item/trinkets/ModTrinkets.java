@@ -20,6 +20,12 @@ public class ModTrinkets {
             new SadimsIronItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE))
     );
 
+    public static final BloodStoneItem BLOOD_STONE_ITEM = Registry.register(
+            Registries.ITEM,
+            Identifier.of("eyelisspartmod", "bloodstone"),
+            new BloodStoneItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE))
+    );
+
     public static void registerModTrinkets() {
         EyelisssParticleMod.LOGGER.info("Registering Custom Trinket Items for " + EyelisssParticleMod.MOD_ID);
     }

@@ -18,12 +18,20 @@ import net.minecraft.util.Formatting;
 public class OverhealthSpawningHandler {
 
     private static final String ORANGE_TEAM_NAME = "OH_Radar_Orange";
+    private static final String EVALUATED_TAG = "eyelisspartmod.overhealth_evaluated";
 
     public static void register() {
         ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
             if (!world.isClient() && entity instanceof LivingEntity livingEntity && !(livingEntity instanceof PlayerEntity)) {
 
-                if (livingEntity.getMaxHealth() >= 100.0f) return;
+                if (livingEntity.getCommandTags().contains(EVALUATED_TAG)) return;
+
+                if (livingEntity.getMaxHealth() >= 100.0f) {
+                    livingEntity.addCommandTag(EVALUATED_TAG);
+                    return;
+                }
+
+                livingEntity.addCommandTag(EVALUATED_TAG);
 
                 var overhealthEntry = Registries.STATUS_EFFECT.getEntry(ModEffects.OVERHEALTH);
 

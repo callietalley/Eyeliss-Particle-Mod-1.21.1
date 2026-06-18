@@ -20,6 +20,9 @@ public class ModParticles {
     public static final SimpleParticleType OVERHEALTH_ORBIT =
             registerParticle("overhealth_orbit", FabricParticleTypes.simple(true));
 
+    public static final SimpleParticleType BLOOD_SMOKE =
+            registerParticle("blood_smoke", FabricParticleTypes.simple(false)); // false means it renders from a distance
+
     private static SimpleParticleType registerParticle(String name, SimpleParticleType particleType) {
         return Registry.register(Registries.PARTICLE_TYPE, Identifier.of(EyelisssParticleMod.MOD_ID, name), particleType);
     }

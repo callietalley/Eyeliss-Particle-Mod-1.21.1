@@ -1,15 +1,18 @@
 package eyeliss.particle.mod;
 
+import eyeliss.particle.mod.api.ModCommands;
 import eyeliss.particle.mod.block.ModBlocks;
 import eyeliss.particle.mod.component.ModComponents;
 import eyeliss.particle.mod.effect.ModEffects;
 import eyeliss.particle.mod.enchantment.ModEnchantments;
 import eyeliss.particle.mod.entity.ModEntities;
 import eyeliss.particle.mod.event.OverhealthHandler;
+import eyeliss.particle.mod.event.RareItemGlows;
 import eyeliss.particle.mod.event.ShadowCurseHandler;
 import eyeliss.particle.mod.event.UniqueDrops;
 import eyeliss.particle.mod.item.*;
 import eyeliss.particle.mod.item.trinkets.ModTrinkets;
+import eyeliss.particle.mod.item.trinkets.util.BloodStoneTickHandler;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.network.ShadowBundleScrollPayload; // Added packet import
 import eyeliss.particle.mod.particle.ModParticles;
@@ -17,27 +20,17 @@ import eyeliss.particle.mod.potion.ModPotions;
 import eyeliss.particle.mod.recipe.LimitedRecipes;
 import eyeliss.particle.mod.recipe.ModRecipes;
 import eyeliss.particle.mod.sound.ModSounds;
+import eyeliss.particle.mod.util.BloodShardDropHandler;
 import eyeliss.particle.mod.util.ModLootTableModifiers;
 import eyeliss.particle.mod.util.OverhealthSpawningHandler;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry; // Added networking imports
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BundleContentsComponent;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.scoreboard.Team;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Formatting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -46,18 +39,20 @@ import java.util.List;
 public class EyelisssParticleMod implements ModInitializer {
 	public static final String MOD_ID = "eyelisspartmod";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	private static final String TEAM_NAME = "purple_glow_team";
 
 	public static MinecraftServer CURRENT_SERVER = null;
-
-	private static final TagKey<Item> PURPLE_GLOW_TAG = TagKey.of(
-			RegistryKeys.ITEM,
-			Identifier.of(MOD_ID, "glows_purple")
-	);
 
 	@Override
 	public void onInitialize() {
 		LimitedRecipes.registerLimits();
+		OverhealthHandler.register();
+		OverhealthSpawningHandler.register();
+		BloodStoneTickHandler.register();
+		BloodShardDropHandler.register();
+		ModCommands.register();
+		RareItemGlows.register();
+
+
 		ModEffects.register();
 		ModPotions.registerPotions();
 		ModComponents.registerComponents();
@@ -67,10 +62,6 @@ public class EyelisssParticleMod implements ModInitializer {
 		VanillaItemGroupAdditions.registerItemGroups();
 		ModRecipes.registerRecipes();
 		ModEnchantments.registerEnchantments();
-
-
-		OverhealthHandler.register();
-		OverhealthSpawningHandler.register();
 
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
@@ -118,34 +109,6 @@ public class EyelisssParticleMod implements ModInitializer {
 					}
 				}
 			});
-		});
-
-		ServerTickEvents.START_SERVER_TICK.register(server -> {
-			Scoreboard scoreboard = server.getScoreboard();
-			Team purpleTeam = scoreboard.getTeam(TEAM_NAME);
-
-			if (purpleTeam == null) {
-				purpleTeam = scoreboard.addTeam(TEAM_NAME);
-				purpleTeam.setColor(Formatting.LIGHT_PURPLE);
-				purpleTeam.setDisplayName(Text.literal("Purple Glow Team"));
-			}
-
-			for (var world : server.getWorlds()) {
-				for (ItemEntity itemEntity : world.getEntitiesByType(EntityType.ITEM, itemEntity -> true)) {
-
-					ItemStack stack = itemEntity.getStack();
-
-					if (stack.isIn(PURPLE_GLOW_TAG) || Boolean.TRUE.equals(stack.get(ModComponents.IS_CURSED))) {
-						String scoreHolderName = itemEntity.getNameForScoreboard();
-
-						if (!purpleTeam.getPlayerList().contains(scoreHolderName)) {
-							scoreboard.addScoreHolderToTeam(scoreHolderName, purpleTeam);
-						}
-
-						itemEntity.setGlowing(true);
-					}
-				}
-			}
 		});
 	}
 }

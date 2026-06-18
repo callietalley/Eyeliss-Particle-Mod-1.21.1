@@ -1,7 +1,6 @@
 package eyeliss.particle.mod.recipe;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback; // Ensure Fabric API is in dependencies
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShapedRecipe;
@@ -43,7 +42,5 @@ public class LimitedRecipes {
                 Identifier.of(EyelisssParticleMod.MOD_ID, "hard_limited"),
                 HARD_LIMITED_SERIALIZER
         );
-
-        CommandRegistrationCallback.EVENT.register(CraftLimitClearCommand::register);
     }
 }

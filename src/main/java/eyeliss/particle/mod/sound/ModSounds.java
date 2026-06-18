@@ -25,9 +25,20 @@ public class ModSounds {
     public static final Identifier HARMONIOUS_ESSENCE_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "item.harmonious_essence.music");
     public static final SoundEvent HARMONIOUS_ESSENCE_EVENT = SoundEvent.of(HARMONIOUS_ESSENCE_ID);
 
+    public static final Identifier BLOOD_STEAL_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "item.bloodstone.steal");
+    public static final SoundEvent BLOOD_STEAL_EVENT = SoundEvent.of(BLOOD_STEAL_ID);
+
+    public static final Identifier BLOOD_STONE_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "item.bloodstone.activate");
+    public static final SoundEvent BLOOD_STONE_EVENT = SoundEvent.of(BLOOD_STONE_ID);
+
     public static void registerSounds() {
         Registry.register(Registries.SOUND_EVENT, FLOCK_ID, FLOCK_EVENT);
         Registry.register(Registries.SOUND_EVENT, SWARM_ID, SWARM_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SHADOW_BUNDLE_WITHDRAW_ID, SHADOW_BUNDLE_WITHDRAW_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SHADOW_BUNDLE_INSERT_ID, SHADOW_BUNDLE_INSERT_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SHADOW_BUNDLE_INSERT_FAIL_ID, SHADOW_BUNDLE_INSERT_FAIL_EVENT);
+        Registry.register(Registries.SOUND_EVENT, BLOOD_STONE_ID, BLOOD_STONE_EVENT);
+        Registry.register(Registries.SOUND_EVENT, BLOOD_STEAL_ID, BLOOD_STEAL_EVENT);
         EyelisssParticleMod.LOGGER.info("Registering Sounds for " + EyelisssParticleMod.MOD_ID);
     }
 }

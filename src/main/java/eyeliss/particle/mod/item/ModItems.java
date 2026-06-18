@@ -28,13 +28,20 @@ public class ModItems {
             )
     );
 
-    public static final Item DEPLETED_ESSENCE = registerItem("depleted_essence",
-            new DepletedEssenceItem(new Item.Settings())
-    );
+    public static final Item DEPLETED_ESSENCE = registerItem("depleted_essence", new DepletedEssenceItem(new Item.Settings()) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Obtained attempting to craft an item that cannot be crafted anymore").formatted(Formatting.GRAY));
+            tooltip.add(Text.literal("Use to turn into a material used in any of the rare items").formatted(Formatting.GRAY));
+            tooltip.add(Text.literal("Rarely becomes the rare materials from these items").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
 
     public static final Item SLOP = registerItem("slop", new Item(new Item.Settings()));
     public static final Item COOKED_SLOP = registerItem("cooked_slop", new Item(new Item.Settings()));
-    public static final Item DIMENSIONAL_DUST = registerItem("dimensional_dust", new Item(new Item.Settings()) {
+    public static final Item DIMENSIONAL_DUST = registerItem("dimensional_dust", new Item(new Item.Settings().rarity(Rarity.RARE)) {
         @Override
         public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
             tooltip.add(Text.literal("Obtained by killing a Ghast in the end with a 100% chance").formatted(Formatting.GRAY));
@@ -43,11 +50,21 @@ public class ModItems {
             super.appendTooltip(stack, context, tooltip, type);
         }
     });
-    public static final Item SUSPENSEFUL_ESSENCE = registerItem("suspenseful_essence", new Item(new Item.Settings()) {
+    public static final Item SUSPENSEFUL_ESSENCE = registerItem("suspenseful_essence", new Item(new Item.Settings().rarity(Rarity.UNCOMMON)) {
         @Override
         public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
             tooltip.add(Text.literal("Obtained by killing a Creeper that is 75%").formatted(Formatting.GRAY));
             tooltip.add(Text.literal("or more through it's exploding process").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
+
+    public static final Item BLOOD_SHARD = registerItem("blood_shard", new Item(new Item.Settings().fireproof().rarity(Rarity.UNCOMMON)) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Obtained by killing 100 mobs").formatted(Formatting.GRAY));
+            tooltip.add(Text.literal(" ").formatted(Formatting.GRAY));
 
             super.appendTooltip(stack, context, tooltip, type);
         }
