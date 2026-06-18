@@ -18,12 +18,10 @@ public class BloodSmokeParticle extends SpriteBillboardParticle {
         this.velocityY = velocityY * 0.1 + this.random.nextFloat() * 0.08;
         this.velocityZ = velocityZ * 0.1 + (this.random.nextFloat() - 0.5f) * 0.05;
 
-        // LOCK THE COLOR TO CRIMSON NATIVELY 🩸
         this.red = 0.85f + (this.random.nextFloat() * 0.15f);
         this.green = 0.85f;
         this.blue = 0.85f;
 
-        // Particle layout properties
         this.maxAge = 25 + this.random.nextInt(15);
         this.scale = 0.4f + this.random.nextFloat() * 0.3f;
         this.alpha = 0.9f;

@@ -25,7 +25,7 @@ public class ModCommands {
                 .then(CommandManager.literal("reset")
                         .executes(CraftLimitClearCommand::resetAllCounters)
                         .then(CommandManager.argument("recipe_id", IdentifierArgumentType.identifier())
-                                .suggests(CraftLimitClearCommand.LIMITED_RECIPE_SUGGESTIONS) // **Make sure this field is public in your craft class!
+                                .suggests(CraftLimitClearCommand.LIMITED_RECIPE_SUGGESTIONS)
                                 .executes(CraftLimitClearCommand::resetSpecificCounter)))
                 .then(CommandManager.literal("set")
                         .then(CommandManager.argument("recipe_id", IdentifierArgumentType.identifier())
@@ -41,7 +41,6 @@ public class ModCommands {
                                     ServerPlayerEntity player = source.getPlayer();
                                     if (player != null) {
 
-                                        // UPDATED: Pass 'player' directly instead of 'player.getUuid()'
                                         BloodStoneTickHandler.resetCooldown(player);
 
                                         source.sendFeedback(() -> Text.literal("Blood Stone cooldown reset!").formatted(Formatting.RED), false);
