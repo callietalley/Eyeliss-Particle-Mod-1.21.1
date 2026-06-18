@@ -1,12 +1,12 @@
 package eyeliss.particle.mod.util;
 
-import eyeliss.particle.mod.item.ModItems; // Ensure this points to your item registry class!
+import eyeliss.particle.mod.item.ModItems;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld; // Needed for casting
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import java.util.HashMap;
