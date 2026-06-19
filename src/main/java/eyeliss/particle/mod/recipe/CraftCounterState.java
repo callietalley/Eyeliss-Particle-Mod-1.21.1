@@ -9,67 +9,104 @@ import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class CraftCounterState extends PersistentState {
-    // Stores recipe ID string -> craft count integers
-    private final Map<String, Integer> recipeCounts = new HashMap<>();
+    private final Map<String, Integer> globalCounts = new HashMap<>();
+    private final Map<String, Map<String, Integer>> playerCounts = new HashMap<>();
 
     public CraftCounterState() {}
 
-    public int getCraftCount(String recipeId) {
-        return recipeCounts.getOrDefault(recipeId, 0);
+    public int getGlobalCount(String recipeId) {
+        return globalCounts.getOrDefault(recipeId, 0);
     }
 
-    public void incrementCraftCount(String recipeId) {
-        recipeCounts.put(recipeId, getCraftCount(recipeId) + 1);
+    public int getPlayerCount(String recipeId, UUID playerUuid) {
+        Map<String, Integer> playerMap = playerCounts.get(recipeId);
+        if (playerMap == null) return 0;
+        return playerMap.getOrDefault(playerUuid.toString(), 0);
+    }
+
+    public void increaseCounts(String recipeId, UUID playerUuid, int amount) {
+        // Increment Global
+        globalCounts.put(recipeId, getGlobalCount(recipeId) + amount);
+
+        // Increment Player
+        playerCounts.computeIfAbsent(recipeId, k -> new HashMap<>());
+        Map<String, Integer> playerMap = playerCounts.get(recipeId);
+        String uuidStr = playerUuid.toString();
+        playerMap.put(uuidStr, playerMap.getOrDefault(uuidStr, 0) + amount);
+
         this.markDirty();
     }
 
     public void clearAllCounts() {
-        this.recipeCounts.clear();
+        this.globalCounts.clear();
+        this.playerCounts.clear();
         this.markDirty();
     }
 
+    // FIXED: Resolves "Cannot resolve method 'clearSpecificCount'"
     public void clearSpecificCount(String recipeId) {
-        this.recipeCounts.remove(recipeId);
-        this.markDirty(); // Saves changes directly to the server folder state files
+        this.globalCounts.remove(recipeId);
+        this.playerCounts.remove(recipeId);
+        this.markDirty();
     }
 
-    public void setSpecificCount(String recipeId, int amount) {
-        this.recipeCounts.put(recipeId, amount);
-        this.markDirty(); // Save state update immediately to your world file
+    // FIXED: Resolves "Cannot resolve method 'setPlayerCount'"
+    public void setPlayerCount(String recipeId, UUID playerUuid, int amount) {
+        this.playerCounts.computeIfAbsent(recipeId, k -> new HashMap<>());
+        this.playerCounts.get(recipeId).put(playerUuid.toString(), amount);
+        this.markDirty();
     }
 
     public static CraftCounterState fromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         CraftCounterState state = new CraftCounterState();
-        NbtCompound countsGroup = nbt.getCompound("recipeCounts");
-        for (String key : countsGroup.getKeys()) {
-            state.recipeCounts.put(key, countsGroup.getInt(key));
+
+        // 1. Read Globals cleanly
+        NbtCompound globals = nbt.getCompound("globalCounts");
+        for (String key : globals.getKeys()) {
+            state.globalCounts.put(key, globals.getInt(key));
+        }
+
+        // 2. Read Players using correct deep compound extraction loops
+        NbtCompound playersRoot = nbt.getCompound("playerCounts");
+        for (String recipeKey : playersRoot.getKeys()) {
+
+            // CRITICAL FIX: Explicitly extract the inner dictionary layer as a compound group
+            NbtCompound playerGroup = playersRoot.getCompound(recipeKey);
+
+            Map<String, Integer> playerMap = new HashMap<>();
+            for (String playerUuidStr : playerGroup.getKeys()) {
+                playerMap.put(playerUuidStr, playerGroup.getInt(playerUuidStr));
+            }
+            state.playerCounts.put(recipeKey, playerMap);
         }
         return state;
     }
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        NbtCompound countsGroup = new NbtCompound();
-        recipeCounts.forEach(countsGroup::putInt);
-        nbt.put("recipeCounts", countsGroup);
+        NbtCompound globals = new NbtCompound();
+        globalCounts.forEach(globals::putInt);
+        nbt.put("globalCounts", globals);
+
+        NbtCompound playersRoot = new NbtCompound();
+        playerCounts.forEach((recipeId, playerMap) -> {
+            NbtCompound playerGroup = new NbtCompound();
+            playerMap.forEach(playerGroup::putInt);
+            playersRoot.put(recipeId, playerGroup);
+        });
+        nbt.put("playerCounts", playersRoot);
+
         return nbt;
     }
 
     public static CraftCounterState getServerState(MinecraftServer server) {
         var overworld = server.getWorld(World.OVERWORLD);
-        if (overworld == null) {
-            // Safe fallback to prevent IDE NullPointerException warnings
-            return new CraftCounterState();
-        }
-
+        if (overworld == null) return new CraftCounterState();
         PersistentStateManager manager = overworld.getPersistentStateManager();
-        Type<CraftCounterState> type = new Type<>(
-                CraftCounterState::new,
-                CraftCounterState::fromNbt,
-                DataFixTypes.LEVEL
-        );
-        return manager.getOrCreate(type, "dynamic_craft_counters");
+        Type<CraftCounterState> type = new Type<>(CraftCounterState::new, CraftCounterState::fromNbt, DataFixTypes.LEVEL);
+        return manager.getOrCreate(type, "dual_craft_counters");
     }
 }

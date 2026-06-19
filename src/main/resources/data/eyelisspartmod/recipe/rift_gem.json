@@ -1,22 +1,21 @@
 {
   "type": "eyelisspartmod:hard_limited",
-  "limit": 4,
-  "shaped_data": {
-    "category": "misc",
-    "key": {
-      "S": { "item": "minecraft:netherite_block" },
-      "B": { "item": "eyelisspartmod:blood_shard" },
-      "T": { "item": "eyelisspartmod:dimensional_dust" },
-      "D": { "item": "minecraft:diamond"}
-    },
-    "pattern": [
-      "BTB",
-      "DSD",
-      "BTB"
-    ],
-    "result": {
-      "count": 1,
-      "id": "eyelisspartmod:rift_gem"
-    }
+  "category": "misc",
+  "global_limit": 4,
+  "player_limit": 3,
+  "key": {
+    "S": { "item": "minecraft:netherite_block" },
+    "B": { "item": "eyelisspartmod:blood_shard" },
+    "T": { "item": "eyelisspartmod:dimensional_dust" },
+    "D": { "item": "minecraft:diamond" }
+  },
+  "pattern": [
+    "BTB",
+    "DSD",
+    "BTB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "eyelisspartmod:rift_gem"
   }
 }

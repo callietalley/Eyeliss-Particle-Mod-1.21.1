@@ -23,6 +23,7 @@ import eyeliss.particle.mod.recipe.ModRecipes;
 import eyeliss.particle.mod.screen.RiftGemScreens;
 import eyeliss.particle.mod.sound.ModSounds;
 import eyeliss.particle.mod.util.BloodShardDropHandler;
+import eyeliss.particle.mod.util.ItemDuplicationChecker;
 import eyeliss.particle.mod.util.ModLootTableModifiers;
 import eyeliss.particle.mod.util.OverhealthSpawningHandler;
 import net.fabricmc.api.ModInitializer;
@@ -48,6 +49,7 @@ public class EyelisssParticleMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LimitedRecipes.registerLimits();
+		ItemDuplicationChecker.register();
 		OverhealthHandler.register();
 		OverhealthSpawningHandler.register();
 		BloodStoneTickHandler.register();

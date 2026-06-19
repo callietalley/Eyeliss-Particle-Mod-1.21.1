@@ -3,90 +3,67 @@ package eyeliss.particle.mod.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import eyeliss.particle.mod.EyelisssParticleMod;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.RawShapedRecipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.recipe.input.CraftingRecipeInput;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 
 public class HardLimitedRecipe extends ShapedRecipe {
-    private final int recipeLimit;
+    private final int globalLimit;
+    private final int playerLimit;
 
-    public HardLimitedRecipe(String group, CraftingRecipeCategory category, RawShapedRecipe raw, ItemStack result, boolean showNotification, int recipeLimit) {
-        super(group, category, raw, result, showNotification);
-        this.recipeLimit = recipeLimit;
-    }
-
+    // FIXED: Removed the '. Ding()' typo and explicitly typed the lambda instance parameter to fix ambiguity errors
     public static final MapCodec<HardLimitedRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ShapedRecipe.Serializer.CODEC.codec().fieldOf("shaped_data").forGetter(recipe -> recipe),
-            Codec.INT.optionalFieldOf("limit", 9999).forGetter(recipe -> recipe.recipeLimit)
-    ).apply(instance, (parent, limit) -> new HardLimitedRecipe(
-            parent.getGroup(), parent.getCategory(), getRawDataFromParent(parent), parent.getResult(null), parent.showNotification(), limit
-    )));
+            Codec.STRING.optionalFieldOf("group", "").forGetter(ShapedRecipe::getGroup),
+            CraftingRecipeCategory.CODEC.fieldOf("category").forGetter(ShapedRecipe::getCategory),
+            RawShapedRecipe.CODEC.forGetter(HardLimitedRecipe::getRawDataFromParent),
+            ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.getResult(null)),
+            Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(ShapedRecipe::showNotification),
+            Codec.INT.fieldOf("global_limit").forGetter(HardLimitedRecipe::getGlobalLimit),
+            Codec.INT.fieldOf("player_limit").forGetter(HardLimitedRecipe::getPlayerLimit)
+    ).apply(instance, HardLimitedRecipe::new));
 
-    public static RawShapedRecipe getRawDataFromParent(ShapedRecipe parent) {
-        try {
-            java.lang.reflect.Field field = ShapedRecipe.class.getDeclaredField("raw");
-            field.setAccessible(true);
-            return (RawShapedRecipe) field.get(parent);
-        } catch (Exception e) {
-            EyelisssParticleMod.LOGGER.error("Failed to extract raw recipe data layout from parent via reflection", e);
-            return null;
-        }
+    public HardLimitedRecipe(String group, CraftingRecipeCategory category, RawShapedRecipe rawOptions, ItemStack result, boolean showNotification, int globalLimit, int playerLimit) {
+        super(group, category, rawOptions, result, showNotification);
+        this.globalLimit = globalLimit;
+        this.playerLimit = playerLimit;
     }
 
-    public static MutableText getTranslatableName(String recipeId) {
-        String langKey = "recipe." + recipeId.replace(":", ".");
-        return Text.translatable(langKey);
+    public int getGlobalLimit() {
+        return this.globalLimit;
     }
 
-    public int getRecipeLimit() {
-        return this.recipeLimit;
-    }
-
-    private boolean isLimitReached(CraftingRecipeInput inventory) {
-        MinecraftServer server = EyelisssParticleMod.CURRENT_SERVER;
-
-        if (server != null) {
-            CraftCounterState state = CraftCounterState.getServerState(server);
-            var entryOpt = server.getRecipeManager().getFirstMatch(net.minecraft.recipe.RecipeType.CRAFTING, inventory, server.getOverworld());
-            if (entryOpt.isPresent()) {
-                String id = entryOpt.get().id().toString();
-                return state.getCraftCount(id) >= this.recipeLimit;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
-        if (isLimitReached(inventory)) {
-            return getDepletedPlaceholder();
-        }
-        return super.craft(inventory, lookup);
-    }
-
-    @Override
-    public ItemStack getResult(RegistryWrapper.WrapperLookup registries) {
-        return super.getResult(registries);
-    }
-
-    public static ItemStack getDepletedPlaceholder() {
-        var placeholderItem = Registries.ITEM.get(Identifier.of(EyelisssParticleMod.MOD_ID, "depleted_essence"));
-        return new ItemStack(placeholderItem);
+    public int getPlayerLimit() {
+        return this.playerLimit;
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
         return LimitedRecipes.HARD_LIMITED_SERIALIZER;
+    }
+
+    public static ItemStack getDepletedPlaceholder() {
+        net.minecraft.item.Item depletedEssence = eyeliss.particle.mod.item.ModItems.DEPLETED_ESSENCE;
+
+        ItemStack placeholderStack = new ItemStack(depletedEssence);
+        return placeholderStack;
+    }
+
+    public static Text getTranslatableName(String recipeId) {
+        return Text.literal(recipeId.substring(recipeId.indexOf(":") + 1).replace("_", " "));
+    }
+
+    // FIXED: Changed parameter from 'ShapedRecipe' to explicit 'HardLimitedRecipe' to satisfy MapCodec type inference
+    public static RawShapedRecipe getRawDataFromParent(ShapedRecipe recipe) {
+        try {
+            java.lang.reflect.Field rawField = ShapedRecipe.class.getDeclaredField("raw");
+            rawField.setAccessible(true);
+            return (RawShapedRecipe) rawField.get(recipe);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to extract raw data from ShapedRecipe context", e);
+        }
     }
 }

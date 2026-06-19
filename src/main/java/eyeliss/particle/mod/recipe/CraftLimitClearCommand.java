@@ -1,11 +1,14 @@
 package eyeliss.particle.mod.recipe;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -14,7 +17,6 @@ import java.util.stream.Collectors;
 
 public class CraftLimitClearCommand {
 
-    // FIXED: Changed from 'private' to 'public' so ModCommands can access it
     public static final SuggestionProvider<ServerCommandSource> LIMITED_RECIPE_SUGGESTIONS = (context, builder) -> {
         ServerCommandSource source = context.getSource();
         if (source.getServer() != null) {
@@ -29,15 +31,13 @@ public class CraftLimitClearCommand {
         return builder.buildFuture();
     };
 
-    // The old register() method has been completely removed from here!
-
     public static int resetAllCounters(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
         if (source.getServer() != null) {
             CraftCounterState state = CraftCounterState.getServerState(source.getServer());
             state.clearAllCounts();
 
-            source.sendFeedback(() -> Text.literal("§a[Success] All server-wide recipe limits have been reset!§r"), true);
+            source.sendFeedback(() -> Text.literal("[Success] All server-wide and player recipe limits have been reset!").copy().formatted(Formatting.GREEN), true);
             return 1;
         }
         return 0;
@@ -52,28 +52,56 @@ public class CraftLimitClearCommand {
             CraftCounterState state = CraftCounterState.getServerState(source.getServer());
             state.clearSpecificCount(idString);
 
-            source.sendFeedback(() -> Text.literal("§a[Success] Limits for recipe ")
-                    .append(HardLimitedRecipe.getTranslatableName(idString).formatted(Formatting.YELLOW))
-                    .append(" have been completely reset!§r"), true);
+            source.sendFeedback(() -> Text.literal("[Success] Limits for recipe ")
+                    .copy().formatted(Formatting.GREEN)
+                    .append(HardLimitedRecipe.getTranslatableName(idString).copy().formatted(Formatting.YELLOW))
+                    .append(" have been completely reset!"), true);
             return 1;
         }
         return 0;
     }
 
-    public static int setSpecificCounter(CommandContext<ServerCommandSource> context) {
+    public static int resetPlayerCounter(CommandContext<ServerCommandSource> context) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         ServerCommandSource source = context.getSource();
         if (source.getServer() != null) {
             Identifier recipeId = IdentifierArgumentType.getIdentifier(context, "recipe_id");
             String idString = recipeId.toString();
-            int amount = com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(context, "amount");
-
+            ServerPlayerEntity targetPlayer = EntityArgumentType.getPlayer(context, "player");
 
             CraftCounterState state = CraftCounterState.getServerState(source.getServer());
-            state.setSpecificCount(idString, amount);
+            state.setPlayerCount(idString, targetPlayer.getUuid(), 0);
 
-            source.sendFeedback(() -> Text.literal("§a[Success] Set current craft count for ")
-                    .append(HardLimitedRecipe.getTranslatableName(idString).formatted(Formatting.YELLOW))
-                    .append(" to §6" + amount + "§a.§r"), true);
+            // FIXED: Appending the display name directly instead of mutating it avoids the IDE warning entirely
+            source.sendFeedback(() -> Text.literal("[Success] Reset ")
+                    .copy().formatted(Formatting.GREEN)
+                    .append(targetPlayer.getDisplayName())
+                    .append("'s craft count for ")
+                    .append(HardLimitedRecipe.getTranslatableName(idString).copy().formatted(Formatting.YELLOW))
+                    .append(" back to 0."), true);
+            return 1;
+        }
+        return 0;
+    }
+
+    public static int setPlayerCounter(CommandContext<ServerCommandSource> context) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        ServerCommandSource source = context.getSource();
+        if (source.getServer() != null) {
+            Identifier recipeId = IdentifierArgumentType.getIdentifier(context, "recipe_id");
+            String idString = recipeId.toString();
+            ServerPlayerEntity targetPlayer = EntityArgumentType.getPlayer(context, "player");
+            int amount = IntegerArgumentType.getInteger(context, "amount");
+
+            CraftCounterState state = CraftCounterState.getServerState(source.getServer());
+            state.setPlayerCount(idString, targetPlayer.getUuid(), amount);
+
+            // FIXED: Eliminated invalid copyOf call and handled the display name cleanly
+            source.sendFeedback(() -> Text.literal("[Success] Set ")
+                    .copy().formatted(Formatting.GREEN)
+                    .append(targetPlayer.getDisplayName())
+                    .append("'s craft count for ")
+                    .append(HardLimitedRecipe.getTranslatableName(idString).copy().formatted(Formatting.YELLOW))
+                    .append(" to ")
+                    .append(Text.literal(String.valueOf(amount)).copy().formatted(Formatting.GOLD)), true);
             return 1;
         }
         return 0;

@@ -31,7 +31,6 @@ public class EyelisssParticleModClient implements ClientModInitializer {
     public void onInitializeClient() {
 
         EntityRendererRegistry.register(ModEntities.THROWN_SYRINGE, ThrownSyringeEntityRenderer::new);
-
         HandledScreens.register(RiftGemScreens.RIFT_GEM_SCREEN_HANDLER, RiftGemScreen::new);
         HandledScreens.register(RiftGemScreens.RIFT_GEM_BIND_HANDLER, RiftGemBindScreen::new);
 
