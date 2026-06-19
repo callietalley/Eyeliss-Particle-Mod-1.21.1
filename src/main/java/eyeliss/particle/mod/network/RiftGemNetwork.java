@@ -102,6 +102,28 @@ public class RiftGemNetwork {
 
                         String displayEnv = env.substring(0, 1).toUpperCase() + env.substring(1);
                         player.sendMessage(Text.literal("§d[Rift] Successfully bound coordinates to frequency: " + displayEnv), true);
+
+                        ServerWorld world = player.getServerWorld();
+
+                        net.minecraft.util.Identifier soundId = net.minecraft.util.Identifier.of("spell_engine", "bind_spell");
+                        net.minecraft.sound.SoundEvent bindSound = net.minecraft.sound.SoundEvent.of(soundId);
+
+                        float randomPitch = 1.0f + (player.getRandom().nextFloat() - 0.5f) * 0.3f;
+                        world.playSound(null, player.getX(), player.getY(), player.getZ(), bindSound, SoundCategory.PLAYERS, 1.0f, randomPitch);
+
+                        org.joml.Vector3f purpleColor = new org.joml.Vector3f(0.58f, 0.0f, 0.86f);
+                        net.minecraft.particle.DustParticleEffect purpleDust = new net.minecraft.particle.DustParticleEffect(purpleColor, 1.2f);
+
+                        double chestY = player.getY() + 1.1;
+
+                        world.spawnParticles(
+                                purpleDust,
+                                player.getX(), chestY, player.getZ(),
+                                25,
+                                0.2, 0.2, 0.2,
+                                0.15
+                        );
+
                         return;
                     }
                 }
@@ -181,7 +203,6 @@ public class RiftGemNetwork {
 
                                         netherWorld.getChunkManager().getChunk(currentX >> 4, currentZ >> 4, net.minecraft.world.chunk.ChunkStatus.FULL, true);
 
-                                        // FIXED: Lowered the maximum vertical scan height boundary from 110 to 85
                                         for (int y = 85; y > 31; y--) {
                                             BlockPos checkPos = new BlockPos(currentX, y, currentZ);
                                             BlockState stateCurrent = netherWorld.getBlockState(checkPos);
@@ -237,6 +258,30 @@ public class RiftGemNetwork {
                             WARMUP_PLAYERS.put(player.getUuid(), 10);
                             WARMUP_TARGETS.put(player.getUuid(), new WarpTarget(x, y, z, dimStr, slotStack, time));
                             player.sendMessage(Text.literal("§5Opening rift stream..."), true);
+
+                            net.minecraft.util.Identifier targetDimId = net.minecraft.util.Identifier.of(dimStr);
+                            RegistryKey<World> targetDimKey = RegistryKey.of(RegistryKeys.WORLD, targetDimId);
+                            ServerWorld targetWorld = context.server().getWorld(targetDimKey);
+
+                            if (targetWorld != null) {
+                                int centerChunkX = (int) Math.floor(x) >> 4;
+                                int centerChunkZ = (int) Math.floor(z) >> 4;
+
+                                BlockPos ticketAnchorPos = new BlockPos((int) Math.floor(x), (int) Math.floor(y), (int) Math.floor(z));
+
+                                for (int cx = -1; cx <= 1; cx++) {
+                                    for (int cz = -1; cz <= 1; cz++) {
+                                        net.minecraft.util.math.ChunkPos targetChunkPos = new net.minecraft.util.math.ChunkPos(centerChunkX + cx, centerChunkZ + cz);
+
+                                        targetWorld.getChunkManager().addTicket(
+                                                net.minecraft.server.world.ChunkTicketType.PORTAL,
+                                                targetChunkPos,
+                                                3,
+                                                ticketAnchorPos
+                                        );
+                                    }
+                                }
+                            }
                         }
                         else if (BIOMES.contains(env)) {
                             player.sendMessage(Text.literal("§6[Rift] Channel '" + env + "' has no spatial coordinate bound yet!"), true);

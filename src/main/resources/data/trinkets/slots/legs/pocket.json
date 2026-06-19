@@ -1,6 +1,6 @@
 {
   "icon": "eyelisspartmod:gui/slots/pocket",
-  "order": 0,
+  "order": -1,
   "validator_predicates": [
     "trinkets:tag"
   ]
