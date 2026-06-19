@@ -100,8 +100,9 @@
 
   "entity.eyelisspartmod.umberwither": "§5§lUmberwither",
 
-  "key.category.eyeliss_particle_mod.quaternary_active": "Eyeliss Keybinds",
+  "key.category.eyeliss_particle_mod.keybinds": "Eyeliss Keybinds",
   "key.eyeliss_particle_mod.quaternary_active": "Special Power",
+  "key.eyeliss_particle_mod.trinket_key": "Trinket Active",
 
   "effect.eyelisspartmod.overhealth": "Armored",
   "item.minecraft.potion.effect.overhealth": "Potion of Armor",
@@ -142,6 +143,9 @@
   "recipe.eyelisspartmod.bloodstone": "Bloodstone",
   "item.eyelisspartmod.bloodstone": "Bloodstone",
   "item.eyelisspartmod.blood_shard": "Blood Shard",
+
+  "recipe.eyelisspartmod.rift_gem": "Rift Gem",
+  "item.eyelisspartmod.rift_gem": "Rift Gem",
 
   "trinkets.slot.legs.pocket": "Pocket",
 

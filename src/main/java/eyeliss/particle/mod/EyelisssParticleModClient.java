@@ -10,12 +10,16 @@ import eyeliss.particle.mod.entity.ModEntities;
 import eyeliss.particle.mod.item.ModItems;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.particle.*;
+import eyeliss.particle.mod.screen.RiftGemScreen;
+import eyeliss.particle.mod.screen.RiftGemScreens;
+import eyeliss.particle.mod.screen.RiftGemBindScreen;
 import eyeliss.particle.mod.util.ClientOverhealthTracker;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BundleContentsComponent;
@@ -28,6 +32,8 @@ public class EyelisssParticleModClient implements ClientModInitializer {
 
         EntityRendererRegistry.register(ModEntities.THROWN_SYRINGE, ThrownSyringeEntityRenderer::new);
 
+        HandledScreens.register(RiftGemScreens.RIFT_GEM_SCREEN_HANDLER, RiftGemScreen::new);
+        HandledScreens.register(RiftGemScreens.RIFT_GEM_BIND_HANDLER, RiftGemBindScreen::new);
 
         ShadowParticleHandler.register();
         ParticleFactoryRegistry.getInstance().register(ModParticles.RAGE_PARTICLE, RageParticle.Factory::new);

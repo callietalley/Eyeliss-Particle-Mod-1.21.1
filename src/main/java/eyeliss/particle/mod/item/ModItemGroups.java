@@ -55,6 +55,7 @@ public class ModItemGroups {
                         entries.add(ModTrinkets.MIDAS_GOLD);
                         entries.add(ModTrinkets.SADIMS_IRON);
                         entries.add(ModTrinkets.BLOOD_STONE_ITEM);
+                        entries.add(ModTrinkets.RIFT_GEM);
                     })
                     .build()
     );

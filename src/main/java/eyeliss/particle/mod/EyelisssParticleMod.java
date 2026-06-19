@@ -14,16 +14,19 @@ import eyeliss.particle.mod.item.*;
 import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import eyeliss.particle.mod.item.trinkets.util.BloodStoneTickHandler;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
+import eyeliss.particle.mod.network.RiftGemNetwork;
 import eyeliss.particle.mod.network.ShadowBundleScrollPayload; // Added packet import
 import eyeliss.particle.mod.particle.ModParticles;
 import eyeliss.particle.mod.potion.ModPotions;
 import eyeliss.particle.mod.recipe.LimitedRecipes;
 import eyeliss.particle.mod.recipe.ModRecipes;
+import eyeliss.particle.mod.screen.RiftGemScreens;
 import eyeliss.particle.mod.sound.ModSounds;
 import eyeliss.particle.mod.util.BloodShardDropHandler;
 import eyeliss.particle.mod.util.ModLootTableModifiers;
 import eyeliss.particle.mod.util.OverhealthSpawningHandler;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.DataComponentTypes;
@@ -51,6 +54,11 @@ public class EyelisssParticleMod implements ModInitializer {
 		BloodShardDropHandler.register();
 		ModCommands.register();
 		RareItemGlows.register();
+
+		RiftGemNetwork.initializePayloads();
+		RiftGemNetwork.registerServerReceivers();
+		RiftGemScreens.registerScreenHandlers();
+		ServerTickEvents.START_SERVER_TICK.register(RiftGemNetwork::tickWarmups);
 
 
 		ModEffects.register();
