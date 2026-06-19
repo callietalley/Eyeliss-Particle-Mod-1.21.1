@@ -28,10 +28,8 @@ public class CraftCounterState extends PersistentState {
     }
 
     public void increaseCounts(String recipeId, UUID playerUuid, int amount) {
-        // Increment Global
         globalCounts.put(recipeId, getGlobalCount(recipeId) + amount);
 
-        // Increment Player
         playerCounts.computeIfAbsent(recipeId, k -> new HashMap<>());
         Map<String, Integer> playerMap = playerCounts.get(recipeId);
         String uuidStr = playerUuid.toString();
@@ -46,14 +44,12 @@ public class CraftCounterState extends PersistentState {
         this.markDirty();
     }
 
-    // FIXED: Resolves "Cannot resolve method 'clearSpecificCount'"
     public void clearSpecificCount(String recipeId) {
         this.globalCounts.remove(recipeId);
         this.playerCounts.remove(recipeId);
         this.markDirty();
     }
 
-    // FIXED: Resolves "Cannot resolve method 'setPlayerCount'"
     public void setPlayerCount(String recipeId, UUID playerUuid, int amount) {
         this.playerCounts.computeIfAbsent(recipeId, k -> new HashMap<>());
         this.playerCounts.get(recipeId).put(playerUuid.toString(), amount);
@@ -63,17 +59,14 @@ public class CraftCounterState extends PersistentState {
     public static CraftCounterState fromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         CraftCounterState state = new CraftCounterState();
 
-        // 1. Read Globals cleanly
         NbtCompound globals = nbt.getCompound("globalCounts");
         for (String key : globals.getKeys()) {
             state.globalCounts.put(key, globals.getInt(key));
         }
 
-        // 2. Read Players using correct deep compound extraction loops
         NbtCompound playersRoot = nbt.getCompound("playerCounts");
         for (String recipeKey : playersRoot.getKeys()) {
 
-            // CRITICAL FIX: Explicitly extract the inner dictionary layer as a compound group
             NbtCompound playerGroup = playersRoot.getCompound(recipeKey);
 
             Map<String, Integer> playerMap = new HashMap<>();

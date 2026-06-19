@@ -32,7 +32,7 @@ public class LimitedRecipes {
                         return new HardLimitedRecipe(
                                 parent.getGroup(), parent.getCategory(),
                                 HardLimitedRecipe.getRawDataFromParent(parent),
-                                parent.getResult(buf.getRegistryManager()), // FIXED: Removed null crash exploit
+                                parent.getResult(buf.getRegistryManager()),
                                 parent.showNotification(),
                                 globalLimit,
                                 playerLimit

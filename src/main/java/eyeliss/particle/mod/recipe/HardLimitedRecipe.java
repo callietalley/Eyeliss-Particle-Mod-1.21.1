@@ -56,7 +56,6 @@ public class HardLimitedRecipe extends ShapedRecipe {
         return Text.literal(recipeId.substring(recipeId.indexOf(":") + 1).replace("_", " "));
     }
 
-    // FIXED: Changed parameter from 'ShapedRecipe' to explicit 'HardLimitedRecipe' to satisfy MapCodec type inference
     public static RawShapedRecipe getRawDataFromParent(ShapedRecipe recipe) {
         try {
             java.lang.reflect.Field rawField = ShapedRecipe.class.getDeclaredField("raw");

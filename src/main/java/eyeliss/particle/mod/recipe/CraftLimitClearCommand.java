@@ -71,7 +71,6 @@ public class CraftLimitClearCommand {
             CraftCounterState state = CraftCounterState.getServerState(source.getServer());
             state.setPlayerCount(idString, targetPlayer.getUuid(), 0);
 
-            // FIXED: Appending the display name directly instead of mutating it avoids the IDE warning entirely
             source.sendFeedback(() -> Text.literal("[Success] Reset ")
                     .copy().formatted(Formatting.GREEN)
                     .append(targetPlayer.getDisplayName())

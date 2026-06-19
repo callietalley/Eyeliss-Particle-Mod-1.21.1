@@ -38,17 +38,15 @@ public class ItemDuplicationChecker {
 
                     if (trackedIdsThisTick.contains(trackingId)) {
 
-                        // 1. Play the lava burn sound directly at the player's current location before deleting it
                         player.getServerWorld().playSound(
                                 null,
                                 player.getX(), player.getY(), player.getZ(),
-                                SoundEvents.ENTITY_GENERIC_BURN, // The vanilla burn/lava sizzle sound
+                                SoundEvents.ENTITY_GENERIC_BURN,
                                 SoundCategory.PLAYERS,
-                                1.0F, // Volume
-                                1.0F  // Pitch
+                                1.0F,
+                                1.0F
                         );
 
-                        // 2. Delete the duplicate item stack out of their inventory slot
                         player.getInventory().setStack(i, ItemStack.EMPTY);
                         player.getInventory().markDirty();
 
@@ -56,7 +54,7 @@ public class ItemDuplicationChecker {
 
                         player.sendMessage(
                                 Text.literal("[Security] ").copy().formatted(Formatting.RED, Formatting.BOLD)
-                                        .append(Text.literal("Your " + itemName + " turned to ash! ").copy().formatted(Formatting.GRAY))
+                                        .append(Text.literal("Your " + itemName + " turned to dust! ").copy().formatted(Formatting.GRAY))
                                         .append(Text.literal("An item with this identical signature tracking ID already exists on the server.").formatted(Formatting.RED)),
                                 false
                         );

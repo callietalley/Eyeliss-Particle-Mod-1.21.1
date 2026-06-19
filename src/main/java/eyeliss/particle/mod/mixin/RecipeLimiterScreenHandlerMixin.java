@@ -31,17 +31,14 @@ public abstract class RecipeLimiterScreenHandlerMixin extends ScreenHandler {
         super(type, syncId);
     }
 
-    // 1. Hook for manual inventory adjustments
     @Inject(method = "onContentChanged", at = @At("TAIL"))
     private void eyelisspartmod$onContentChanged(net.minecraft.inventory.Inventory inventory, CallbackInfo ci) {
         this.eyelisspartmod$enforceLimits();
     }
 
-    // 2. FIXED SIGNATURE: Fully typed RecipeEntry generic to match 1.21 vanilla specifications
     @Inject(method = "updateResult", at = @At("TAIL"))
     private static void eyelisspartmod$onRecipeBookUpdate(
             ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, RecipeEntry<CraftingRecipe> recipe, CallbackInfo ci
-            // FIXED: Changed to raw type to satisfy JVM type erasure
     ) {
 
         if (handler instanceof RecipeLimiterScreenHandlerMixin mixin) {
@@ -49,7 +46,6 @@ public abstract class RecipeLimiterScreenHandlerMixin extends ScreenHandler {
         }
     }
 
-    // 3. FIXED: Added the mandatory @Unique annotation to prevent other mod environment collisions
     @Unique
     private void eyelisspartmod$enforceLimits() {
         World world = this.player.getWorld();
@@ -67,7 +63,6 @@ public abstract class RecipeLimiterScreenHandlerMixin extends ScreenHandler {
                 int globalCount = state.getGlobalCount(recipeId);
                 int playerCount = state.getPlayerCount(recipeId, this.player.getUuid());
 
-                // Enforce dual caps and replace with DEPLETED_ESSENCE static items
                 if (globalCount >= limitedRecipe.getGlobalLimit() || playerCount >= limitedRecipe.getPlayerLimit()) {
                     this.result.setStack(0, HardLimitedRecipe.getDepletedPlaceholder());
                     this.sendContentUpdates();
