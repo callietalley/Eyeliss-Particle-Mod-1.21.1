@@ -55,7 +55,7 @@ public class ItemDuplicationChecker {
                         player.sendMessage(
                                 Text.literal("[Security] ").copy().formatted(Formatting.RED, Formatting.BOLD)
                                         .append(Text.literal("Your " + itemName + " turned to dust! ").copy().formatted(Formatting.GRAY))
-                                        .append(Text.literal("An item with this identical signature tracking ID already exists on the server.").formatted(Formatting.RED)),
+                                        .append(Text.literal("An item with this identical tracking ID already exists on the server.").formatted(Formatting.RED)),
                                 false
                         );
                     } else {

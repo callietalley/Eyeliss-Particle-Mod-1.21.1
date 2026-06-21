@@ -31,6 +31,19 @@ public class ModSounds {
     public static final Identifier BLOOD_STONE_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "item.bloodstone.activate");
     public static final SoundEvent BLOOD_STONE_EVENT = SoundEvent.of(BLOOD_STONE_ID);
 
+    // New Source Block Sound Identifiers & Events 🪨
+    public static final Identifier SOURCE_BLOCK_BREAK_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "block.source_block.break");
+    public static final SoundEvent SOURCE_BLOCK_BREAK_EVENT = SoundEvent.of(SOURCE_BLOCK_BREAK_ID);
+
+    public static final Identifier SOURCE_BLOCK_STEP_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "block.source_block.step");
+    public static final SoundEvent SOURCE_BLOCK_STEP_EVENT = SoundEvent.of(SOURCE_BLOCK_STEP_ID);
+
+    public static final Identifier SOURCE_BLOCK_PLACE_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "block.source_block.place");
+    public static final SoundEvent SOURCE_BLOCK_PLACE_EVENT = SoundEvent.of(SOURCE_BLOCK_PLACE_ID);
+
+    public static final Identifier SOURCE_BLOCK_HIT_ID = Identifier.of(EyelisssParticleMod.MOD_ID, "block.source_block.hit");
+    public static final SoundEvent SOURCE_BLOCK_HIT_EVENT = SoundEvent.of(SOURCE_BLOCK_HIT_ID);
+
     public static void registerSounds() {
         Registry.register(Registries.SOUND_EVENT, FLOCK_ID, FLOCK_EVENT);
         Registry.register(Registries.SOUND_EVENT, SWARM_ID, SWARM_EVENT);
@@ -39,6 +52,14 @@ public class ModSounds {
         Registry.register(Registries.SOUND_EVENT, SHADOW_BUNDLE_INSERT_FAIL_ID, SHADOW_BUNDLE_INSERT_FAIL_EVENT);
         Registry.register(Registries.SOUND_EVENT, BLOOD_STONE_ID, BLOOD_STONE_EVENT);
         Registry.register(Registries.SOUND_EVENT, BLOOD_STEAL_ID, BLOOD_STEAL_EVENT);
+        Registry.register(Registries.SOUND_EVENT, HARMONIOUS_ESSENCE_ID, HARMONIOUS_ESSENCE_EVENT); // Added missing registration from your list!
+
+        // Register the new block interactions 🛠️
+        Registry.register(Registries.SOUND_EVENT, SOURCE_BLOCK_BREAK_ID, SOURCE_BLOCK_BREAK_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SOURCE_BLOCK_STEP_ID, SOURCE_BLOCK_STEP_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SOURCE_BLOCK_PLACE_ID, SOURCE_BLOCK_PLACE_EVENT);
+        Registry.register(Registries.SOUND_EVENT, SOURCE_BLOCK_HIT_ID, SOURCE_BLOCK_HIT_EVENT);
+
         EyelisssParticleMod.LOGGER.info("Registering Sounds for " + EyelisssParticleMod.MOD_ID);
     }
 }

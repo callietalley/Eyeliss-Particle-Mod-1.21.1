@@ -79,5 +79,41 @@
     "sounds": [
       { "name": "eyelisspartmod:item/bloodstone/activate", "stream": true }
     ]
+  },
+  "block.source_block.break": {
+    "subtitle": "subtitles.block.source_block.break",
+    "sounds": [
+      { "name": "eyelisspartmod:block/source_block/break1", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/break2", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/break3", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/break4", "stream": true }
+    ]
+  },
+  "block.source_block.step": {
+    "subtitle": "subtitles.block.source_block.step",
+    "sounds": [
+      { "name": "eyelisspartmod:block/source_block/hit1", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/hit2", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/hit3", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/hit4", "stream": true }
+    ]
+  },
+  "block.source_block.place": {
+    "subtitle": "subtitles.block.source_block.place",
+    "sounds": [
+      { "name": "eyelisspartmod:block/source_block/place1", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/place2", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/place3", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/place4", "stream": true }
+    ]
+  },
+  "block.source_block.hit": {
+    "subtitle": "subtitles.block.source_block.hit",
+    "sounds": [
+      { "name": "eyelisspartmod:block/source_block/hit1", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/hit2", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/hit3", "stream": true },
+      { "name": "eyelisspartmod:block/source_block/hit4", "stream": true }
+    ]
   }
 }

@@ -1,5 +1,6 @@
 package eyeliss.particle.mod.network;
 
+import eyeliss.particle.mod.api.IActiveTrinketItem;
 import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import dev.emi.trinkets.api.TrinketsApi;
 import dev.emi.trinkets.api.TrinketComponent;
@@ -49,27 +50,14 @@ public class RiftGemNetwork {
                 java.util.Optional<TrinketComponent> component = TrinketsApi.getTrinketComponent(player);
                 if (component.isEmpty()) return;
 
-                ItemStack gemStack = ItemStack.EMPTY;
+                // Loop through all equipped items to find one that supports active inputs
                 for (var equip : component.get().getAllEquipped()) {
-                    if (equip.getRight().isOf(ModTrinkets.RIFT_GEM)) {
-                        gemStack = equip.getRight();
-                        break;
+                    ItemStack stack = equip.getRight();
+                    if (stack.getItem() instanceof IActiveTrinketItem activeTrinket) {
+                        // Dynamically fire the trinket's unique active feature
+                        activeTrinket.onTrinketKeybindPressed(player, stack, payload.isSneaking());
+                        return; // Stop searching once we process the first valid active trinket
                     }
-                }
-
-                if (gemStack.isEmpty()) return;
-
-                final ItemStack finalGemStack = gemStack;
-                if (payload.isSneaking()) {
-                    player.openHandledScreen(new net.minecraft.screen.SimpleNamedScreenHandlerFactory(
-                            (syncId, inv, p) -> new RiftGemBindScreenHandler(syncId, inv, finalGemStack),
-                            Text.literal("Anchor Configuration")
-                    ));
-                } else {
-                    player.openHandledScreen(new net.minecraft.screen.SimpleNamedScreenHandlerFactory(
-                            (syncId, inv, p) -> new RiftGemScreenHandler(syncId, inv, finalGemStack),
-                            Text.literal("Rift Terminal")
-                    ));
                 }
             });
         });

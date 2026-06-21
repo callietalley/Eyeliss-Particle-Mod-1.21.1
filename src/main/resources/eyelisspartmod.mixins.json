@@ -18,7 +18,12 @@
 		"JukeboxRitualMixin",
 		"HarmoniousItemSoundMixin",
 		"RecipeLimitSlotMixin",
-		"RecipeLimiterScreenHandlerMixin"
+		"RecipeLimiterScreenHandlerMixin",
+		"BlockItemMixin",
+		"BucketItemMixin",
+		"ItemInvoker",
+		"EntityFluidMovementMixin",
+		"LivingEntityAccessor"
 	],
 	"client": [
 		"client.GameRendererMixin",
@@ -26,7 +31,13 @@
 		"client.TooltipComponentMixin",
 		"client.HandledScreenMixin",
 		"client.HandledScreenAccessor",
-		"client.OverhealthHealthBarFreezeMixin"
+		"client.OverhealthHealthBarFreezeMixin",
+		"client.DimensionEffectsMixin",
+		"client.SourceRendererMixin",
+		"client.ClientSourceSkyMixin",
+		"client.DamageTrackerAccessor",
+		"client.LivingEntityMixin",
+		"client.BackgroundRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

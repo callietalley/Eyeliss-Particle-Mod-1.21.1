@@ -36,16 +36,17 @@ public class ModKeybinds {
             }
 
             while (trinket_key.wasPressed()) {
-                boolean isEquipped = TrinketsApi.getTrinketComponent(client.player)
-                        .map(comp -> comp.isEquipped(stack -> stack.isOf(eyeliss.particle.mod.item.trinkets.ModTrinkets.RIFT_GEM)))
+                boolean hasActiveTrinket = TrinketsApi.getTrinketComponent(client.player)
+                        .map(comp -> comp.getAllEquipped().stream()
+                                .anyMatch(equip -> equip.getRight().getItem() instanceof IActiveTrinketItem))
                         .orElse(false);
 
-                if (isEquipped) {
+                // If the player has ANY trinket with an active ability, send the packet
+                if (hasActiveTrinket) {
                     boolean isSneaking = client.player.isSneaking();
                     ClientPlayNetworking.send(new RiftGemPayloads.OpenRiftScreenPayload(isSneaking));
                 }
             }
         });
-
     }
 }

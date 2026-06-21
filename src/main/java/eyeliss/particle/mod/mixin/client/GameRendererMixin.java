@@ -1,11 +1,12 @@
 package eyeliss.particle.mod.mixin.client;
 
-import net.minecraft.registry.Registries;
+import eyeliss.particle.mod.fluid.SauceDamageTracker;
 import eyeliss.particle.mod.effect.ModEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.spongepowered.asm.mixin.Final;
@@ -28,7 +29,9 @@ public class GameRendererMixin {
         boolean isBleeding = player.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(ModEffects.BLEEDING_OUT));
         boolean isPoisoned = player.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(ModEffects.STYX_POISON));
 
-        if (isBleeding || isPoisoned) {
+        boolean isSourceSauce = ((SauceDamageTracker) player).eyelisssParticleMod$wasRecentlyDamagedBySauce();
+
+        if (isBleeding || isPoisoned || isSourceSauce) {
             float f = (float) player.hurtTime - tickDelta;
             if (f >= 0.0F) {
                 f /= (float) player.maxHurtTime;

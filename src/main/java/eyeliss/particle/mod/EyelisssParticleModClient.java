@@ -1,12 +1,14 @@
 package eyeliss.particle.mod;
 
 import eyeliss.particle.mod.api.ModKeybinds;
+import eyeliss.particle.mod.block.ModBlocks;
 import eyeliss.particle.mod.client.ShadowParticleHandler;
 import eyeliss.particle.mod.client.SyringeColor;
 import eyeliss.particle.mod.client.render.ThrownSyringeEntityRenderer;
 import eyeliss.particle.mod.client.render.UmberwitherRenderer;
 import eyeliss.particle.mod.client.OverhealthBarRenderer;
 import eyeliss.particle.mod.entity.ModEntities;
+import eyeliss.particle.mod.fluid.ModFluids;
 import eyeliss.particle.mod.item.ModItems;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.particle.*;
@@ -15,8 +17,11 @@ import eyeliss.particle.mod.screen.RiftGemScreens;
 import eyeliss.particle.mod.screen.RiftGemBindScreen;
 import eyeliss.particle.mod.util.ClientOverhealthTracker;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -29,25 +34,39 @@ public class EyelisssParticleModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        FluidRenderHandlerRegistry.INSTANCE.register(
+                ModFluids.STILL_SOURCE_SAUCE,
+                ModFluids.FLOWING_SOURCE_SAUCE,
+                new SimpleFluidRenderHandler(
+                        Identifier.of("eyelisspartmod", "block/source_sauce_still"),
+                        Identifier.of("eyelisspartmod", "block/source_sauce_flow")
+                )
+        );
 
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SOURCE_BLOCK, net.minecraft.client.render.RenderLayer.getSolid());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DEEP_SOURCE_BLOCK, net.minecraft.client.render.RenderLayer.getSolid());
+
+        // --- Entity & Screen Handlers ---
         EntityRendererRegistry.register(ModEntities.THROWN_SYRINGE, ThrownSyringeEntityRenderer::new);
         HandledScreens.register(RiftGemScreens.RIFT_GEM_SCREEN_HANDLER, RiftGemScreen::new);
         HandledScreens.register(RiftGemScreens.RIFT_GEM_BIND_HANDLER, RiftGemBindScreen::new);
 
+        // --- Particle Handlers ---
         ShadowParticleHandler.register();
         ParticleFactoryRegistry.getInstance().register(ModParticles.RAGE_PARTICLE, RageParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.FLOCK_ORBIT_PARTICLE, FlockOrbitParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.FLOCK_AURA_PARTICLE, FlockAuraParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.OVERHEALTH_ORBIT, OverhealthOrbitParticle.Factory::new);
-        net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry.getInstance().register(
+        ParticleFactoryRegistry.getInstance().register(
                 eyeliss.particle.mod.particle.ModParticles.BLOOD_SMOKE,
                 BloodSmokeParticle.Factory::new
         );
 
+        // --- Keybinds & Additional Entities ---
         ModKeybinds.register();
-
         EntityRendererRegistry.register(ModEntities.UMBERWITHER, UmberwitherRenderer::new);
 
+        // --- Item Predicates ---
         ModelPredicateProviderRegistry.register(ModItems.SHADOW_BUNDLE, Identifier.of("filled"), (stack, world, entity, seed) -> {
             BundleContentsComponent contents = stack.get(DataComponentTypes.BUNDLE_CONTENTS);
             if (contents == null || contents.isEmpty()) {
@@ -56,6 +75,7 @@ public class EyelisssParticleModClient implements ClientModInitializer {
             return 1.0F;
         });
 
+        // --- Colors, Networking, & HUD Overlays ---
         SyringeColor.registerColor();
 
         ClientPlayNetworking.registerGlobalReceiver(OverhealthSyncPayload.ID, (payload, context) -> {

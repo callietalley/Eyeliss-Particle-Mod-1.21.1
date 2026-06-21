@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "eyelisspartmod:styx_poison",
-    "eyelisspartmod:bleeding_out"
+    "eyelisspartmod:bleeding_out",
+    "eyelisspartmod:source_sauce_damage"
   ]
 }
