@@ -47,6 +47,13 @@ public class ModTrinkets {
                     tooltip.add(Text.literal(" ").formatted(Formatting.GRAY));
                     tooltip.add(Text.literal("Origin - Highest block at 0, 0 in the overworld").formatted(Formatting.GRAY));
                     tooltip.add(Text.literal(" ").formatted(Formatting.GRAY));
+                    tooltip.add(Text.literal("Return - Returns you to a safe place near your overworld position").formatted(Formatting.GRAY));
+                    tooltip.add(Text.literal(" ").formatted(Formatting.GRAY));
+                    tooltip.add(Text.literal("Source - A pitch white dimension, with a 1 to 15 block ratio").formatted(Formatting.GRAY));
+                    tooltip.add(Text.literal("compared to the overworld").formatted(Formatting.GRAY));
+                    tooltip.add(Text.literal(" ").formatted(Formatting.GRAY));
+                    tooltip.add(Text.literal("End - Takes you to the entrance of The End dimension").formatted(Formatting.GRAY));
+                    tooltip.add(Text.literal("if you have killed the Enderdragon before").formatted(Formatting.GRAY));
 
                     super.appendTooltip(stack, context, tooltip, type);
                 }

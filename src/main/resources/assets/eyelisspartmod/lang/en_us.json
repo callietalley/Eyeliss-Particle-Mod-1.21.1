@@ -100,10 +100,10 @@
   "block.eyelisspartmod.source_sauce_block": "Source Sauce",
   "item.eyelisspartmod.source_sauce_bucket": "Source Sauce Bucket",
 
-  "block.source_block.break": "Source Block breaks",
-  "block.source_block.place": "Source Block is placed",
-  "block.source_block.step": "Stepping on Source Block",
-  "block.source_block.hit": "Hitting Source Block",
+  "subtitles.block.source_block.break": "Source Block breaks",
+  "subtitles.block.source_block.place": "Source Block is placed",
+  "subtitles.block.source_block.step": "Stepping on Source Block",
+  "subtitles.block.source_block.hit": "Hitting Source Block",
 
   "itemgroup.eyelisspartmod.eyeliss_items": "Eyeliss Items",
   "itemgroup.eyelisspartmod.eyeliss_trinkets": "Eyeliss Trinkets",

@@ -4,8 +4,6 @@ import eyeliss.particle.mod.api.IActiveTrinketItem;
 import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import dev.emi.trinkets.api.TrinketsApi;
 import dev.emi.trinkets.api.TrinketComponent;
-import eyeliss.particle.mod.screen.RiftGemScreenHandler;
-import eyeliss.particle.mod.screen.RiftGemBindScreenHandler;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
@@ -50,13 +48,11 @@ public class RiftGemNetwork {
                 java.util.Optional<TrinketComponent> component = TrinketsApi.getTrinketComponent(player);
                 if (component.isEmpty()) return;
 
-                // Loop through all equipped items to find one that supports active inputs
                 for (var equip : component.get().getAllEquipped()) {
                     ItemStack stack = equip.getRight();
                     if (stack.getItem() instanceof IActiveTrinketItem activeTrinket) {
-                        // Dynamically fire the trinket's unique active feature
                         activeTrinket.onTrinketKeybindPressed(player, stack, payload.isSneaking());
-                        return; // Stop searching once we process the first valid active trinket
+                        return;
                     }
                 }
             });
@@ -148,6 +144,50 @@ public class RiftGemNetwork {
                             return;
                         }
 
+                        if (player.getWorld().getRegistryKey() == World.END) {
+                            String lowerEnv = (env != null) ? env.toLowerCase() : "";
+
+                            java.util.List<String> blockedEnvironments = java.util.Arrays.asList(
+                                    "forest", "desert", "tundra", "deepforest", "shore", "origin", "hell", "source", "return"
+                            );
+
+                            if (blockedEnvironments.contains(lowerEnv)) {
+
+                                boolean hasFreeTheEnd = false;
+                                if (player.getServer() != null) {
+                                    net.minecraft.advancement.AdvancementEntry advancementEntry = player.getServer()
+                                            .getAdvancementLoader()
+                                            .get(net.minecraft.util.Identifier.of("minecraft", "end/kill_dragon"));
+
+                                    if (advancementEntry != null) {
+                                        net.minecraft.advancement.PlayerAdvancementTracker tracker = player.getServer()
+                                                .getPlayerManager()
+                                                .getAdvancementTracker(player);
+
+                                        if (tracker.getProgress(advancementEntry).isDone()) {
+                                            hasFreeTheEnd = true;
+                                        }
+                                    }
+                                }
+
+                                if (!hasFreeTheEnd) {
+                                    player.sendMessage(Text.literal("§c[Error] The Void's density is too absolute; a dragon's soul could bypass the density of The Void."), true);
+
+                                    if (player.getWorld() instanceof net.minecraft.server.world.ServerWorld serverWorld) {
+                                        serverWorld.playSound(
+                                                null,
+                                                player.getX(), player.getY(), player.getZ(),
+                                                net.minecraft.sound.SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE,
+                                                net.minecraft.sound.SoundCategory.PLAYERS,
+                                                1.0F,
+                                                0.5F
+                                        );
+                                    }
+                                    return;
+                                }
+                            }
+                        }
+
                         if ("origin".equals(env)) {
                             ServerWorld overworld = context.server().getWorld(World.OVERWORLD);
                             if (overworld == null) return;
@@ -159,18 +199,16 @@ public class RiftGemNetwork {
                         }
 
                         if ("hell".equals(env)) {
+                            if (player.getWorld().getRegistryKey() != World.OVERWORLD) {
+                                player.sendMessage(Text.literal("§c[Error] Unable to reach the netherworld; gateway distance threshold destabilized outside the Overworld matrix."), true);
+                                return;
+                            }
+
                             ServerWorld netherWorld = context.server().getWorld(World.NETHER);
                             if (netherWorld == null) return;
 
-                            double targetX = player.getX();
-                            double targetZ = player.getZ();
-                            if (player.getWorld().getRegistryKey() == World.OVERWORLD) {
-                                targetX /= 8.0;
-                                targetZ /= 8.0;
-                            } else if (player.getWorld().getRegistryKey() == World.END) {
-                                targetX = 0;
-                                targetZ = 0;
-                            }
+                            double targetX = player.getX() / 8.0;
+                            double targetZ = player.getZ() / 8.0;
 
                             int originBlockX = (int) Math.floor(targetX);
                             int originBlockZ = (int) Math.floor(targetZ);
@@ -230,9 +268,249 @@ public class RiftGemNetwork {
 
                             WARMUP_PLAYERS.put(player.getUuid(), 10);
                             WARMUP_TARGETS.put(player.getUuid(), new WarpTarget(finalX + 0.5, finalY + 0.1, finalZ + 0.5, World.NETHER.getValue().toString(), slotStack, time));
-                            player.sendMessage(Text.literal("§5Piercing veil to Nether coordinates..."), true);
+                            player.sendMessage(Text.literal("§5Opening gateway to Nether coordinates..."), true);
                             return;
                         }
+
+                        if ("source".equals(env)) {
+                            net.minecraft.registry.RegistryKey<World> theSourceKey = net.minecraft.registry.RegistryKey.of(
+                                    net.minecraft.registry.RegistryKeys.WORLD,
+                                    net.minecraft.util.Identifier.of("eyelisspartmod", "the_source")
+                            );
+
+                            ServerWorld sourceWorld = context.server().getWorld(theSourceKey);
+                            if (sourceWorld == null) return;
+
+                            double targetX = player.getX();
+                            double targetZ = player.getZ();
+                            if (player.getWorld().getRegistryKey() == World.END) {
+                                targetX = 0;
+                                targetZ = 0;
+                            }
+
+                            int originBlockX = (int) Math.floor(targetX);
+                            int originBlockZ = (int) Math.floor(targetZ);
+
+                            int finalX = originBlockX;
+                            int finalY = 64;
+                            int finalZ = originBlockZ;
+                            boolean foundSafeSpot = false;
+
+                            searchLoop:
+                            for (int r = 0; r <= 16; r++) {
+                                for (int dx = -r; dx <= r; dx++) {
+                                    for (int dz = -r; dz <= r; dz++) {
+                                        if (Math.abs(dx) != r && Math.abs(dz) != r) continue;
+
+                                        int currentX = originBlockX + dx;
+                                        int currentZ = originBlockZ + dz;
+
+                                        sourceWorld.getChunkManager().getChunk(currentX >> 4, currentZ >> 4, net.minecraft.world.chunk.ChunkStatus.FULL, true);
+
+                                        for (int y = 150; y > 31; y--) {
+                                            BlockPos checkPos = new BlockPos(currentX, y, currentZ);
+                                            BlockState stateCurrent = sourceWorld.getBlockState(checkPos);
+                                            BlockState stateAbove = sourceWorld.getBlockState(checkPos.up());
+                                            BlockState stateBelow = sourceWorld.getBlockState(checkPos.down());
+
+                                            if (stateCurrent.isAir() && stateAbove.isAir()) {
+                                                if (stateBelow.isSolidBlock(sourceWorld, checkPos.down()) && stateBelow.getFluidState().isEmpty()) {
+
+                                                    boolean hasSauceDrop = false;
+                                                    for (int drop = 1; drop <= 3; drop++) {
+                                                        if (sourceWorld.getBlockState(checkPos.down(drop)).isOf(eyeliss.particle.mod.fluid.ModFluids.SOURCE_SAUCE_BLOCK)) {
+                                                            hasSauceDrop = true;
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (!hasSauceDrop) {
+                                                        finalX = currentX;
+                                                        finalY = y;
+                                                        finalZ = currentZ;
+                                                        foundSafeSpot = true;
+                                                        break searchLoop;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (!foundSafeSpot) {
+                                player.sendMessage(Text.literal("§b[Warning] Completely surrounded by Source Sauce oceans! Forcing safe fallback at Y=64."), true);
+                            } else if (finalX != originBlockX || finalZ != originBlockZ) {
+                                player.sendMessage(Text.literal("§d[Rift] Shifted destination away from Source Sauce fluid to the nearest ridge!"), true);
+                            }
+
+                            WARMUP_PLAYERS.put(player.getUuid(), 10);
+                            WARMUP_TARGETS.put(player.getUuid(), new WarpTarget(finalX + 0.5, finalY + 0.1, finalZ + 0.5, theSourceKey.getValue().toString(), slotStack, time));
+                            player.sendMessage(Text.literal("§dCondensing reality to reach the Source..."), true);
+                            return;
+                        }
+
+                        if ("return".equals(env)) {
+                            ServerWorld overworldWorld = context.server().getWorld(World.OVERWORLD);
+                            if (overworldWorld == null) return;
+
+                            double targetX = player.getX();
+                            double targetZ = player.getZ();
+
+                            if (player.getWorld().getRegistryKey() == World.END) {
+                                targetX = 0;
+                                targetZ = 0;
+                            }
+
+                            int originBlockX = (int) Math.floor(targetX);
+                            int originBlockZ = (int) Math.floor(targetZ);
+
+                            int finalX = originBlockX;
+                            int finalY = overworldWorld.getSeaLevel();
+                            int finalZ = originBlockZ;
+                            boolean foundSafeSpot = false;
+
+                            searchLoop:
+                            for (int r = 0; r <= 16; r++) {
+                                for (int dx = -r; dx <= r; dx++) {
+                                    for (int dz = -r; dz <= r; dz++) {
+                                        if (Math.abs(dx) != r && Math.abs(dz) != r) continue;
+
+                                        int currentX = originBlockX + dx;
+                                        int currentZ = originBlockZ + dz;
+
+                                        overworldWorld.getChunkManager().getChunk(currentX >> 4, currentZ >> 4, net.minecraft.world.chunk.ChunkStatus.FULL, true);
+
+                                        int highestY = overworldWorld.getTopY(net.minecraft.world.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, currentX, currentZ);
+
+                                        int startY = Math.min(highestY + 3, overworldWorld.getTopY() - 2);
+                                        int endY = overworldWorld.getBottomY();
+
+                                        for (int y = startY; y >= endY; y--) {
+                                            BlockPos checkPos = new BlockPos(currentX, y, currentZ);
+                                            BlockState stateCurrent = overworldWorld.getBlockState(checkPos);
+                                            BlockState stateAbove = overworldWorld.getBlockState(checkPos.up());
+                                            BlockState stateBelow = overworldWorld.getBlockState(checkPos.down());
+
+                                            if (stateCurrent.isAir() && stateAbove.isAir()) {
+                                                if (stateBelow.isSolidBlock(overworldWorld, checkPos.down()) && stateBelow.getFluidState().isEmpty()) {
+
+                                                    boolean hasHazardDrop = false;
+                                                    for (int drop = 1; drop <= 3; drop++) {
+                                                        net.minecraft.fluid.FluidState fluid = overworldWorld.getFluidState(checkPos.down(drop));
+                                                        if (!fluid.isEmpty()) {
+                                                            hasHazardDrop = true;
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (!hasHazardDrop) {
+                                                        finalX = currentX;
+                                                        finalY = y;
+                                                        finalZ = currentZ;
+                                                        foundSafeSpot = true;
+                                                        break searchLoop;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (!foundSafeSpot) {
+                                player.sendMessage(Text.literal("§6[Warning] Overworld target coordinates unstable! Forcing sea-level fallback at Y=" + finalY), true);
+                            } else if (finalX != originBlockX || finalZ != originBlockZ) {
+                                player.sendMessage(Text.literal("§a[Rift] Destination shifted to the nearest safe Overworld ground surface position!"), true);
+                            }
+
+                            WARMUP_PLAYERS.put(player.getUuid(), 10);
+                            WARMUP_TARGETS.put(player.getUuid(), new WarpTarget(finalX + 0.5, finalY + 0.1, finalZ + 0.5, World.OVERWORLD.getValue().toString(), slotStack, time));
+
+                            player.sendMessage(Text.literal("§aRe-weaving reality matrix to return to the Overworld..."), true);
+                            return;
+                        }
+
+                        if ("end".equals(env)) {
+                            boolean hasFreeTheEnd = false;
+                            if (player.getServer() != null) {
+                                net.minecraft.advancement.AdvancementEntry advancementEntry = player.getServer()
+                                        .getAdvancementLoader()
+                                        .get(net.minecraft.util.Identifier.of("minecraft", "end/kill_dragon"));
+
+                                if (advancementEntry != null) {
+                                    net.minecraft.advancement.PlayerAdvancementTracker tracker = player.getServer()
+                                            .getPlayerManager()
+                                            .getAdvancementTracker(player);
+
+                                    if (tracker.getProgress(advancementEntry).isDone()) {
+                                        hasFreeTheEnd = true;
+                                    }
+                                }
+                            }
+
+                            if (!hasFreeTheEnd) {
+                                player.sendMessage(Text.literal("§5§l[Dragon] You are not allowed to come and go as you please."), true);
+
+                                if (player.getWorld() instanceof net.minecraft.server.world.ServerWorld serverWorld) {
+                                    // 1. FIXED: Use Entity-tracking packet wrapped in RegistryEntry so the sound clings to the player!
+                                    player.networkHandler.sendPacket(new net.minecraft.network.packet.s2c.play.PlaySoundFromEntityS2CPacket(
+                                            net.minecraft.registry.entry.RegistryEntry.of(SoundEvents.ENTITY_ENDER_DRAGON_GROWL),
+                                            net.minecraft.sound.SoundCategory.PLAYERS,
+                                            player, // Binds the audio directly to this specific moving entity
+                                            1.0F,   // Volume
+                                            0.5F,   // Pitch
+                                            serverWorld.getRandom().nextLong() // Sound Seed
+                                    ));
+
+                                    // 2. WORLD ONLY AUDIO: Broadcasts to everyone nearby at the stationary source coordinates
+                                    net.minecraft.sound.SoundEvent genericDispel = net.minecraft.sound.SoundEvent.of(
+                                            net.minecraft.util.Identifier.of("spell_engine", "generic_dispel_1")
+                                    );
+
+                                    serverWorld.playSound(
+                                            null, // Passing null ensures all players in earshot receive the sound packet
+                                            player.getX(), player.getY(), player.getZ(),
+                                            genericDispel,
+                                            net.minecraft.sound.SoundCategory.PLAYERS,
+                                            1.0F, // Volume
+                                            1.5F  // Pitch
+                                    );
+
+                                    // 3. Deal exactly 2 hearts (4.0f) of damage using Dragon Breath source attributes
+                                    player.damage(serverWorld.getDamageSources().dragonBreath(), 4.0f);
+
+                                    // 4. FLING PHYSICS: Extract look direction vectors to reverse movement trajectories
+                                    net.minecraft.util.math.Vec3d lookDirection = player.getRotationVector();
+
+                                    // Set massive horizontal blow-back multipliers matched with high drag vertical lift
+                                    double horizontalForce = 3.5;
+                                    double verticalLift = 1.2;
+
+                                    player.setVelocity(
+                                            -lookDirection.x * horizontalForce,
+                                            verticalLift,
+                                            -lookDirection.z * horizontalForce
+                                    );
+
+                                    // Crucial server flag notification to force synchronization packets to the client loop
+                                    player.velocityModified = true;
+                                }
+                                return;
+                            }
+
+                            ServerWorld endWorld = context.server().getWorld(World.END);
+                            if (endWorld == null) return;
+
+                            endWorld.getChunkManager().getChunk(100 >> 4, 0 >> 4, net.minecraft.world.chunk.ChunkStatus.FULL, true);
+
+                            WARMUP_PLAYERS.put(player.getUuid(), 10);
+                            WARMUP_TARGETS.put(player.getUuid(), new WarpTarget(100.5, 49.1, 0.5, World.END.getValue().toString(), slotStack, time));
+
+                            player.sendMessage(Text.literal("§5Channelling end gateway (End 100, 49, 0)..."), true);
+                            return;
+                        }
+
 
                         String playerUUID = player.getUuidAsString();
                         String internalKeyName = env.toLowerCase();

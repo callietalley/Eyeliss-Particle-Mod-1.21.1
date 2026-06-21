@@ -24,7 +24,10 @@ public class RiftGemScreen extends HandledScreen<RiftGemScreenHandler> {
             "deepforest", "Deepforest",
             "shore", "Shore",
             "origin", "Origin",
-            "hell", "Hell"
+            "hell", "Hell",
+            "source", "Source",
+            "return", "Return",
+            "end", "End"
     );
     private static final Identifier TEXTBOX_TEXTURE = Identifier.of("eyelisspartmod", "textures/gui/rift_textbox.png");
 
