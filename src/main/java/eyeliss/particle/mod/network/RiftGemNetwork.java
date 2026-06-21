@@ -453,37 +453,32 @@ public class RiftGemNetwork {
                                 player.sendMessage(Text.literal("§5§l[Dragon] You are not allowed to come and go as you please."), true);
 
                                 if (player.getWorld() instanceof net.minecraft.server.world.ServerWorld serverWorld) {
-                                    // 1. FIXED: Use Entity-tracking packet wrapped in RegistryEntry so the sound clings to the player!
                                     player.networkHandler.sendPacket(new net.minecraft.network.packet.s2c.play.PlaySoundFromEntityS2CPacket(
                                             net.minecraft.registry.entry.RegistryEntry.of(SoundEvents.ENTITY_ENDER_DRAGON_GROWL),
                                             net.minecraft.sound.SoundCategory.PLAYERS,
-                                            player, // Binds the audio directly to this specific moving entity
-                                            1.0F,   // Volume
-                                            0.5F,   // Pitch
-                                            serverWorld.getRandom().nextLong() // Sound Seed
+                                            player,
+                                            1.0F,
+                                            0.5F,
+                                            serverWorld.getRandom().nextLong()
                                     ));
 
-                                    // 2. WORLD ONLY AUDIO: Broadcasts to everyone nearby at the stationary source coordinates
                                     net.minecraft.sound.SoundEvent genericDispel = net.minecraft.sound.SoundEvent.of(
                                             net.minecraft.util.Identifier.of("spell_engine", "generic_dispel_1")
                                     );
 
                                     serverWorld.playSound(
-                                            null, // Passing null ensures all players in earshot receive the sound packet
+                                            null,
                                             player.getX(), player.getY(), player.getZ(),
                                             genericDispel,
                                             net.minecraft.sound.SoundCategory.PLAYERS,
-                                            1.0F, // Volume
-                                            1.5F  // Pitch
+                                            1.0F,
+                                            1.5F
                                     );
 
-                                    // 3. Deal exactly 2 hearts (4.0f) of damage using Dragon Breath source attributes
                                     player.damage(serverWorld.getDamageSources().dragonBreath(), 4.0f);
 
-                                    // 4. FLING PHYSICS: Extract look direction vectors to reverse movement trajectories
                                     net.minecraft.util.math.Vec3d lookDirection = player.getRotationVector();
 
-                                    // Set massive horizontal blow-back multipliers matched with high drag vertical lift
                                     double horizontalForce = 3.5;
                                     double verticalLift = 1.2;
 
@@ -493,7 +488,6 @@ public class RiftGemNetwork {
                                             -lookDirection.z * horizontalForce
                                     );
 
-                                    // Crucial server flag notification to force synchronization packets to the client loop
                                     player.velocityModified = true;
                                 }
                                 return;

@@ -17,27 +17,21 @@ public class EntityFluidMovementMixin {
     private void applySourceSauceSluggishBuoyancy(CallbackInfoReturnable<Boolean> cir) {
         Entity entity = (Entity) (Object) this;
 
-        // Check if the entity is inside your fluid
         FluidState fluidState = entity.getWorld().getFluidState(entity.getBlockPos());
         if (fluidState.getFluid() == ModFluids.STILL_SOURCE_SAUCE || fluidState.getFluid() == ModFluids.FLOWING_SOURCE_SAUCE) {
             Vec3d velocity = entity.getVelocity();
 
-            // If the entity is a living creature (like a player) trying to move/jump
             if (entity instanceof LivingEntity living) {
-                // FIXED: Safely casts via the accessor interface to check if spacebar is active
                 LivingEntityAccessor accessor = (LivingEntityAccessor) living;
 
                 if (accessor.isJumping()) {
-                    // Give them a controlled, slow upward velocity (matching vanilla lava swimming strength)
                     entity.setVelocity(velocity.x * 0.5D, 0.06D, velocity.z * 0.5D);
                 } else {
-                    // If they aren't jumping, damp their downward speed so they sink sludgily instead of falling fast
                     if (velocity.y < -0.02D) {
                         entity.setVelocity(velocity.x * 0.5D, -0.02D, velocity.z * 0.5D);
                     }
                 }
             } else {
-                // Standard non-player items or entities float upward slowly to match lava density
                 if (velocity.y < 0.04D) {
                     entity.setVelocity(velocity.x * 0.5D, velocity.y + 0.02D, velocity.z * 0.5D);
                 }
