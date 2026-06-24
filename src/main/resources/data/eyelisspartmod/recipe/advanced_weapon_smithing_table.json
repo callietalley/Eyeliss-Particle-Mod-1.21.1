@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:crafting_table"
+    },
+    "S": {
+      "item": "minecraft:smithing_table"
+    },
+    "L": {
+      "tag": "minecraft:logs"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "ISI",
+    "ICI",
+    "ILI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "eyelisspartmod:advanced_weapon_smithing_table"
+  }
+}

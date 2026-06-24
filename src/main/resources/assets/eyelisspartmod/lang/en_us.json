@@ -35,6 +35,8 @@
 
   "item.eyelisspartmod.ancient_khopesh": "Ancient Khopesh",
 
+  "recipe.eyelisspartmod.limited_sword_craft": "Limited Recipe Test",
+
   "recipe.eyelisspartmod.doctoring": "Doctoring Arm",
   "item.eyelisspartmod.syringe": "The Doctoring Arm",
 
@@ -92,6 +94,10 @@
   "block.eyelisspartmod.slop_block": "Block of Slop",
   "block.eyelisspartmod.cooked_slop_block": "Block of Cooked Slop",
 
+  "block.eyelisspartmod.advanced_weapon_smithing_table": "Advanced Smithing Table",
+  "tooltip.eyelisspartmod.advanced_weapon_smithing_table.desc": "A station used to craft unique, high material cost items",
+  "tooltip.eyelisspartmod.advanced_weapon_smithing_table.flavor": "Can have unique limited craft items in it's list",
+
   "travelerstitles.eyelisspartmod.the_source": "The Source",
   "biome.eyelisspartmod.mellow_plains": "Mellow Plains",
   "biome.eyelisspartmod.extreme_peaks": "Extreme Peaks",
@@ -104,6 +110,8 @@
   "subtitles.block.source_block.place": "Source Block is placed",
   "subtitles.block.source_block.step": "Stepping on Source Block",
   "subtitles.block.source_block.hit": "Hitting Source Block",
+
+  "container.advanced_weapon_smithing": "Advanced Weapon Smithing Station",
 
   "itemgroup.eyelisspartmod.eyeliss_items": "Eyeliss Items",
   "itemgroup.eyelisspartmod.eyeliss_trinkets": "Eyeliss Trinkets",

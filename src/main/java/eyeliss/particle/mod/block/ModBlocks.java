@@ -19,7 +19,7 @@ public class ModBlocks {
             ModSounds.SOURCE_BLOCK_STEP_EVENT,
             ModSounds.SOURCE_BLOCK_PLACE_EVENT,
             ModSounds.SOURCE_BLOCK_HIT_EVENT,
-            ModSounds.SOURCE_BLOCK_STEP_EVENT // Reusing step event for fall sounds
+            ModSounds.SOURCE_BLOCK_STEP_EVENT
     );
 
     public static final Block SLOP_BLOCK = registerBlock("slop_block",
@@ -58,6 +58,15 @@ public class ModBlocks {
                             .sounds(SOURCE_BLOCK_SOUNDS)
                             .postProcess((state, world, pos) -> true)
                             .emissiveLighting((state, world, pos) -> true)
+            ));
+
+    public static final Block ADVANCED_WEAPON_SMITHING_BLOCK = registerBlock("advanced_weapon_smithing_table",
+            new AdvancedWeaponSmithingBlock(
+                    AbstractBlock.Settings.create()
+                            .strength(2.5f)
+                            .sounds(BlockSoundGroup.ANVIL)
+                            .nonOpaque()
+
             ));
 
     private static Block registerBlock(String name, Block block) {

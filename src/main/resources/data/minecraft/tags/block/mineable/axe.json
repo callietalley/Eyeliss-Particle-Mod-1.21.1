@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "eyelisspartmod:source_block",
     "eyelisspartmod:advanced_weapon_smithing_table"
   ]
 }

@@ -12,8 +12,9 @@ import eyeliss.particle.mod.fluid.ModFluids;
 import eyeliss.particle.mod.item.ModItems;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.particle.*;
+import eyeliss.particle.mod.screen.AdvancedWeaponSmithingScreen;
+import eyeliss.particle.mod.screen.ModScreenHandlers;
 import eyeliss.particle.mod.screen.RiftGemScreen;
-import eyeliss.particle.mod.screen.RiftGemScreens;
 import eyeliss.particle.mod.screen.RiftGemBindScreen;
 import eyeliss.particle.mod.util.ClientOverhealthTracker;
 import net.fabricmc.api.ClientModInitializer;
@@ -26,6 +27,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.util.Identifier;
@@ -45,11 +47,16 @@ public class EyelisssParticleModClient implements ClientModInitializer {
 
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SOURCE_BLOCK, net.minecraft.client.render.RenderLayer.getSolid());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DEEP_SOURCE_BLOCK, net.minecraft.client.render.RenderLayer.getSolid());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.ADVANCED_WEAPON_SMITHING_BLOCK, RenderLayer.getCutout());
 
         // --- Entity & Screen Handlers ---
         EntityRendererRegistry.register(ModEntities.THROWN_SYRINGE, ThrownSyringeEntityRenderer::new);
-        HandledScreens.register(RiftGemScreens.RIFT_GEM_SCREEN_HANDLER, RiftGemScreen::new);
-        HandledScreens.register(RiftGemScreens.RIFT_GEM_BIND_HANDLER, RiftGemBindScreen::new);
+        HandledScreens.register(ModScreenHandlers.RIFT_GEM_SCREEN_HANDLER, RiftGemScreen::new);
+        HandledScreens.register(ModScreenHandlers.RIFT_GEM_BIND_HANDLER, RiftGemBindScreen::new);
+        net.minecraft.client.gui.screen.ingame.HandledScreens.register(
+                ModScreenHandlers.ADVANCED_WEAPON_SMITHING_HANDLER,
+                AdvancedWeaponSmithingScreen::new
+        );
 
         // --- Particle Handlers ---
         ShadowParticleHandler.register();

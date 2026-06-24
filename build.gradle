@@ -88,3 +88,7 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+loom {
+	// Tells the Fabric compiler where to look for your access widener file
+	accessWidenerPath = file("src/main/resources/eyelisspartmod.accesswidener")
+}

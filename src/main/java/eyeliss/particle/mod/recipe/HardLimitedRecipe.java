@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.recipe.RawShapedRecipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShapedRecipe;
@@ -15,7 +14,6 @@ public class HardLimitedRecipe extends ShapedRecipe {
     private final int globalLimit;
     private final int playerLimit;
 
-    // FIXED: Removed the '. Ding()' typo and explicitly typed the lambda instance parameter to fix ambiguity errors
     public static final MapCodec<HardLimitedRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.STRING.optionalFieldOf("group", "").forGetter(ShapedRecipe::getGroup),
             CraftingRecipeCategory.CODEC.fieldOf("category").forGetter(ShapedRecipe::getCategory),
@@ -53,7 +51,15 @@ public class HardLimitedRecipe extends ShapedRecipe {
     }
 
     public static Text getTranslatableName(String recipeId) {
-        return Text.literal(recipeId.substring(recipeId.indexOf(":") + 1).replace("_", " "));
+        if (recipeId.contains(":")) {
+            String namespace = recipeId.substring(0, recipeId.indexOf(":"));
+            String path = recipeId.substring(recipeId.indexOf(":") + 1);
+
+            String translationKey = "recipe." + namespace + "." + path;
+            return Text.translatable(translationKey);
+        }
+
+        return Text.translatable("recipe." + eyeliss.particle.mod.EyelisssParticleMod.MOD_ID + "." + recipeId);
     }
 
     public static RawShapedRecipe getRawDataFromParent(ShapedRecipe recipe) {

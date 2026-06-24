@@ -2,6 +2,8 @@ package eyeliss.particle.mod;
 
 import eyeliss.particle.mod.api.ModCommands;
 import eyeliss.particle.mod.block.ModBlocks;
+import eyeliss.particle.mod.block.entity.AdvancedWeaponSmithingBlockEntity;
+import eyeliss.particle.mod.block.entity.ModBlockEntities;
 import eyeliss.particle.mod.component.ModComponents;
 import eyeliss.particle.mod.effect.ModEffects;
 import eyeliss.particle.mod.enchantment.ModEnchantments;
@@ -13,14 +15,13 @@ import eyeliss.particle.mod.event.UniqueDrops;
 import eyeliss.particle.mod.item.*;
 import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import eyeliss.particle.mod.item.trinkets.util.BloodStoneTickHandler;
-import eyeliss.particle.mod.network.OverhealthSyncPayload;
-import eyeliss.particle.mod.network.RiftGemNetwork;
-import eyeliss.particle.mod.network.ShadowBundleScrollPayload; // Added packet import
+import eyeliss.particle.mod.network.*;
 import eyeliss.particle.mod.particle.ModParticles;
 import eyeliss.particle.mod.potion.ModPotions;
 import eyeliss.particle.mod.recipe.LimitedRecipes;
 import eyeliss.particle.mod.recipe.ModRecipes;
-import eyeliss.particle.mod.screen.RiftGemScreens;
+import eyeliss.particle.mod.screen.AdvancedWeaponSmithingScreenHandler;
+import eyeliss.particle.mod.screen.ModScreenHandlers;
 import eyeliss.particle.mod.sound.ModSounds;
 import eyeliss.particle.mod.util.BloodShardDropHandler;
 import eyeliss.particle.mod.util.ItemDuplicationChecker;
@@ -48,6 +49,9 @@ public class EyelisssParticleMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModRecipes.registerRecipes();
+		ModBlocks.registerModBlocks();
+		ModBlockEntities.registerBlockEntities();
 		LimitedRecipes.registerLimits();
 		ItemDuplicationChecker.register();
 		OverhealthHandler.register();
@@ -59,9 +63,8 @@ public class EyelisssParticleMod implements ModInitializer {
 
 		RiftGemNetwork.initializePayloads();
 		RiftGemNetwork.registerServerReceivers();
-		RiftGemScreens.registerScreenHandlers();
+		ModScreenHandlers.registerScreenHandlers();
 		ServerTickEvents.START_SERVER_TICK.register(RiftGemNetwork::tickWarmups);
-
 
 		ModEffects.register();
 		ModPotions.registerPotions();
@@ -70,7 +73,6 @@ public class EyelisssParticleMod implements ModInitializer {
 		UniqueDrops.registerDrops();
 		ModLootTableModifiers.modifyLootTables();
 		VanillaItemGroupAdditions.registerItemGroups();
-		ModRecipes.registerRecipes();
 		ModEnchantments.registerEnchantments();
 
 		ModItemGroups.registerItemGroups();
@@ -78,7 +80,6 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModTrinkets.registerModTrinkets();
 		ModSpawnEggs.registerModSpawnEggs();
 		ModWeapons.registerModWeapons();
-		ModBlocks.registerModBlocks();
 		ModParticles.registerParticles();
 		ModSounds.registerSounds();
 		ShadowCurseHandler.register();
@@ -87,6 +88,45 @@ public class EyelisssParticleMod implements ModInitializer {
 
 		PayloadTypeRegistry.configurationC2S().register(ShadowBundleScrollPayload.ID, ShadowBundleScrollPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(ShadowBundleScrollPayload.ID, ShadowBundleScrollPayload.CODEC);
+
+		PayloadTypeRegistry.playC2S().register(SelectWeaponC2SPayload.ID, SelectWeaponC2SPayload.PACKET_CODEC);
+
+		PayloadTypeRegistry.playS2C().register(BlockPosPayload.ID, BlockPosPayload.PACKET_CODEC);
+
+		ServerPlayNetworking.registerGlobalReceiver(SelectWeaponC2SPayload.ID, (payload, context) -> {
+			context.server().execute(() -> {
+				net.minecraft.server.network.ServerPlayerEntity player = context.player();
+
+				if (player.currentScreenHandler instanceof eyeliss.particle.mod.screen.AdvancedWeaponSmithingScreenHandler smithingHandler) {
+					if (smithingHandler.getSlot(0).inventory instanceof eyeliss.particle.mod.block.entity.AdvancedWeaponSmithingBlockEntity smithingEntity) {
+
+						smithingEntity.returnMaterialsToPlayer(player);
+
+						var serverAllowedRecipes = smithingEntity.getAllAvailableSmithingRecipes();
+						int targetServerIndex = -1;
+
+						for (int i = 0; i < serverAllowedRecipes.size(); i++) {
+							if (serverAllowedRecipes.get(i).id().toString().equals(payload.recipeId())) {
+								targetServerIndex = i;
+								break;
+							}
+						}
+
+						if (targetServerIndex != -1) {
+							smithingHandler.getPropertyDelegate().set(0, targetServerIndex);
+							smithingEntity.updateRecipeOutput();
+						} else {
+							smithingHandler.getPropertyDelegate().set(0, 0);
+							smithingEntity.updateRecipeOutput();
+						}
+					}
+
+					smithingHandler.sendContentUpdates();
+					player.getInventory().markDirty();
+					smithingHandler.onContentChanged(smithingHandler.getSlot(0).inventory);
+				}
+			});
+		});
 
 		ServerPlayNetworking.registerGlobalReceiver(ShadowBundleScrollPayload.ID, (payload, context) -> {
 			context.server().execute(() -> {

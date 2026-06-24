@@ -69,6 +69,7 @@ public class ModItemGroups {
                     .entries((displayContext, entries) -> {
                         entries.add(ModBlocks.SLOP_BLOCK);
                         entries.add(ModBlocks.COOKED_SLOP_BLOCK);
+                        entries.add(ModBlocks.ADVANCED_WEAPON_SMITHING_BLOCK);
                         entries.add(ModBlocks.SOURCE_BLOCK);
                         entries.add(ModBlocks.DEEP_SOURCE_BLOCK);
                         entries.add(ModFluids.SOURCE_SAUCE_BUCKET);

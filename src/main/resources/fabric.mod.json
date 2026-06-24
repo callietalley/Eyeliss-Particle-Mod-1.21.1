@@ -4,6 +4,7 @@
 	"version": "${version}",
 	"name": "Eyeliss's Particle Mod",
 	"description": "I made this mod because I needed more resources to use in datapacks and such.",
+	"accessWidener": "eyelisspartmod.accesswidener",
 	"authors": [
 		"Eyeliss"
 	],

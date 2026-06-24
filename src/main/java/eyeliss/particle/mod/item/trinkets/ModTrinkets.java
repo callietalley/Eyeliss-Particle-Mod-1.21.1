@@ -41,7 +41,7 @@ public class ModTrinkets {
                     tooltip.add(Text.literal("Open teleport menu with the Trinket Keybind").formatted(Formatting.GRAY));
                     tooltip.add(Text.literal("Open the binding menu with Shift + Trinket Keybind").formatted(Formatting.GRAY));
                     tooltip.add(Text.literal(" ").formatted(Formatting.GRAY));
-                    tooltip.add(Text.literal("Has 2 static locations:").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD));
+                    tooltip.add(Text.literal("Has 4 static locations:").formatted(Formatting.LIGHT_PURPLE, Formatting.BOLD));
                     tooltip.add(Text.literal("Hell - Takes you to the safest position").formatted(Formatting.GRAY));
                     tooltip.add(Text.literal("nearest to your position in the nether").formatted(Formatting.GRAY));
                     tooltip.add(Text.literal(" ").formatted(Formatting.GRAY));

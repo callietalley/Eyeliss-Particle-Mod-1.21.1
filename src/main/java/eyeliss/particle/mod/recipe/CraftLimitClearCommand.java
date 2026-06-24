@@ -21,7 +21,8 @@ public class CraftLimitClearCommand {
         ServerCommandSource source = context.getSource();
         if (source.getServer() != null) {
             var customIds = source.getServer().getRecipeManager().values().stream()
-                    .filter(entry -> entry.value() instanceof HardLimitedRecipe)
+                    .filter(entry -> entry.value() instanceof HardLimitedRecipe ||
+                            entry.value() instanceof HardLimitedSmithingRecipe) // ADDED THIS CHECK
                     .map(RecipeEntry::id)
                     .map(Identifier::toString)
                     .collect(Collectors.toList());
@@ -93,7 +94,6 @@ public class CraftLimitClearCommand {
             CraftCounterState state = CraftCounterState.getServerState(source.getServer());
             state.setPlayerCount(idString, targetPlayer.getUuid(), amount);
 
-            // FIXED: Eliminated invalid copyOf call and handled the display name cleanly
             source.sendFeedback(() -> Text.literal("[Success] Set ")
                     .copy().formatted(Formatting.GREEN)
                     .append(targetPlayer.getDisplayName())

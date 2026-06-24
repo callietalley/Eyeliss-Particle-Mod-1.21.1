@@ -8,11 +8,11 @@ import net.minecraft.screen.ScreenHandler;
 public class RiftGemBindScreenHandler extends ScreenHandler {
 
     public RiftGemBindScreenHandler(int syncId, PlayerInventory playerInventory) {
-        super(RiftGemScreens.RIFT_GEM_BIND_HANDLER, syncId);
+        super(ModScreenHandlers.RIFT_GEM_BIND_HANDLER, syncId);
     }
 
     public RiftGemBindScreenHandler(int syncId, PlayerInventory playerInventory, ItemStack stack) {
-        super(RiftGemScreens.RIFT_GEM_BIND_HANDLER, syncId);
+        super(ModScreenHandlers.RIFT_GEM_BIND_HANDLER, syncId);
     }
 
     @Override

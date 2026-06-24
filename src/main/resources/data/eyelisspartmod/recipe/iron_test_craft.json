@@ -1,0 +1,14 @@
+{
+  "type": "eyelisspartmod:weapon_smithing",
+  "order": 1,
+  "ingredients": [
+    { "id": "minecraft:iron_ingot", "count": 5 },
+    { "id": "minecraft:obsidian", "count": 8 },
+    { "id": "minecraft:blaze_powder", "count": 5 },
+    { "id": "minecraft:leather", "count": 2 }
+  ],
+  "result": {
+    "id": "minecraft:iron_sword",
+    "count": 1
+  }
+}
