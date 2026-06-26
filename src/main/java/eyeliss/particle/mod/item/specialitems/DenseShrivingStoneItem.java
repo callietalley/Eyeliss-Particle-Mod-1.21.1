@@ -17,7 +17,6 @@ public class DenseShrivingStoneItem extends Item {
         if (clickType != ClickType.LEFT) return false;
 
         ItemStack targetStack = slot.getStack();
-        // Checks and wipes out EITHER form of upgrade component tracker data, but ignores Blessed stones
         if (targetStack.isEmpty() || (!targetStack.contains(ModComponents.SHRIVING_CHARGE) && !targetStack.contains(ModComponents.BLOCK_CHARGE))) {
             return false;
         }

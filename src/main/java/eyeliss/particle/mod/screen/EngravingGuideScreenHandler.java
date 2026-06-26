@@ -23,22 +23,17 @@ public class EngravingGuideScreenHandler extends ScreenHandler {
     public EngravingGuideScreenHandler(int syncId, PlayerInventory playerInventory, SimpleInventory inventory) {
         super(ModScreenHandlers.ENGRAVING_GUIDE_HANDLER, syncId);
 
-        // Input slot stays aligned at X: 73, Y: 84
         this.addSlot(new Slot(inputInventory, 0, 73, 84) {
             @Override
             public int getMaxItemCount() { return 1; }
         });
 
-        // --- UPDATED COORDINATES FOR PLAYER COFFER STORAGE GRID ROW LAYOUTS ---
-        // FIX: Shifted player main inventory coffer box cells right by 10 pixels (65 -> 75)
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
                 this.addSlot(new Slot(playerInventory, col + row * 9 + 9, 75 + col * 18, 188 + row * 18));
             }
         }
 
-        // --- UPDATED COORDINATES FOR PLAYER HOTBAR GRID BAR LAYOUTS ---
-        // FIX: Shifted hotbar lane item tracking cells right by 10 pixels (65 -> 75)
         for (int col = 0; col < 9; ++col) {
             this.addSlot(new Slot(playerInventory, col, 75 + col * 18, 246));
         }

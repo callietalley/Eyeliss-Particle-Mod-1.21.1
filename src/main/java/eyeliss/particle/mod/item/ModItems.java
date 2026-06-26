@@ -158,7 +158,7 @@ public class ModItems {
             super.appendTooltip(stack, context, tooltip, type);
         }
     });
-    public static final Item ENGRAVING_GUIDE_BOOK = registerItem("engraving_guide_book", new eyeliss.particle.mod.item.EngravingGuideBookItem(new Item.Settings().maxCount(1)) {
+    public static final Item ENGRAVING_GUIDE_BOOK = registerItem("engraving_guide_book", new eyeliss.particle.mod.item.specialitems.EngravingGuideBookItem(new Item.Settings().maxCount(1)) {
         @Override
         public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
             tooltip.add(Text.literal("Tells you everything you need to know about engravings.").formatted(Formatting.GRAY));

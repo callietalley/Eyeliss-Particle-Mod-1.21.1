@@ -28,12 +28,10 @@ public class ModCommands {
                 .then(cooldownBranch)
         );
 
-        // --- ROOT PATHWAY DIRECTORY: /engrave ---
         dispatcher.register(CommandManager.literal("engrave")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.argument("target", EntityArgumentType.player())
 
-                        // BRANCH 1: /engrave <target> engraving ...
                         .then(CommandManager.literal("engraving")
                                 .then(CommandManager.literal("add")
                                         .then(CommandManager.argument("engraving_name", StringArgumentType.word())
@@ -46,7 +44,6 @@ public class ModCommands {
                                                 .suggests(EngraveCommandExecutor::suggestEngravingNames)
                                                 .executes(EngraveCommandExecutor::executeRemoveEngraving))))
 
-                        // BRANCH 2: /engrave <target> kills ...
                         .then(CommandManager.literal("kills")
                                 .then(CommandManager.literal("set")
                                         .then(CommandManager.argument("amount", IntegerArgumentType.integer(0))
@@ -54,14 +51,11 @@ public class ModCommands {
                                 .then(CommandManager.literal("remove")
                                         .executes(EngraveCommandExecutor::executeRemoveShriving)))
 
-                        // BRANCH 3: /engrave <target> blocks ...
                         .then(CommandManager.literal("blocks")
                                 .then(CommandManager.literal("set")
                                         .then(CommandManager.argument("amount", IntegerArgumentType.integer(0))
                                                 .executes(EngraveCommandExecutor::executeSetBlocks))))
 
-                        // NEW BRANCH 4: /engrave <target> devotion ...
-                        // FIX: Grants full operator control over your new single-level Blessed project bars
                         .then(CommandManager.literal("devotion")
                                 .then(CommandManager.literal("set")
                                         .then(CommandManager.argument("amount", IntegerArgumentType.integer(0))

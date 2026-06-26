@@ -17,12 +17,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class EngraveCommandExecutor {
 
-    // --- master SUGGESTIONS POOL: CONTAINS ALL 18 ENGRAVINGS FOR COMPLETE TAB AUTOFILL ---
     public static final List<String> KNOWN_ENGRAVINGS = List.of(
             "absorption", "crushing", "fortitude", "lightweight", "pulverizing",
             "sturdy", "restoration", "transcendence", "wisdom", "stagnation", "ruin",
             "ethereal", "dwarven", "shattering",
-            // NEW ENGRAVINGS: Unlocks complete suggestion box visibility in game chat loops
             "magic_touch", "exorcism", "sweeping", "truth", "blessed", "hasted"
     );
 
@@ -30,9 +28,6 @@ public class EngraveCommandExecutor {
         return CommandSource.suggestMatching(KNOWN_ENGRAVINGS, builder);
     }
 
-    // =========================================================================
-    // BRANCH 1 NODE: ADD & REMOVE ENGRAVINGS PROCESSORS
-    // =========================================================================
     public static int executeAddEngraving(com.mojang.brigadier.context.CommandContext<net.minecraft.server.command.ServerCommandSource> context, boolean incomingDwarvenTouchParam) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
         net.minecraft.server.network.ServerPlayerEntity targetPlayer = net.minecraft.command.argument.EntityArgumentType.getPlayer(context, "target");
         String engName = com.mojang.brigadier.arguments.StringArgumentType.getString(context, "engraving_name");
@@ -43,7 +38,6 @@ public class EngraveCommandExecutor {
             return 0;
         }
 
-        // 1. FIREWALL GUARD: Block duplicate 'true' applications if item already has a permanent Dwarven Touch
         if (incomingDwarvenTouchParam) {
             if (stack.getOrDefault(eyeliss.particle.mod.component.ModComponents.DWARVEN_TOUCH, false)) {
                 context.getSource().sendError(net.minecraft.text.Text.literal("Operation Aborted! This item already has a permanent Dwarven Touch applied. Only non-dwarven modifications are allowed."));
@@ -51,10 +45,8 @@ public class EngraveCommandExecutor {
             }
         }
 
-        // 2. EXTRACT EXISTING LEVEL MATRIX BEFORE STACK CLEANUP
         List<EngravingContents> list = new ArrayList<>(stack.getOrDefault(ModComponents.ENGRAVING_CONTENTS, List.of()));
 
-        // Find if this specific engraving id already exists on the item
         int existingLevel = 0;
         for (EngravingContents e : list) {
             if (e.engravingId().equalsIgnoreCase(engName)) {
@@ -63,23 +55,19 @@ public class EngraveCommandExecutor {
             }
         }
 
-        // Strip the old line entry to prepare for our newly updated level allocation pass
         list.removeIf(e -> e.engravingId().equalsIgnoreCase(engName));
 
-        // 3. ENFORCE LEVEL CAP CEILINGS DYNAMICALLY
-        int newTargetLevel = existingLevel + 1; // Increment current level by +1
+        int newTargetLevel = existingLevel + 1;
 
-        // Query your pool categories. Blessings, Curses, and Single Level traits are frozen at a max level of 1
         boolean isCappedAtOne = eyeliss.particle.mod.component.ModEngravings.isBlessingOrCurse(engName);
         if (isCappedAtOne && newTargetLevel > 1) {
-            newTargetLevel = 1; // Force cap right back down to level 1 for specialized blessings
+            newTargetLevel = 1;
             context.getSource().sendFeedback(() -> net.minecraft.text.Text.literal("Note: '" + engName + "' is a single-level trait and cannot be leveled past I."), false);
         }
 
         list.add(new EngravingContents(engName, newTargetLevel));
         stack.set(ModComponents.ENGRAVING_CONTENTS, list);
 
-        // FIX: Force instant cache validation right inside your admin command node!
         if (stack.contains(net.minecraft.component.DataComponentTypes.ENCHANTMENTS)) {
             var enchants = stack.get(net.minecraft.component.DataComponentTypes.ENCHANTMENTS);
             stack.set(net.minecraft.component.DataComponentTypes.ENCHANTMENTS, enchants);
@@ -127,9 +115,6 @@ public class EngraveCommandExecutor {
         return 1;
     }
 
-    // =========================================================================
-    // BRANCH 2 & 3 NODES: BLOOD KILLS & GEOLOGIC BLOCKS PROJECT SETTERS
-    // =========================================================================
     public static int executeSetKills(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity targetPlayer = EntityArgumentType.getPlayer(context, "target");
         int amount = com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(context, "amount");
@@ -181,9 +166,6 @@ public class EngraveCommandExecutor {
         return 1;
     }
 
-    // =========================================================================
-    // BRANCH 4 NODE: DEVOTION PROGRESS SETTER FOR BLESSED ENCHANTMENT STATUS BARS
-    // =========================================================================
     public static int executeSetDevotion(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity targetPlayer = EntityArgumentType.getPlayer(context, "target");
         int amount = com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(context, "amount");
@@ -196,7 +178,6 @@ public class EngraveCommandExecutor {
 
         BlessedCharge current = stack.get(ModComponents.BLESSED_CHARGE);
         if (current != null) {
-            // Clamp the input amount so it cannot surpass the required point ceiling limits
             int setAmount = Math.min(amount, current.requiredPoints());
             stack.set(ModComponents.BLESSED_CHARGE, new BlessedCharge(setAmount, current.requiredPoints()));
             context.getSource().sendFeedback(() -> Text.literal("Successfully updated " + targetPlayer.getName().getString() + "'s Devotion points to: " + setAmount), true);

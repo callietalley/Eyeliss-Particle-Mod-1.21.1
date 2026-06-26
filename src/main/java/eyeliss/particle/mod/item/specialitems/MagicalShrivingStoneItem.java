@@ -11,7 +11,9 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
+import net.minecraft.util.Formatting;
 import java.util.List;
 
 public class MagicalShrivingStoneItem extends Item {
@@ -22,7 +24,18 @@ public class MagicalShrivingStoneItem extends Item {
         if (clickType != ClickType.LEFT) return false;
 
         ItemStack targetStack = slot.getStack();
-        if (targetStack.isEmpty() || targetStack.contains(ModComponents.SHRIVING_CHARGE)) return false;
+        if (targetStack.isEmpty()) return false;
+
+        if (targetStack.contains(ModComponents.SHRIVING_CHARGE) ||
+                targetStack.contains(ModComponents.BLOCK_CHARGE) ||
+                targetStack.contains(ModComponents.BLESSED_CHARGE)) {
+
+            if (!player.getWorld().isClient()) {
+                player.sendMessage(Text.literal("This item is already carrying a Shriving Burden!")
+                        .formatted(Formatting.RED), true);
+            }
+            return false;
+        }
 
         List<TagKey<Item>> activePoolTags = List.of(
                 ModItemTags.SWORD_ENGRAVING_POOL,

@@ -52,7 +52,6 @@ public class DwarvenChiselItem extends Item {
         if (rolledIdOpt.isEmpty()) return false;
         String rolledId = rolledIdOpt.get();
 
-        // 3. Special Rule: Transcendence cannot be added if item is already at baseline max
         if (rolledId.equals("transcendence") && totalLevelSum >= 3) return false;
 
         List<EngravingContents> updatedList = new ArrayList<>();
@@ -60,7 +59,6 @@ public class DwarvenChiselItem extends Item {
 
         for (EngravingContents entry : current) {
             if (entry.engravingId().equals(rolledId)) {
-                // Blessings and Curses are strictly locked to maximum level 1
                 if (ModEngravings.isBlessingOrCurse(rolledId)) return false;
 
                 updatedList.add(new EngravingContents(rolledId, entry.level() + 1));
@@ -74,14 +72,11 @@ public class DwarvenChiselItem extends Item {
 
         targetStack.set(ModComponents.ENGRAVING_CONTENTS, updatedList);
 
-        // 4. Force apply Mending if Restoration Blessing activates using 1.21.1 Registry specifications
         if (rolledId.equals("restoration")) {
             ItemEnchantmentsComponent enchantments = targetStack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT);
 
-            // FIX: Acquired the correct registry wrapper mapping for 1.21.1 platforms
             RegistryWrapper.Impl<Enchantment> enchantmentRegistry = player.getWorld().getRegistryManager().getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
 
-            // FIX: Lookup entry reference using RegistryKey directly
             Optional<RegistryEntry.Reference<Enchantment>> mendingRef = enchantmentRegistry.getOptional(Enchantments.MENDING);
 
             if (mendingRef.isPresent()) {

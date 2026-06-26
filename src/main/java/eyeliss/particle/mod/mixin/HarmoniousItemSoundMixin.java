@@ -3,7 +3,6 @@ package eyeliss.particle.mod.mixin;
 import eyeliss.particle.mod.item.HarmoniousEssenceItem;
 import eyeliss.particle.mod.sound.ModSounds;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

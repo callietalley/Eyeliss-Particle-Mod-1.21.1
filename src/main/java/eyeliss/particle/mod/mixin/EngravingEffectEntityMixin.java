@@ -15,13 +15,12 @@ public class EngravingEffectEntityMixin {
 
     @ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
     private float injectCustomWeaponEngravingDamageModifiers(float amount, DamageSource source) {
-        // Only intercept and scale damage if the attacker is an active player
         if (source.getAttacker() instanceof PlayerEntity player) {
             LivingEntity target = (LivingEntity) (Object) this;
 
             return ActiveEngravingEvaluator.calculateCustomWeaponDamageModifiers(player, target, source, amount);
         }
-        return amount; // Pass baseline damage through if attacker isn't a player
+        return amount;
     }
 
     @ModifyVariable(method = "applyArmorToDamage", at = @At("HEAD"), argsOnly = true)

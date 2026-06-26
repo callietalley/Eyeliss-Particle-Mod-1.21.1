@@ -43,7 +43,6 @@ public class ModToolEngravingEvents {
 
             if (isHoldingKeybind && engravings.stream().anyMatch(e -> e.engravingId().equals("pulverizing"))) {
 
-                // --- 1. PICKAXE & SHOVEL: 3x3 AREA MINING ---
                 if (tool.getItem() instanceof PickaxeItem || tool.getItem() instanceof ShovelItem) {
                     HitResult hit = player.raycast(4.5, 0.0f, false);
                     Direction minedSide = Direction.UP;
@@ -81,17 +80,13 @@ public class ModToolEngravingEvents {
                             Block.dropStacks(targetState, world, targetPos, world.getBlockEntity(targetPos), player, tool);
                             world.breakBlock(targetPos, false, player);
 
-                            // Award Geologic progression for co-mined blocks (100% chance for solid blocks)
                             awardPulverizeBlockCharge(serverPlayer);
 
                             tool.damage(1, serverPlayer, EquipmentSlot.MAINHAND);
                             if (tool.isEmpty()) break;
                         }
                     }
-                }
-
-                // --- 2. HOE & SHEARS: LEAF-ONLY TRIMMING (128 CAP, ZERO COST) ---
-                else if ((tool.getItem() instanceof HoeItem || tool.getItem() instanceof ShearsItem) && state.isIn(BlockTags.LEAVES)) {
+                } else if ((tool.getItem() instanceof HoeItem || tool.getItem() instanceof ShearsItem) && state.isIn(BlockTags.LEAVES)) {
                     Queue<BlockPos> queue = new LinkedList<>();
                     Set<BlockPos> visited = new HashSet<>();
                     queue.add(pos);
@@ -118,7 +113,6 @@ public class ModToolEngravingEvents {
                                         Block.dropStacks(adjState, world, adjacent, world.getBlockEntity(adjacent), player, tool);
                                         world.setBlockState(adjacent, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
 
-                                        // --- FIX: BALANCED 33% PROBABILITY RATIO GATE ON LEAF TRIMMING ---
                                         if (serverPlayer.getRandom().nextFloat() < 0.33f) {
                                             awardPulverizeBlockCharge(serverPlayer);
                                         }
@@ -131,10 +125,7 @@ public class ModToolEngravingEvents {
                             if (leafTrimCount >= 128) break;
                         }
                     }
-                }
-
-                // --- 3. HOE: OMNI CROP VEIN MINING (MATURED ONLY) ---
-                else if (tool.getItem() instanceof HoeItem && (state.getBlock() instanceof CropBlock || state.isIn(BlockTags.CROPS))) {
+                } else if (tool.getItem() instanceof HoeItem && (state.getBlock() instanceof CropBlock || state.isIn(BlockTags.CROPS))) {
                     if (state.getBlock() instanceof CropBlock cropBlock && state.get(CropBlock.AGE) < cropBlock.getMaxAge()) {
                         return true;
                     }
@@ -177,10 +168,7 @@ public class ModToolEngravingEvents {
                         }
                         if (tool.isEmpty()) break;
                     }
-                }
-
-                // --- 4. AXE: OMNI LOG + LOG-CONNECTED LEAVES (DUAL-CAP OVERLAY) ---
-                else if (tool.getItem() instanceof AxeItem && state.isIn(BlockTags.LOGS)) {
+                } else if (tool.getItem() instanceof AxeItem && state.isIn(BlockTags.LOGS)) {
                     Queue<BlockPos> queue = new LinkedList<>();
                     Set<BlockPos> visited = new HashSet<>();
                     queue.add(pos);
@@ -212,12 +200,10 @@ public class ModToolEngravingEvents {
                                         Block.dropStacks(adjState, world, adjacent, world.getBlockEntity(adjacent), player, tool);
                                         world.breakBlock(adjacent, false, player);
 
-                                        // Award Geologic progress for co-mined vein log blocks (100% chance)
                                         awardPulverizeBlockCharge(serverPlayer);
 
                                         tool.damage(1, serverPlayer, EquipmentSlot.MAINHAND);
-                                    }
-                                    else if (isLeaf && leafCount < 64) {
+                                    } else if (isLeaf && leafCount < 64) {
                                         visited.add(adjacent);
                                         queue.add(adjacent);
                                         leafCount++;
@@ -225,7 +211,6 @@ public class ModToolEngravingEvents {
                                         Block.dropStacks(adjState, world, adjacent, world.getBlockEntity(adjacent), player, tool);
                                         world.setBlockState(adjacent, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
 
-                                        // --- FIX: BALANCED 33% PROBABILITY RATIO GATE ON LOG-CONNECTED LEAVES ---
                                         if (serverPlayer.getRandom().nextFloat() < 0.33f) {
                                             awardPulverizeBlockCharge(serverPlayer);
                                         }
@@ -240,7 +225,7 @@ public class ModToolEngravingEvents {
                         if (tool.isEmpty()) break;
                     }
                 }
-            } // Closes the 'if (isHoldingKeybind...)' check block
+            }
 
             if (engravings.stream().anyMatch(e -> e.engravingId().equals("shattering")) && !player.isSneaking()) {
                 boolean isStandardToolBlock = state.isIn(BlockTags.SHOVEL_MINEABLE)
@@ -249,19 +234,14 @@ public class ModToolEngravingEvents {
                         || state.isIn(BlockTags.HOE_MINEABLE);
 
                 if (!isStandardToolBlock && !state.isAir()) {
-                    // Let the block break naturally to completely eliminate the double break sound!
                     return true;
                 }
             }
 
-            return true; // Fallback: Allows the block to break normally if no special filters match
+            return true;
         });
     }
 
-    /**
-     * Internal Core Engine: Awards a block-breaking charge point across your tool matrices.
-     * Processes main hand tools directly, and grants a 50% off-hand siphon transfer chance.
-     */
     private static void awardPulverizeBlockCharge(ServerPlayerEntity serverPlayer) {
         List<ItemStack> blockProcessingTargets = new ArrayList<>();
 

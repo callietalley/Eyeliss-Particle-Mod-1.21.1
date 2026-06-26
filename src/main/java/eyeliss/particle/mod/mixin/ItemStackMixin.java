@@ -49,13 +49,10 @@ public abstract class ItemStackMixin {
 
             int currentDamage = stack.getDamage();
 
-            // --- UNIVERSAL MENDING II ENHANCEMENT MATRIX ---
-            // If the incoming damage value is LESS than the current damage, the item is being REPAIRED.
             if (damage < currentDamage) {
                 boolean hasRestoration = engravings.stream().anyMatch(e -> e.engravingId().equals("restoration"));
 
                 if (hasRestoration) {
-                    // Check if the item also carries vanilla Mending natively
                     ItemEnchantmentsComponent enchants = stack.getOrDefault(
                             DataComponentTypes.ENCHANTMENTS,
                             ItemEnchantmentsComponent.DEFAULT
@@ -64,19 +61,13 @@ public abstract class ItemStackMixin {
                     boolean hasVanillaMending = enchants.getEnchantments().stream()
                             .anyMatch(e -> e.matchesKey(Enchantments.MENDING));
 
-                    // CLUMPS & VANILLA COMPATIBLE COMBO LOGIC:
-                    // If the item has Restoration AND vanilla Mending, we intercept the repair event.
-                    // Vanilla/Clumps already calculated a +2 durability fix. We catch that difference,
-                    // double it on the spot, and rewrite the final damage value to achieve a true 4-points-per-XP fix!
                     if (hasVanillaMending) {
                         int vanillaRepairAmount = currentDamage - damage;
 
-                        // Apply an extra matching repair bonus chunk directly to the incoming calculation value
                         int calculatedComboDamage = Math.max(0, damage - vanillaRepairAmount);
 
                         stack.setDamage(calculatedComboDamage);
-                        ci.cancel(); // Cancel the un-boosted parent repair transaction pass immediately
-                        return;
+                        ci.cancel();
                     }
                 }
             }
@@ -86,9 +77,6 @@ public abstract class ItemStackMixin {
         }
     }
 
-    // =========================================================================
-    // PART 4: ENFORCED GLOBAL STRUCTURAL TOOLTIP SEQUENCER ENGINE
-    // =========================================================================
     @Inject(method = "getTooltip", at = @At("HEAD"), cancellable = true)
     private void enforceGlobalStructuralOrder(Item.TooltipContext context, PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir) {
         if (eyelisspartmod$isSortingTooltip.get()) return;
@@ -158,7 +146,6 @@ public abstract class ItemStackMixin {
 
             List<Text> finalOrderedTooltip = new ArrayList<>(topBlock);
 
-            // --- RESOLVE ADVANCED TRANSLATABLE ENCHANTMENT OVERLAYS ---
             boolean hasDwarven = engravings.stream().anyMatch(e -> e.engravingId().equals("dwarven"));
             boolean hasRestoration = engravings.stream().anyMatch(e -> e.engravingId().equals("restoration"));
             String fortuneNameKey = Enchantments.FORTUNE.getValue().toTranslationKey("enchantment");
@@ -169,7 +156,6 @@ public abstract class ItemStackMixin {
                     RegistryEntry<Enchantment> enchRef = entry.getKey();
                     int originalLevel = entry.getIntValue();
 
-                    // A. DWARVEN + FORTUNE FORMULA OVERLAY
                     if (hasDwarven && enchRef.matchesKey(Enchantments.FORTUNE)) {
                         int combinedTotal = originalLevel + 1;
                         Text baseNumeral = Text.translatable("enchantment.level." + originalLevel);
@@ -185,11 +171,10 @@ public abstract class ItemStackMixin {
 
                         finalOrderedTooltip.add(customizedFormulaLine);
                     }
-                    // B. RESTORATION + MENDING COMBO OVERLAY
                     else if (hasRestoration && enchRef.matchesKey(Enchantments.MENDING)) {
                         MutableText mendingTwoLine = Text.translatable(mendingNameKey)
                                 .append(" ")
-                                .append(Text.translatable("enchantment.level.2")) // Displays "Mending II"
+                                .append(Text.translatable("enchantment.level.2"))
                                 .append(" (")
                                 .append(Text.translatable("enchantment.level.1"))
                                 .append(" + Restoration)")
@@ -203,19 +188,16 @@ public abstract class ItemStackMixin {
                 }
             }
 
-            // Fallback A: If the tool has Dwarven but lacks a Fortune book entirely
             if (hasDwarven && (enchantmentsComponent == null || enchantmentsComponent.getEnchantmentEntries().stream().noneMatch(e -> e.getKey().matchesKey(Enchantments.FORTUNE)))) {
                 MutableText placeholderLine = Text.translatable(fortuneNameKey).append(" ").append(Text.translatable("enchantment.level.1")).formatted(Formatting.GRAY, Formatting.ITALIC);
                 finalOrderedTooltip.add(placeholderLine);
             }
 
-            // Fallback B: If the tool has Restoration but lacks a vanilla Mending book entirely
             if (hasRestoration && (enchantmentsComponent == null || enchantmentsComponent.getEnchantmentEntries().stream().noneMatch(e -> e.getKey().matchesKey(Enchantments.MENDING)))) {
                 MutableText mendingPlaceholder = Text.translatable(mendingNameKey).append(" ").append(Text.translatable("enchantment.level.1")).formatted(Formatting.GRAY);
                 finalOrderedTooltip.add(mendingPlaceholder);
             }
 
-            // --- RENDER DYNAMIC CUSTOM ENGRAVINGS (UN-INDENTED, FLUSH LEFT) ---
             for (EngravingContents engraving : engravings) {
                 MutableText engravingLine = Text.empty().append(Text.translatable("engraving.eyelisspartmod." + engraving.engravingId()));
 
@@ -229,17 +211,11 @@ public abstract class ItemStackMixin {
                 finalOrderedTooltip.add(engravingLine);
             }
 
-            // --- APPEND TECHNICAL ATTRIBUTE MODIFIERS & ADVANCED TOOLTIPS ---
             if (!bottomBlock.isEmpty()) {
                 finalOrderedTooltip.add(Text.empty());
                 finalOrderedTooltip.addAll(bottomBlock);
             }
 
-            // =========================================================================
-            // PROGRESS BARS SEGMENT: INJECT METERS AT THE TAIL CAP ENDS
-            // =========================================================================
-
-            // 1. BLOOD SHRIVING RE-ROLL PROGRESS TRACKER (RED)
             if (hasKillCharge) {
                 BloodShrivingCharge charge = stack.get(ModComponents.SHRIVING_CHARGE);
                 if (charge != null && charge.requiredKills() > 0) {
@@ -258,7 +234,6 @@ public abstract class ItemStackMixin {
                 }
             }
 
-            // 2. GEOLOGIC SHRIVING RE-ROLL PROGRESS TRACKER (GOLD)
             if (hasBlockCharge) {
                 BlockShrivingCharge bCharge = stack.get(ModComponents.BLOCK_CHARGE);
                 if (bCharge != null && bCharge.requiredBlocks() > 0) {
@@ -277,7 +252,6 @@ public abstract class ItemStackMixin {
                 }
             }
 
-            // 3. BLESSED AURA DEVOTION PROGRESS TRACKER (CYAN)
             if (hasBlessedCharge) {
                 BlessedCharge blCharge = stack.get(ModComponents.BLESSED_CHARGE);
                 if (blCharge != null && blCharge.requiredPoints() > 0) {
@@ -303,9 +277,6 @@ public abstract class ItemStackMixin {
         }
     }
 
-    // =========================================================================
-    // PART 5: TOOL SPEED BALANCERS MATRIX ENGINE
-    // =========================================================================
     @Inject(method = "getMiningSpeedMultiplier(Lnet/minecraft/block/BlockState;)F", at = @At("RETURN"), cancellable = true)
     private void injectCustomToolEngravingBreakSpeeds(net.minecraft.block.BlockState state, CallbackInfoReturnable<Float> cir) {
         ItemStack stack = (ItemStack)(Object)this;

@@ -25,15 +25,13 @@ public class GeologicShrivingStoneItem extends Item {
         ItemStack targetStack = slot.getStack();
         if (targetStack.isEmpty()) return false;
 
-        // CRITICAL RULE ENFORCEMENT: Only ONE upgrading shriving stone can be active at any given time!
         if (targetStack.contains(ModComponents.SHRIVING_CHARGE) || targetStack.contains(ModComponents.BLOCK_CHARGE)) {
             if (!player.getWorld().isClient()) {
-                player.sendMessage(Text.literal("This item is already carrying an active Shriving Stone project! Strip it first using a Dense Shriving Stone.").formatted(net.minecraft.util.Formatting.RED), true);
+                player.sendMessage(Text.literal("This item is already carrying a Shriving Burden!").formatted(net.minecraft.util.Formatting.RED), true);
             }
             return false;
         }
 
-        // Validate tags mapping constraints
         List<TagKey<Item>> activePoolTags = List.of(
                 ModItemTags.SWORD_ENGRAVING_POOL, ModItemTags.TOOL_ENGRAVING_POOL,
                 ModItemTags.ARMOR_ENGRAVING_POOL, ModItemTags.GENERAL_ENGRAVING_POOL
@@ -47,7 +45,6 @@ public class GeologicShrivingStoneItem extends Item {
 
         List<EngravingContents> current = targetStack.getOrDefault(ModComponents.ENGRAVING_CONTENTS, List.of());
 
-        // Block application if Curse of Stagnation is present
         if (current.stream().anyMatch(e -> e.engravingId().equals("stagnation"))) return false;
 
         boolean hasTranscendence = current.stream().anyMatch(e -> e.engravingId().equals("transcendence"));

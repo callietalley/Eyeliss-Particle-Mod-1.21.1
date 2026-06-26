@@ -10,8 +10,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,23 +22,18 @@ import java.util.List;
 @Mixin(PlayerEntity.class)
 public abstract class EngravingEffectPlayerMixin {
 
-    // Precision decimal accumulators to bridge fractional experience across ticks securely
     @Unique private static final ThreadLocal<Float> eyelisspartmod$fractionalXPTracker = ThreadLocal.withInitial(() -> 0.0f);
     @Unique private static final ThreadLocal<Float> eyelisspartmod$fractionalDevotionTracker = ThreadLocal.withInitial(() -> 0.0f);
 
-    // Unique tracking ledger guard to cleanly block stack overflow recursive feedback loops
     @Unique private boolean eyelisspartmod$isProcessingXp = false;
 
-    // --- UNIVERSAL WISDOM ENGINE: INTERCEPTS ALL XP COMBAT/MINING TRANSACTIONS ---
     @Inject(method = "addExperience(I)V", at = @At("HEAD"), cancellable = true)
     private void injectUniversalWisdomCollectionSynergy(int originalXPAmount, CallbackInfo ci) {
-        // Stop execution instantly if this call was triggered by our own modifier bonus injection pass
         if (this.eyelisspartmod$isProcessingXp || originalXPAmount <= 0) return;
 
         PlayerEntity player = (PlayerEntity)(Object)this;
         if (player.getWorld().isClient()) return;
 
-        // --- PHASE 1: STANDARD WISDOM MULTIPLIER SCALING (+20% per piece) ---
         int wisdomCount = 0;
         wisdomCount += eyelisspartmod$countWisdom(player.getMainHandStack());
         wisdomCount += eyelisspartmod$countWisdom(player.getOffHandStack());
@@ -65,12 +58,10 @@ public abstract class EngravingEffectPlayerMixin {
             processedXPAmount = newAmount;
         }
 
-        // --- PHASE 2: PROGRESSION SHRIVING & DEVOTION MULTI-SIPHONS ---
         if (player instanceof ServerPlayerEntity serverPlayer) {
             ItemStack heldItem = serverPlayer.getMainHandStack();
 
             if (!heldItem.isEmpty()) {
-                // TRACKING PATHWAY A: Legacy Blood Kills & Geologic Shriving Stone points (20% Amplified rate)
                 if (eyelisspartmod$countWisdom(heldItem) > 0) {
                     float incomingRatioWeight = processedXPAmount * 0.02f;
                     float currentAccumulatedPool = eyelisspartmod$fractionalXPTracker.get() + incomingRatioWeight;
@@ -78,7 +69,6 @@ public abstract class EngravingEffectPlayerMixin {
                     int successfulRollsCount = 0;
                     while (currentAccumulatedPool >= 1.0f) {
                         currentAccumulatedPool -= 1.0f;
-                        // Calibrated up from < 0.05f to < 0.20f to grant a crisp 20% proc rate per 50 XP interval
                         if (serverPlayer.getRandom().nextFloat() < 0.20f) {
                             successfulRollsCount++;
                         }
@@ -96,7 +86,6 @@ public abstract class EngravingEffectPlayerMixin {
                     }
                 }
 
-                // TRACKING PATHWAY B: Isolated Blessed Aura Devotion Charger (1 Point per 10 XP points)
                 if (heldItem.contains(ModComponents.BLESSED_CHARGE)) {
                     float incomingDevotionWeight = processedXPAmount * 0.10f;
                     float currentDevotionPool = eyelisspartmod$fractionalDevotionTracker.get() + incomingDevotionWeight;
@@ -114,7 +103,6 @@ public abstract class EngravingEffectPlayerMixin {
                 }
             }
 
-            // --- PHASE 3: DYNAMIC RESTORATION BLESSING CACHE-BYPASSING REPAIR ENGINE ---
             List<ItemStack> repairableEquipment = new ArrayList<>();
             ItemStack mainTool = serverPlayer.getMainHandStack();
             if (!mainTool.isEmpty()) repairableEquipment.add(mainTool);
@@ -141,7 +129,6 @@ public abstract class EngravingEffectPlayerMixin {
                     boolean hasVanillaMending = enchants.getEnchantments().stream()
                             .anyMatch(e -> e.matchesKey(Enchantments.MENDING));
 
-                    // CALIBRATED COMBO RATIOS: Restoration Alone = Mending I (1XP:2Durability) | Stacked with Mending = Mending II (1XP:4Durability!)
                     int repairPointsPerXP = hasVanillaMending ? 4 : 2;
 
                     while (piece.isDamaged() && xpLeftToProcess > 0) {
@@ -159,7 +146,6 @@ public abstract class EngravingEffectPlayerMixin {
                 }
             }
 
-            // Flush remaining XP back to the player level bar if any repairs occurred, bypassing vanilla loops
             if (xpLeftToProcess != processedXPAmount) {
                 this.eyelisspartmod$isProcessingXp = true;
                 serverPlayer.addExperience(xpLeftToProcess);
@@ -169,9 +155,6 @@ public abstract class EngravingEffectPlayerMixin {
         }
     }
 
-    // =========================================================================
-    // PART 3: BLESSED AURA EXPONENTIAL XP DEVOTION ACCUMULATOR GAUGE
-    // =========================================================================
     @Unique
     private void eyelisspartmod$awardDevotionBonus(ItemStack heldItem, ServerPlayerEntity serverPlayer, int pointsToAward) {
         BlessedCharge charge = heldItem.get(ModComponents.BLESSED_CHARGE);
@@ -182,7 +165,6 @@ public abstract class EngravingEffectPlayerMixin {
         if (updatedDevotion >= charge.requiredPoints()) {
             heldItem.remove(ModComponents.BLESSED_CHARGE);
 
-            // Calls your centralized, pool-restricted public bridge method to consume 'blessed' and apply the upgrade
             ActiveEngravingEvaluator.finalizeBlessedGraduationProject(heldItem, serverPlayer);
         } else {
             heldItem.set(ModComponents.BLESSED_CHARGE, new BlessedCharge(updatedDevotion, charge.requiredPoints()));
@@ -192,9 +174,6 @@ public abstract class EngravingEffectPlayerMixin {
         }
     }
 
-    // =========================================================================
-    // PART 4: LEGACY SHRIVING STONE BACKEND UPGRADE AUXILIARIES
-    // =========================================================================
     @Unique
     private void eyelisspartmod$awardKillBonus(ItemStack stack, ServerPlayerEntity player, int points) {
         BloodShrivingCharge c = stack.get(ModComponents.SHRIVING_CHARGE);
@@ -220,9 +199,6 @@ public abstract class EngravingEffectPlayerMixin {
         return list.stream().filter(e -> e.engravingId().equals("wisdom")).mapToInt(EngravingContents::level).sum();
     }
 
-    // =========================================================================
-    // PART 5: SHATTERING BLESSING HARVEST SUITABILITY OVERRIDE
-    // =========================================================================
     @Inject(method = "canHarvest(Lnet/minecraft/block/BlockState;)Z", at = @At("HEAD"), cancellable = true)
     private void injectShatteringHarvestSuitability(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity)(Object)this;
@@ -238,7 +214,6 @@ public abstract class EngravingEffectPlayerMixin {
                     || state.isIn(net.minecraft.registry.tag.BlockTags.AXE_MINEABLE)
                     || state.isIn(net.minecraft.registry.tag.BlockTags.HOE_MINEABLE);
 
-            // Force tool suitability to true on fragile glass blocks to apply tier break speeds natively
             if (!isStandardToolBlock && !state.isAir()) {
                 cir.setReturnValue(true);
             }

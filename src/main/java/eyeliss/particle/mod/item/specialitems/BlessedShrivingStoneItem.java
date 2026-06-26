@@ -19,7 +19,6 @@ public class BlessedShrivingStoneItem extends Item {
 
     @Override
     public boolean onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player) {
-        // Run only when left-clicking this stone onto another item in the inventory grid
         if (clickType != ClickType.LEFT) return false;
 
         ItemStack targetStack = slot.getStack();
@@ -34,9 +33,7 @@ public class BlessedShrivingStoneItem extends Item {
         for (EngravingContents entry : current) {
             String id = entry.engravingId();
 
-            // Catch the first curse type encountered
             if (!foundAndRemovedCurse && (id.equals("stagnation") || id.equals("ruin"))) {
-                // Replace it one-to-one with a level 1 Baptism blessing slot filler
                 updatedList.add(new EngravingContents("baptism", 1));
                 foundAndRemovedCurse = true;
             } else {
@@ -44,17 +41,13 @@ public class BlessedShrivingStoneItem extends Item {
             }
         }
 
-        // Exit out safely if the item had no curses to break
         if (!foundAndRemovedCurse) return false;
 
-        // Apply updated component list onto target item stack data
         targetStack.set(ModComponents.ENGRAVING_CONTENTS, updatedList);
 
-        // Play a satisfying holy/glass shriving breaking audio effect
         player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.BLOCK_AMETHYST_BLOCK_BREAK, SoundCategory.PLAYERS, 0.6f, 1.2f);
 
-        // Consume exactly 1 item count from the player's held stone stack
         if (!player.getAbilities().creativeMode) {
             stack.decrement(1);
         }

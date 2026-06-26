@@ -205,7 +205,7 @@
   "item.eyelisspartmod.geologic_shriving_stone": "Geologic Shriving Stone",
   "item.eyelisspartmod.engraving_guide_book": "Engraving Guide Book",
   "gui.eyelisspartmod.insert_slot_hint": "[ Place Gear Above ]",
-  "gui.eyelisspartmod.survival_guide_content": "§5§lEngravings{r}§rTo obtain an engraving, you must use a specific Shriving Stone on the item you wish to engrave.{r} {r}To charge up the magical engraving bar, you must kill mobs, you get more charge from higher health mobs.{r} {r}To charge up the geologic engraving bar, you must mine blocks.{r} {r}Every tier of engraving takes 10x more to gain another.{r} {r}§5§lCurses{r}§rTo remove curses, you must use a Blessed Shriving Stone on the item{r}This will replace the cursed engraving with a Baptised engraving.",
+  "gui.eyelisspartmod.survival_guide_content": "§5§lEngravings{r}§rTo obtain an engraving, you must use a specific Shriving Stone on the item you wish to engrave.{r}To use a Shriving Stone, hold it over another item in your inventory, and left click.{r} {r}To charge up the magical engraving bar, you must kill mobs, you get more charge from higher health mobs.{r} {r}To charge up the geologic engraving bar, you must mine blocks.{r} {r}Every tier of engraving takes 10x more to gain another.{r} {r}§5§lCurses{r}§rTo remove curses, you must use a Blessed Shriving Stone on the item{r}This will replace the cursed engraving with a Baptised engraving.",
 
   "engraving.description.eyelisspartmod.absorption": "Heals for 12.5% of damage dealt{r} And increasing by 7.5% per level past 1.",
   "engraving.description.eyelisspartmod.crushing": "Cancels 15% of armor values{r} And increasing by 10% per level past 1.",

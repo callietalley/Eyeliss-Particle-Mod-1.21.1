@@ -1,4 +1,4 @@
-package eyeliss.particle.mod.item;
+package eyeliss.particle.mod.item.specialitems;
 
 import eyeliss.particle.mod.screen.EngravingGuideScreenHandler;
 import net.minecraft.entity.player.PlayerEntity;

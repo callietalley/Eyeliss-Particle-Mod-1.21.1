@@ -14,8 +14,6 @@ public class ModEngravings {
     private static final List<String> SINGLE_LEVEL_POOLS = List.of("blessed");
 
     public static void registerPools() {
-        // --- SWORD / WEAPON POOLS MATRIX ---
-        // Blessed registers as a normal pool item, but is restricted via our single level pool below
         NORMAL_POOLS.put(ModItemTags.WEAPON_ENGRAVING_POOL, List.of("sweeping", "truth", "exorcism", "blessed", "magic_touch"));
         BLESSING_POOLS.put(ModItemTags.WEAPON_ENGRAVING_POOL, List.of());
 
@@ -39,10 +37,6 @@ public class ModEngravings {
         return BLESSING_POOLS;
     }
 
-    /**
-     * Absolute Level Checker: Enforces a strict level 1 ceiling for Blessings, Curses, and
-     * our brand new Single Level non-blessings category alike.
-     */
     public static boolean isBlessingOrCurse(String id) {
         if (SINGLE_LEVEL_POOLS.contains(id)) return true;
         return List.of(

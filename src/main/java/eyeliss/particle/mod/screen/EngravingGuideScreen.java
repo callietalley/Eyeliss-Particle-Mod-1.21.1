@@ -27,7 +27,6 @@ public class EngravingGuideScreen extends HandledScreen<EngravingGuideScreenHand
         this.backgroundWidth = 310;
         this.backgroundHeight = 273;
 
-        // FIX: Moved title text to the right by 10 pixels (13 -> 23)
         this.titleX = 23;
         this.titleY = 12;
     }
@@ -61,7 +60,6 @@ public class EngravingGuideScreen extends HandledScreen<EngravingGuideScreenHand
             this.wasItemPresentLastFrame = isItemPresentThisFrame;
         }
 
-        // FIX: Moved the entire right page workspace to the right by 10 pixels (159 -> 169)
         int rightPageX = 169;
         int rightPageMaxTextWidth = 117;
         int minVisibleY = 18;
@@ -69,7 +67,6 @@ public class EngravingGuideScreen extends HandledScreen<EngravingGuideScreenHand
         int visibleHeight = maxVisibleY - minVisibleY;
 
         if (!isItemPresentThisFrame) {
-            // FIX: Repositioned the slot hint text down by 4 and right by 7 pixels to match the slot adjustments (75 -> 81, 104 -> 108)
             int slotMidpointX = 81;
             String slotHint = Text.translatable("gui.eyelisspartmod.insert_slot_hint").getString();
             int slotHintWidth = this.textRenderer.getWidth(slotHint);
