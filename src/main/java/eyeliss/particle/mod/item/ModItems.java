@@ -150,7 +150,7 @@ public class ModItems {
             super.appendTooltip(stack, context, tooltip, type);
         }
     });
-    public static final Item BLESSED_SHRIVING_STONE = registerItem("blessed_shriving_stone", new eyeliss.particle.mod.item.BlessedShrivingStoneItem(new Item.Settings().maxCount(4).fireproof().rarity(Rarity.RARE)) {
+    public static final Item BLESSED_SHRIVING_STONE = registerItem("blessed_shriving_stone", new eyeliss.particle.mod.item.specialitems.BlessedShrivingStoneItem(new Item.Settings().maxCount(4).fireproof().rarity(Rarity.RARE)) {
         @Override
         public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
             tooltip.add(Text.literal("Cleanses cursed engravings.").formatted(Formatting.GRAY));

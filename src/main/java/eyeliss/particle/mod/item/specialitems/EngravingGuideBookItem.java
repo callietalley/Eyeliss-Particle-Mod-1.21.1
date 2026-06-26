@@ -2,7 +2,6 @@ package eyeliss.particle.mod.item.specialitems;
 
 import eyeliss.particle.mod.screen.EngravingGuideScreenHandler;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;

@@ -1,4 +1,4 @@
-package eyeliss.particle.mod.item;
+package eyeliss.particle.mod.item.specialitems;
 
 import eyeliss.particle.mod.component.EngravingContents;
 import eyeliss.particle.mod.component.ModComponents;

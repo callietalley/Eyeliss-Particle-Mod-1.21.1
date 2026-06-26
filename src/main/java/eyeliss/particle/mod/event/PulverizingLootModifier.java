@@ -13,9 +13,7 @@ public class PulverizingLootModifier {
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             if (!source.isBuiltin()) return;
 
-            tableBuilder.modifyPools(poolBuilder -> {
-                LootTableEvents.MODIFY.register((k, tb, src, regs) -> {});
-            });
+            tableBuilder.modifyPools(poolBuilder -> LootTableEvents.MODIFY.register((k, tb, src, regs) -> {}));
         });
 
         net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
