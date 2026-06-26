@@ -8,6 +8,7 @@ import eyeliss.particle.mod.effect.ModEffects;
 import eyeliss.particle.mod.enchantment.ModEnchantments;
 import eyeliss.particle.mod.entity.ModEntities;
 import eyeliss.particle.mod.event.*;
+import eyeliss.particle.mod.fluid.ModFluids;
 import eyeliss.particle.mod.item.*;
 import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import eyeliss.particle.mod.item.trinkets.util.BloodStoneTickHandler;
@@ -42,6 +43,7 @@ public class EyelisssParticleMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModRecipes.registerRecipes();
+        ModFluids.registerModFluids();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerBlockEntities();
 		LimitedRecipes.registerLimits();
