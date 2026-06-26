@@ -1,0 +1,25 @@
+
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:emerald_block"
+    },
+    "C": {
+      "item": "eyelisspartmod:shriving_core"
+    },
+    "S": {
+      "item": "minecraft:deepslate"
+    }
+  },
+  "pattern": [
+    "SBS",
+    "BCB",
+    "SBS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "eyelisspartmod:geologic_shriving_stone"
+  }
+}

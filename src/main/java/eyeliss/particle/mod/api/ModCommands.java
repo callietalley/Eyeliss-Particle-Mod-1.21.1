@@ -1,18 +1,15 @@
 package eyeliss.particle.mod.api;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import eyeliss.particle.mod.recipe.CraftLimitClearCommand;
-import eyeliss.particle.mod.item.trinkets.util.BloodStoneTickHandler;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import eyeliss.particle.mod.api.engraving.EngraveCommandExecutor;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.IdentifierArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 
 public class ModCommands {
 
@@ -22,43 +19,52 @@ public class ModCommands {
 
     private static void buildTree(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess access, CommandManager.RegistrationEnvironment env) {
 
-        // Updated limit branch to handle both global resets and targeting specific players
-        var limitBranch = CommandManager.literal("limit")
-                .then(CommandManager.literal("reset")
-                        .executes(CraftLimitClearCommand::resetAllCounters)
-                        .then(CommandManager.argument("recipe_id", IdentifierArgumentType.identifier())
-                                .suggests(CraftLimitClearCommand.LIMITED_RECIPE_SUGGESTIONS)
-                                .executes(CraftLimitClearCommand::resetSpecificCounter)
-                                // NEW: Allows running /eyeliss limit reset <recipe_id> <player>
-                                .then(CommandManager.argument("player", EntityArgumentType.player())
-                                        .executes(CraftLimitClearCommand::resetPlayerCounter))))
-                .then(CommandManager.literal("set")
-                        .then(CommandManager.argument("recipe_id", IdentifierArgumentType.identifier())
-                                .suggests(CraftLimitClearCommand.LIMITED_RECIPE_SUGGESTIONS)
-                                // NEW: Configured to take a target player username before the amount argument
-                                .then(CommandManager.argument("player", EntityArgumentType.player())
-                                        .then(CommandManager.argument("amount", IntegerArgumentType.integer(0))
-                                                .executes(CraftLimitClearCommand::setPlayerCounter)))));
-
-        var cooldownBranch = CommandManager.literal("cooldown")
-                .then(CommandManager.literal("reset")
-                        .then(CommandManager.literal("bloodstone")
-                                .executes(context -> {
-                                    ServerCommandSource source = context.getSource();
-                                    ServerPlayerEntity player = source.getPlayer();
-                                    if (player != null) {
-                                        BloodStoneTickHandler.resetCooldown(player);
-                                        source.sendFeedback(() -> Text.literal("Blood Stone cooldown reset!").copy().formatted(Formatting.RED), false);
-                                        return 1;
-                                    }
-                                    source.sendError(Text.literal("Must be executed by a player."));
-                                    return 0;
-                                })));
+        var limitBranch = CommandManager.literal("limit");
+        var cooldownBranch = CommandManager.literal("cooldown");
 
         dispatcher.register(CommandManager.literal("eyeliss")
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(limitBranch)
                 .then(cooldownBranch)
         );
+
+        // --- ROOT PATHWAY DIRECTORY: /engrave ---
+        dispatcher.register(CommandManager.literal("engrave")
+                .requires(source -> source.hasPermissionLevel(2))
+                .then(CommandManager.argument("target", EntityArgumentType.player())
+
+                        // BRANCH 1: /engrave <target> engraving ...
+                        .then(CommandManager.literal("engraving")
+                                .then(CommandManager.literal("add")
+                                        .then(CommandManager.argument("engraving_name", StringArgumentType.word())
+                                                .suggests(EngraveCommandExecutor::suggestEngravingNames)
+                                                .executes(context -> EngraveCommandExecutor.executeAddEngraving(context, false))
+                                                .then(CommandManager.argument("dwarven_touch", BoolArgumentType.bool())
+                                                        .executes(context -> EngraveCommandExecutor.executeAddEngraving(context, BoolArgumentType.getBool(context, "dwarven_touch"))))))
+                                .then(CommandManager.literal("remove")
+                                        .then(CommandManager.argument("engraving_name", StringArgumentType.word())
+                                                .suggests(EngraveCommandExecutor::suggestEngravingNames)
+                                                .executes(EngraveCommandExecutor::executeRemoveEngraving))))
+
+                        // BRANCH 2: /engrave <target> kills ...
+                        .then(CommandManager.literal("kills")
+                                .then(CommandManager.literal("set")
+                                        .then(CommandManager.argument("amount", IntegerArgumentType.integer(0))
+                                                .executes(EngraveCommandExecutor::executeSetKills)))
+                                .then(CommandManager.literal("remove")
+                                        .executes(EngraveCommandExecutor::executeRemoveShriving)))
+
+                        // BRANCH 3: /engrave <target> blocks ...
+                        .then(CommandManager.literal("blocks")
+                                .then(CommandManager.literal("set")
+                                        .then(CommandManager.argument("amount", IntegerArgumentType.integer(0))
+                                                .executes(EngraveCommandExecutor::executeSetBlocks))))
+
+                        // NEW BRANCH 4: /engrave <target> devotion ...
+                        // FIX: Grants full operator control over your new single-level Blessed project bars
+                        .then(CommandManager.literal("devotion")
+                                .then(CommandManager.literal("set")
+                                        .then(CommandManager.argument("amount", IntegerArgumentType.integer(0))
+                                                .executes(EngraveCommandExecutor::executeSetDevotion))))));
     }
 }

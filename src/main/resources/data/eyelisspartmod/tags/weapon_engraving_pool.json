@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:axes",
+    "#minecraft:swords",
+    "#eyelisspartmod:dagger_weapon",
+    "#eyelisspartmod:spear_weapon",
+    "#eyelisspartmod:khopesh_weapon",
+    "#c:tools/mace",
+    "#c:tools/spear"
+  ]
+}

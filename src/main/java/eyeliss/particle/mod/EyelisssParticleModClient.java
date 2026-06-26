@@ -57,6 +57,10 @@ public class EyelisssParticleModClient implements ClientModInitializer {
                 ModScreenHandlers.ADVANCED_WEAPON_SMITHING_HANDLER,
                 AdvancedWeaponSmithingScreen::new
         );
+        net.minecraft.client.gui.screen.ingame.HandledScreens.register(
+                eyeliss.particle.mod.screen.ModScreenHandlers.ENGRAVING_GUIDE_HANDLER,
+                eyeliss.particle.mod.screen.EngravingGuideScreen::new
+        );
 
         // --- Particle Handlers ---
         ShadowParticleHandler.register();
@@ -85,12 +89,10 @@ public class EyelisssParticleModClient implements ClientModInitializer {
         // --- Colors, Networking, & HUD Overlays ---
         SyringeColor.registerColor();
 
-        ClientPlayNetworking.registerGlobalReceiver(OverhealthSyncPayload.ID, (payload, context) -> {
-            context.client().execute(() -> {
-                ClientOverhealthTracker.currentShield = payload.currentShield();
-                ClientOverhealthTracker.maxShield = payload.maxShield();
-            });
-        });
+        ClientPlayNetworking.registerGlobalReceiver(OverhealthSyncPayload.ID, (payload, context) -> context.client().execute(() -> {
+            ClientOverhealthTracker.currentShield = payload.currentShield();
+            ClientOverhealthTracker.maxShield = payload.maxShield();
+        }));
 
         HudRenderCallback.EVENT.register(new OverhealthBarRenderer());
     }

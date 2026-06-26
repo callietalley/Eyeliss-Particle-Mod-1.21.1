@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#c:tools/shear",
+    "#minecraft:shovels",
+    "#minecraft:axes",
+    "#minecraft:pickaxes"
+  ]
+}

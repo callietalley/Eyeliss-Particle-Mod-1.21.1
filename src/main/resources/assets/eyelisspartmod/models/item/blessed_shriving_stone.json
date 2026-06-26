@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "eyelisspartmod:item/blessed_shriving_stone"
+  }
+}

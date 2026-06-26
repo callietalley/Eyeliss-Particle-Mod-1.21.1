@@ -1,6 +1,10 @@
 package eyeliss.particle.mod.item;
 
 import eyeliss.particle.mod.EyelisssParticleMod;
+import eyeliss.particle.mod.item.specialitems.DenseShrivingStoneItem;
+import eyeliss.particle.mod.item.specialitems.DwarvenChiselItem;
+import eyeliss.particle.mod.item.specialitems.GeologicShrivingStoneItem;
+import eyeliss.particle.mod.item.specialitems.MagicalShrivingStoneItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BundleContentsComponent;
@@ -103,6 +107,65 @@ public class ModItems {
     }
 
     public static final Item SHADOW_BOOK = registerItem("shadow_book", new EnchantedBookItem(new Item.Settings().maxCount(1).fireproof().rarity(Rarity.UNCOMMON)));
+
+    public static final Item SHRIVING_CORE = registerItem("shriving_core", new Item(new Item.Settings().maxCount(16).fireproof()) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Used in creating a Shriving Stone.").formatted(Formatting.GRAY));
+            tooltip.add(Text.literal("Crafted in an Advanced Smithing Table").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
+
+    public static final Item MAGICAL_SHRIVING_STONE = registerItem("magical_shriving_stone", new MagicalShrivingStoneItem(new Item.Settings().maxCount(4).fireproof().rarity(Rarity.UNCOMMON)) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Applies a Blood thirst to the item, which once fulfilled, applies an engraving.").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
+    public static final Item GEOLOGIC_SHRIVING_STONE = registerItem("geologic_shriving_stone", new GeologicShrivingStoneItem(new Item.Settings().maxCount(4).fireproof().rarity(Rarity.UNCOMMON)) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Applies a Geologic hunger to the item, which once fulfilled, applies an engraving.").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
+    public static final Item DENSE_SHRIVING_STONE = registerItem("dense_shriving_stone", new DenseShrivingStoneItem(new Item.Settings().maxCount(4).fireproof().rarity(Rarity.UNCOMMON)) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Removes the currently applied shriving stone.").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
+    public static final Item DWARVEN_CHISEL = registerItem("dwarven_chisel", new DwarvenChiselItem(new Item.Settings().maxCount(1).fireproof().rarity(Rarity.EPIC)) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Instantly applies a random engraving applicable to the item.").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
+    public static final Item BLESSED_SHRIVING_STONE = registerItem("blessed_shriving_stone", new eyeliss.particle.mod.item.BlessedShrivingStoneItem(new Item.Settings().maxCount(4).fireproof().rarity(Rarity.RARE)) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Cleanses cursed engravings.").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
+    public static final Item ENGRAVING_GUIDE_BOOK = registerItem("engraving_guide_book", new eyeliss.particle.mod.item.EngravingGuideBookItem(new Item.Settings().maxCount(1)) {
+        @Override
+        public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
+            tooltip.add(Text.literal("Tells you everything you need to know about engravings.").formatted(Formatting.GRAY));
+
+            super.appendTooltip(stack, context, tooltip, type);
+        }
+    });
 
     public static void registerModItems () {
         EyelisssParticleMod.LOGGER.info("Registering Mod Items for " + EyelisssParticleMod.MOD_ID);

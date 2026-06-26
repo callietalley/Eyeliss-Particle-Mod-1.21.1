@@ -1,0 +1,14 @@
+{
+  "type": "eyelisspartmod:weapon_smithing",
+  "order": -1,
+  "ingredients": [
+    { "id": "minecraft:deepslate", "count": 16 },
+    { "id": "minecraft:amethyst_shard", "count": 8 },
+    { "id": "minecraft:blaze_powder", "count": 4 },
+    { "id": "minecraft:obsidian", "count": 2 }
+  ],
+  "result": {
+    "id": "eyelisspartmod:shriving_core",
+    "count": 1
+  }
+}

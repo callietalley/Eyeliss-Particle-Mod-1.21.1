@@ -44,6 +44,13 @@ public class ModItemGroups {
                         entries.add(SHADOW_BOOK);
                         entries.add(SHADOW_BUNDLE);
                         entries.add(DEPLETED_ESSENCE);
+                        entries.add(ENGRAVING_GUIDE_BOOK);
+                        entries.add(SHRIVING_CORE);
+                        entries.add(MAGICAL_SHRIVING_STONE);
+                        entries.add(GEOLOGIC_SHRIVING_STONE);
+                        entries.add(DENSE_SHRIVING_STONE);
+                        entries.add(BLESSED_SHRIVING_STONE);
+                        entries.add(DWARVEN_CHISEL);
 
                     }).build());
 

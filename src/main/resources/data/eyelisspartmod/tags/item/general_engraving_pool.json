@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "#c:armors",
+    "#c:tools",
+    "#minecraft:enchantable/durability",
+    "#minecraft:head_armor",
+    "#minecraft:chest_armor",
+    "#minecraft:leg_armor",
+    "#minecraft:foot_armor",
+    "#eyelisspartmod:durable_items",
+    "minecraft:shield"
+  ]
+}

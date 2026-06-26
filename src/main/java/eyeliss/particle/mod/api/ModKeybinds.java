@@ -1,6 +1,7 @@
 package eyeliss.particle.mod.api;
 
 import eyeliss.particle.mod.network.RiftGemPayloads;
+import eyeliss.particle.mod.network.VeinMineKeyPayload;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -14,23 +15,42 @@ public class ModKeybinds {
     public static KeyBinding quaternary_active;
     public static KeyBinding trinket_key;
 
+    // NEW: Define your dedicated vein mining active tracking keybind variable state
+    public static KeyBinding vein_mine_active_key;
+    private static boolean wasHeldLastTick = false;
+
     public static void register() {
         quaternary_active = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.eyeliss_particle_mod.quaternary_active",
+                "key.eyelisspartmod.quaternary_active",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_UNKNOWN,
-                "key.category.eyeliss_particle_mod.keybinds"
+                "key.category.eyelisspartmod.keybinds"
         ));
 
         trinket_key = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.eyeliss_particle_mod.trinket_key",
+                "key.eyelisspartmod.trinket_key",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_UNKNOWN,
-                "key.category.eyeliss_particle_mod.keybinds"
+                "key.category.eyelisspartmod.keybinds"
+        ));
+
+        // NEW: Wire up your dedicated vein-mining hold key registry (Defaults to Left Grave/Tilde Key)
+        vein_mine_active_key = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.eyelisspartmod.vein_mine_key",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_GRAVE_ACCENT,
+                "key.category.eyelisspartmod.keybinds"
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null) return;
+
+            // --- TRACK VEIN MINE HELD STATE CHANGES ---
+            boolean isHeldThisTick = vein_mine_active_key.isPressed();
+            if (isHeldThisTick != wasHeldLastTick) {
+                ClientPlayNetworking.send(new VeinMineKeyPayload(isHeldThisTick));
+                wasHeldLastTick = isHeldThisTick;
+            }
 
             while (quaternary_active.wasPressed()) {
             }
@@ -41,7 +61,6 @@ public class ModKeybinds {
                                 .anyMatch(equip -> equip.getRight().getItem() instanceof IActiveTrinketItem))
                         .orElse(false);
 
-                // If the player has ANY trinket with an active ability, send the packet
                 if (hasActiveTrinket) {
                     boolean isSneaking = client.player.isSneaking();
                     ClientPlayNetworking.send(new RiftGemPayloads.OpenRiftScreenPayload(isSneaking));

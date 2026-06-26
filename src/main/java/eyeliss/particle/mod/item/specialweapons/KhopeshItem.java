@@ -40,6 +40,8 @@ public class KhopeshItem extends Item {
                                         .setStyle(Text.literal("").getStyle().withItalic(false).withExclusiveFormatting(Formatting.GRAY)),
 
                                 Text.literal("the more damage you deal with this")
+                                        .setStyle(Text.literal("").getStyle().withItalic(false).withExclusiveFormatting(Formatting.GRAY)),
+                                Text.literal(" ")
                                         .setStyle(Text.literal("").getStyle().withItalic(false).withExclusiveFormatting(Formatting.GRAY))
                         ))
                 )

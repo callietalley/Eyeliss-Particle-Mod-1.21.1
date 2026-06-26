@@ -2,16 +2,12 @@ package eyeliss.particle.mod;
 
 import eyeliss.particle.mod.api.ModCommands;
 import eyeliss.particle.mod.block.ModBlocks;
-import eyeliss.particle.mod.block.entity.AdvancedWeaponSmithingBlockEntity;
 import eyeliss.particle.mod.block.entity.ModBlockEntities;
 import eyeliss.particle.mod.component.ModComponents;
 import eyeliss.particle.mod.effect.ModEffects;
 import eyeliss.particle.mod.enchantment.ModEnchantments;
 import eyeliss.particle.mod.entity.ModEntities;
-import eyeliss.particle.mod.event.OverhealthHandler;
-import eyeliss.particle.mod.event.RareItemGlows;
-import eyeliss.particle.mod.event.ShadowCurseHandler;
-import eyeliss.particle.mod.event.UniqueDrops;
+import eyeliss.particle.mod.event.*;
 import eyeliss.particle.mod.item.*;
 import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import eyeliss.particle.mod.item.trinkets.util.BloodStoneTickHandler;
@@ -20,7 +16,6 @@ import eyeliss.particle.mod.particle.ModParticles;
 import eyeliss.particle.mod.potion.ModPotions;
 import eyeliss.particle.mod.recipe.LimitedRecipes;
 import eyeliss.particle.mod.recipe.ModRecipes;
-import eyeliss.particle.mod.screen.AdvancedWeaponSmithingScreenHandler;
 import eyeliss.particle.mod.screen.ModScreenHandlers;
 import eyeliss.particle.mod.sound.ModSounds;
 import eyeliss.particle.mod.util.BloodShardDropHandler;
@@ -35,7 +30,6 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
@@ -44,8 +38,6 @@ import java.util.List;
 public class EyelisssParticleMod implements ModInitializer {
 	public static final String MOD_ID = "eyelisspartmod";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-	public static MinecraftServer CURRENT_SERVER = null;
 
 	@Override
 	public void onInitialize() {
@@ -66,9 +58,20 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModScreenHandlers.registerScreenHandlers();
 		ServerTickEvents.START_SERVER_TICK.register(RiftGemNetwork::tickWarmups);
 
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.playC2S().register(
+                eyeliss.particle.mod.network.VeinMineKeyPayload.ID,
+                eyeliss.particle.mod.network.VeinMineKeyPayload.CODEC
+        );
+        eyeliss.particle.mod.network.ServerVeinMineTracker.initialize();
+
+        PulverizingLootModifier.registerLootModifiers();
+
 		ModEffects.register();
 		ModPotions.registerPotions();
 		ModComponents.registerComponents();
+        ModSweepingEvents.registerSweepingAttackHandler();
+		ModEngravingEvents.registerEvents();
+        ModToolEngravingEvents.registerToolEvents();
 		ModEntities.registerEntities();
 		UniqueDrops.registerDrops();
 		ModLootTableModifiers.modifyLootTables();
@@ -93,72 +96,68 @@ public class EyelisssParticleMod implements ModInitializer {
 
 		PayloadTypeRegistry.playS2C().register(BlockPosPayload.ID, BlockPosPayload.PACKET_CODEC);
 
-		ServerPlayNetworking.registerGlobalReceiver(SelectWeaponC2SPayload.ID, (payload, context) -> {
-			context.server().execute(() -> {
-				net.minecraft.server.network.ServerPlayerEntity player = context.player();
+		ServerPlayNetworking.registerGlobalReceiver(SelectWeaponC2SPayload.ID, (payload, context) -> context.server().execute(() -> {
+            net.minecraft.server.network.ServerPlayerEntity player = context.player();
 
-				if (player.currentScreenHandler instanceof eyeliss.particle.mod.screen.AdvancedWeaponSmithingScreenHandler smithingHandler) {
-					if (smithingHandler.getSlot(0).inventory instanceof eyeliss.particle.mod.block.entity.AdvancedWeaponSmithingBlockEntity smithingEntity) {
+            if (player.currentScreenHandler instanceof eyeliss.particle.mod.screen.AdvancedWeaponSmithingScreenHandler smithingHandler) {
+                if (smithingHandler.getSlot(0).inventory instanceof eyeliss.particle.mod.block.entity.AdvancedWeaponSmithingBlockEntity smithingEntity) {
 
-						smithingEntity.returnMaterialsToPlayer(player);
+                    smithingEntity.returnMaterialsToPlayer(player);
 
-						var serverAllowedRecipes = smithingEntity.getAllAvailableSmithingRecipes();
-						int targetServerIndex = -1;
+                    var serverAllowedRecipes = smithingEntity.getAllAvailableSmithingRecipes();
+                    int targetServerIndex = -1;
 
-						for (int i = 0; i < serverAllowedRecipes.size(); i++) {
-							if (serverAllowedRecipes.get(i).id().toString().equals(payload.recipeId())) {
-								targetServerIndex = i;
-								break;
-							}
-						}
+                    for (int i = 0; i < serverAllowedRecipes.size(); i++) {
+                        if (serverAllowedRecipes.get(i).id().toString().equals(payload.recipeId())) {
+                            targetServerIndex = i;
+                            break;
+                        }
+                    }
 
-						if (targetServerIndex != -1) {
-							smithingHandler.getPropertyDelegate().set(0, targetServerIndex);
-							smithingEntity.updateRecipeOutput();
-						} else {
-							smithingHandler.getPropertyDelegate().set(0, 0);
-							smithingEntity.updateRecipeOutput();
-						}
-					}
+                    if (targetServerIndex != -1) {
+                        smithingHandler.getPropertyDelegate().set(0, targetServerIndex);
+                        smithingEntity.updateRecipeOutput();
+                    } else {
+                        smithingHandler.getPropertyDelegate().set(0, 0);
+                        smithingEntity.updateRecipeOutput();
+                    }
+                }
 
-					smithingHandler.sendContentUpdates();
-					player.getInventory().markDirty();
-					smithingHandler.onContentChanged(smithingHandler.getSlot(0).inventory);
-				}
-			});
-		});
+                smithingHandler.sendContentUpdates();
+                player.getInventory().markDirty();
+                smithingHandler.onContentChanged(smithingHandler.getSlot(0).inventory);
+            }
+        }));
 
-		ServerPlayNetworking.registerGlobalReceiver(ShadowBundleScrollPayload.ID, (payload, context) -> {
-			context.server().execute(() -> {
-				var player = context.player();
-				if (player.currentScreenHandler != null) {
-					int targetSlotId = payload.slotId();
+		ServerPlayNetworking.registerGlobalReceiver(ShadowBundleScrollPayload.ID, (payload, context) -> context.server().execute(() -> {
+            var player = context.player();
+            if (player.currentScreenHandler != null) {
+                int targetSlotId = payload.slotId();
 
-					if (targetSlotId >= 0 && targetSlotId < player.currentScreenHandler.slots.size()) {
-						Slot serverSlot = player.currentScreenHandler.getSlot(targetSlotId);
+                if (targetSlotId >= 0 && targetSlotId < player.currentScreenHandler.slots.size()) {
+                    Slot serverSlot = player.currentScreenHandler.getSlot(targetSlotId);
 
-						if (serverSlot.hasStack() && serverSlot.getStack().isOf(ModItems.SHADOW_BUNDLE)) {
-							ItemStack bundleStack = serverSlot.getStack();
-							BundleContentsComponent contents = bundleStack.get(DataComponentTypes.BUNDLE_CONTENTS);
+                    if (serverSlot.hasStack() && serverSlot.getStack().isOf(ModItems.SHADOW_BUNDLE)) {
+                        ItemStack bundleStack = serverSlot.getStack();
+                        BundleContentsComponent contents = bundleStack.get(DataComponentTypes.BUNDLE_CONTENTS);
 
-							if (contents != null && !contents.isEmpty()) {
-								List<ItemStack> itemArrayList = new ArrayList<>(contents.stream().toList());
+                        if (contents != null && !contents.isEmpty()) {
+                            List<ItemStack> itemArrayList = new ArrayList<>(contents.stream().toList());
 
-								if (itemArrayList.size() > 1) {
-									if (payload.scrollUp()) {
-										ItemStack firstItem = itemArrayList.remove(0);
-										itemArrayList.add(firstItem);
-									} else {
-										ItemStack lastItem = itemArrayList.remove(itemArrayList.size() - 1);
-										itemArrayList.add(0, lastItem);
-									}
-									bundleStack.set(DataComponentTypes.BUNDLE_CONTENTS, new BundleContentsComponent(itemArrayList));
-								}
-							}
-						}
-					}
-				}
-			});
-		});
+                            if (itemArrayList.size() > 1) {
+                                if (payload.scrollUp()) {
+                                    ItemStack firstItem = itemArrayList.removeFirst();
+                                    itemArrayList.add(firstItem);
+                                } else {
+                                    ItemStack lastItem = itemArrayList.removeLast();
+                                    itemArrayList.addFirst(lastItem);
+                                }
+                                bundleStack.set(DataComponentTypes.BUNDLE_CONTENTS, new BundleContentsComponent(itemArrayList));
+                            }
+                        }
+                    }
+                }
+            }
+        }));
 	}
 }

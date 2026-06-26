@@ -23,7 +23,11 @@
 		"BucketItemMixin",
 		"ItemInvoker",
 		"EntityFluidMovementMixin",
-		"LivingEntityAccessor"
+		"LivingEntityAccessor",
+		"ItemStackMixin",
+		"EngravingEffectEntityMixin",
+		"SturdyItemSaveMixin",
+		"EngravingEffectPlayerMixin"
 	],
 	"client": [
 		"client.GameRendererMixin",
