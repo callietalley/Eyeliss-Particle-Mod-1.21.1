@@ -3,7 +3,6 @@ package eyeliss.particle.mod.network;
 import dev.emi.trinkets.api.TrinketsApi;
 import eyeliss.particle.mod.api.IActiveTrinketItem;
 import eyeliss.particle.mod.api.IAspectTrinketItem;
-import eyeliss.particle.mod.item.trinkets.HiddenCloakItem; // IMPORTED: Your new item class
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;

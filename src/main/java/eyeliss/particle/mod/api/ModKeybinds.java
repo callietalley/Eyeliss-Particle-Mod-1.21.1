@@ -1,6 +1,5 @@
 package eyeliss.particle.mod.api;
 
-import eyeliss.particle.mod.network.RiftGemPayloads;
 import eyeliss.particle.mod.network.TrinketKeybindPayloads;
 import eyeliss.particle.mod.network.VeinMineKeyPayload;
 import dev.emi.trinkets.api.TrinketsApi;
