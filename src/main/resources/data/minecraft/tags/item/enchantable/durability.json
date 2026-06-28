@@ -3,6 +3,7 @@
   "values": [
     "#eyelisspartmod:dagger_weapon",
     "#eyelisspartmod:spear_weapon",
-    "#eyelisspartmod:khopesh_weapon"
+    "#eyelisspartmod:khopesh_weapon",
+    "eyelisspartmod:namespace_warper"
   ]
 }
