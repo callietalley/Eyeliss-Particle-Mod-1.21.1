@@ -27,7 +27,11 @@
 		"ItemStackMixin",
 		"EngravingEffectEntityMixin",
 		"SturdyItemSaveMixin",
-		"EngravingEffectPlayerMixin"
+		"EngravingEffectPlayerMixin",
+		"ServerPlayerEntityMixin",
+		"PlayerDisplayNameMixin",
+		"PlayerTablistNameDisplayMixin",
+		"NamespaceItemDamageMixin"
 	],
 	"client": [
 		"client.GameRendererMixin",
@@ -41,7 +45,11 @@
 		"client.ClientSourceSkyMixin",
 		"client.DamageTrackerAccessor",
 		"client.LivingEntityMixin",
-		"client.BackgroundRendererMixin"
+		"client.BackgroundRendererMixin",
+		"client.PlayerEntityRendererMixin",
+		"client.ClientPlayerNameMixin",
+		"client.CloakSkinMixin$TabListSkinMixin",
+		"client.CloakSkinMixin$InWorldPlayerSkinMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

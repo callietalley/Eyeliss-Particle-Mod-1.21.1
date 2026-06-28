@@ -19,16 +19,21 @@ public class ModScreenHandlers {
     public static final ScreenHandlerType<AdvancedWeaponSmithingScreenHandler> ADVANCED_WEAPON_SMITHING_HANDLER =
             new ExtendedScreenHandlerType<>(AdvancedWeaponSmithingScreenHandler::new, BlockPosPayload.PACKET_CODEC);
 
-    // NEW ENGRAVING GUIDE SCREEN HANDLER REGISTERED HERE
     public static final ScreenHandlerType<EngravingGuideScreenHandler> ENGRAVING_GUIDE_HANDLER =
             new ScreenHandlerType<>(EngravingGuideScreenHandler::new, net.minecraft.resource.featuretoggle.FeatureFlags.VANILLA_FEATURES);
+
+    public static final ScreenHandlerType<NamespaceWarperScreenHandler> NAMESPACE_WARPER_HANDLER =
+            new net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType<>(
+                    NamespaceWarperScreenHandler::new,
+                    NamespaceWarperScreenHandler.InitialSyncData.PACKET_CODEC
+            );
+
 
     public static void registerScreenHandlers() {
         Registry.register(Registries.SCREEN_HANDLER, Identifier.of(MOD_ID, "rift_gem_handler"), RIFT_GEM_SCREEN_HANDLER);
         Registry.register(Registries.SCREEN_HANDLER, Identifier.of(MOD_ID, "rift_gem_bind_handler"), RIFT_GEM_BIND_HANDLER);
         Registry.register(Registries.SCREEN_HANDLER, Identifier.of(MOD_ID, "advanced_weapon_smithing_handler"), ADVANCED_WEAPON_SMITHING_HANDLER);
-
-        // NEW REGISTRY ENTRY LINK
         Registry.register(Registries.SCREEN_HANDLER, Identifier.of(MOD_ID, "engraving_guide_handler"), ENGRAVING_GUIDE_HANDLER);
+        Registry.register(Registries.SCREEN_HANDLER, Identifier.of(MOD_ID, "namespace_warper_handler"), NAMESPACE_WARPER_HANDLER);
     }
 }

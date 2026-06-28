@@ -1,0 +1,7 @@
+{
+  "icon": "eyelisspartmod:gui/slots/aspect",
+  "order": -1,
+  "validator_predicates": [
+    "trinkets:tag"
+  ]
+}

@@ -34,19 +34,4 @@ public class BloodStoneItem extends TrinketItem {
         ));
         return modifiers;
     }
-
-    @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(Text.literal("Grants +5 hearts")
-                .formatted(Formatting.GRAY));
-        tooltip.add(Text.literal("If you go below 20% max hp, you steal health")
-                .formatted(Formatting.GRAY));
-        tooltip.add(Text.literal("from nearby enemies, with a 200 second cooldown")
-                .formatted(Formatting.GRAY));
-        tooltip.add(Text.literal("Killing most mobs gives regeneration 2 for 4 seconds")
-                .formatted(Formatting.GRAY));
-        tooltip.add(Text.literal(" ")
-                .formatted(Formatting.GRAY));
-        super.appendTooltip(stack, context, tooltip, type);
-    }
 }

@@ -1,6 +1,6 @@
 {
   "type": "eyelisspartmod:hard_limited_smithing",
-  "order": 1,
+  "order": 30,
   "color": 2,
   "global_limit": 3,
   "player_limit": 1,

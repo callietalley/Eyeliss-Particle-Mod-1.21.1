@@ -124,6 +124,7 @@
   "key.category.eyelisspartmod.keybinds": "Eyeliss Keybinds",
   "key.eyelisspartmod.quaternary_active": "Special Power",
   "key.eyelisspartmod.trinket_key": "Trinket Active",
+  "key.eyelisspartmod.secondary_trinket_key": "Secondary Trinket Active",
   "key.eyelisspartmod.vein_mine_key": "Pulverizing",
 
   "effect.eyelisspartmod.overhealth": "Armored",
@@ -172,8 +173,11 @@
 
   "recipe.eyelisspartmod.rift_gem": "Rift Gem",
   "item.eyelisspartmod.rift_gem": "Rift Gem",
+  "item.eyelisspartmod.namespace_warper": "Namespace Warper",
+  "item.eyelisspartmod.hidden_cloak": "Hidden Cloak",
 
   "trinkets.slot.legs.pocket": "Pocket",
+  "trinkets.slot.head.aspect": "Aspect",
 
   "engraving.eyelisspartmod.absorption": "Absorption",
   "engraving.eyelisspartmod.crushing": "Crushing",

@@ -12,10 +12,7 @@ import eyeliss.particle.mod.fluid.ModFluids;
 import eyeliss.particle.mod.item.ModItems;
 import eyeliss.particle.mod.network.OverhealthSyncPayload;
 import eyeliss.particle.mod.particle.*;
-import eyeliss.particle.mod.screen.AdvancedWeaponSmithingScreen;
-import eyeliss.particle.mod.screen.ModScreenHandlers;
-import eyeliss.particle.mod.screen.RiftGemScreen;
-import eyeliss.particle.mod.screen.RiftGemBindScreen;
+import eyeliss.particle.mod.screen.*;
 import eyeliss.particle.mod.util.ClientOverhealthTracker;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -53,6 +50,7 @@ public class EyelisssParticleModClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.THROWN_SYRINGE, ThrownSyringeEntityRenderer::new);
         HandledScreens.register(ModScreenHandlers.RIFT_GEM_SCREEN_HANDLER, RiftGemScreen::new);
         HandledScreens.register(ModScreenHandlers.RIFT_GEM_BIND_HANDLER, RiftGemBindScreen::new);
+        HandledScreens.register(ModScreenHandlers.NAMESPACE_WARPER_HANDLER, NamespaceWarperScreen::new);
         net.minecraft.client.gui.screen.ingame.HandledScreens.register(
                 ModScreenHandlers.ADVANCED_WEAPON_SMITHING_HANDLER,
                 AdvancedWeaponSmithingScreen::new

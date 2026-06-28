@@ -1,6 +1,5 @@
 package eyeliss.particle.mod.network;
 
-import eyeliss.particle.mod.api.IActiveTrinketItem;
 import eyeliss.particle.mod.item.trinkets.ModTrinkets;
 import dev.emi.trinkets.api.TrinketsApi;
 import dev.emi.trinkets.api.TrinketComponent;
@@ -36,27 +35,11 @@ public class RiftGemNetwork {
     private record WarpTarget(double x, double y, double z, String dimensionStr, ItemStack gemStack, long currentWorldTime) {}
 
     public static void initializePayloads() {
-        PayloadTypeRegistry.playC2S().register(RiftGemPayloads.OpenRiftScreenPayload.ID, RiftGemPayloads.OpenRiftScreenPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(RiftGemPayloads.BindEnvironmentPayload.ID, RiftGemPayloads.BindEnvironmentPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(RiftGemPayloads.TypeWarpPayload.ID, RiftGemPayloads.TypeWarpPayload.CODEC);
     }
 
     public static void registerServerReceivers() {
-        ServerPlayNetworking.registerGlobalReceiver(RiftGemPayloads.OpenRiftScreenPayload.ID, (payload, context) -> {
-            ServerPlayerEntity player = context.player();
-            context.server().execute(() -> {
-                java.util.Optional<TrinketComponent> component = TrinketsApi.getTrinketComponent(player);
-                if (component.isEmpty()) return;
-
-                for (var equip : component.get().getAllEquipped()) {
-                    ItemStack stack = equip.getRight();
-                    if (stack.getItem() instanceof IActiveTrinketItem activeTrinket) {
-                        activeTrinket.onTrinketKeybindPressed(player, stack, payload.isSneaking());
-                        return;
-                    }
-                }
-            });
-        });
 
         ServerPlayNetworking.registerGlobalReceiver(RiftGemPayloads.BindEnvironmentPayload.ID, (payload, context) -> {
             ServerPlayerEntity player = context.player();
@@ -505,7 +488,6 @@ public class RiftGemNetwork {
                             return;
                         }
 
-
                         String playerUUID = player.getUuidAsString();
                         String internalKeyName = env.toLowerCase();
 
@@ -543,6 +525,7 @@ public class RiftGemNetwork {
                                 }
                             }
                         }
+
                         else if (BIOMES.contains(env)) {
                             player.sendMessage(Text.literal("§6[Rift] Channel '" + env + "' has no spatial coordinate bound yet!"), true);
                             player.getWorld().playSound(null, player.getBlockPos(), SoundEvents.BLOCK_NOTE_BLOCK_BASS.value(), SoundCategory.PLAYERS, 1.0f, 0.5f);

@@ -1,8 +1,9 @@
 package eyeliss.particle.mod.mixin;
 
-import eyeliss.particle.mod.item.trinkets.MidasGoldItem;
-import eyeliss.particle.mod.item.trinkets.SadimsIronItem; // Imported your new item class!
 import dev.emi.trinkets.api.TrinketInventory;
+import eyeliss.particle.mod.item.trinkets.HiddenCloakItem; // Imported your new cloak class!
+import eyeliss.particle.mod.item.trinkets.MidasGoldItem;
+import eyeliss.particle.mod.item.trinkets.SadimsIronItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -45,6 +46,15 @@ public class TrinketEquipMixin {
                                 SoundEvents.ITEM_ARMOR_EQUIP_IRON,
                                 SoundCategory.NEUTRAL,
                                 1.0F, 0.4F
+                        );
+                    }
+                    else if (stack.getItem() instanceof HiddenCloakItem) {
+                        world.playSound(
+                                null,
+                                entity.getX(), entity.getY(), entity.getZ(),
+                                SoundEvents.ITEM_ARMOR_EQUIP_LEATHER,
+                                SoundCategory.NEUTRAL,
+                                1.0F, 0.5F
                         );
                     }
                 }

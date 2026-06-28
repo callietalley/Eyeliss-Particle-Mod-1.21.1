@@ -55,10 +55,15 @@ public class EyelisssParticleMod implements ModInitializer {
 		ModCommands.register();
 		RareItemGlows.register();
 
+        TrinketKeybindNetwork.initializePayloads();
+        TrinketKeybindNetwork.registerServerReceivers();
 		RiftGemNetwork.initializePayloads();
 		RiftGemNetwork.registerServerReceivers();
+        NamespaceWarperNetwork.initializePayloads();
+        NamespaceWarperNetwork.registerServerReceivers();
 		ModScreenHandlers.registerScreenHandlers();
 		ServerTickEvents.START_SERVER_TICK.register(RiftGemNetwork::tickWarmups);
+        ServerTickEvents.START_SERVER_TICK.register(TrinketProfileUpdater::tickPlayerProfiles);
 
         net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.playC2S().register(
                 eyeliss.particle.mod.network.VeinMineKeyPayload.ID,

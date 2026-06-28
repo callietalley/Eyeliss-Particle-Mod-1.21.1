@@ -2,18 +2,14 @@ package eyeliss.particle.mod.item.trinkets;
 
 import com.google.common.collect.Multimap;
 import dev.emi.trinkets.api.SlotReference;
-import dev.emi.trinkets.api.TrinketItem; // FIXED: Extends TrinketItem natively
+import dev.emi.trinkets.api.TrinketItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import java.util.List;
 
 public class SadimsIronItem extends TrinketItem {
 
@@ -43,14 +39,5 @@ public class SadimsIronItem extends TrinketItem {
         }
 
         return modifiers;
-    }
-
-    @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(Text.literal("Heavy, slows you to equip").formatted(Formatting.GRAY));
-        tooltip.add(Text.literal("Increased melee damage").formatted(Formatting.GRAY));
-        tooltip.add(Text.literal("Increased pickup range").formatted(Formatting.GRAY));
-        tooltip.add(Text.literal(" ").formatted(Formatting.GRAY));
-        super.appendTooltip(stack, context, tooltip, type);
     }
 }

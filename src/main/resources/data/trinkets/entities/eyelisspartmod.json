@@ -3,6 +3,7 @@
     "player"
   ],
   "slots": [
-    "legs/pocket"
+    "legs/pocket",
+    "head/aspect"
   ]
 }

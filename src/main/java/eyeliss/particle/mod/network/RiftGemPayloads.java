@@ -10,15 +10,6 @@ import static eyeliss.particle.mod.EyelisssParticleMod.MOD_ID;
 
 public class RiftGemPayloads {
 
-    public record OpenRiftScreenPayload(boolean isSneaking) implements CustomPayload {
-        public static final CustomPayload.Id<OpenRiftScreenPayload> ID = new CustomPayload.Id<>(Identifier.of(MOD_ID, "open_rift_screen"));
-        public static final PacketCodec<RegistryByteBuf, OpenRiftScreenPayload> CODEC = PacketCodec.tuple(
-                PacketCodecs.BOOL, OpenRiftScreenPayload::isSneaking,
-                OpenRiftScreenPayload::new
-        );
-        @Override public CustomPayload.Id<? extends CustomPayload> getId() { return ID; }
-    }
-
     public record BindEnvironmentPayload(String envName) implements CustomPayload {
         public static final CustomPayload.Id<BindEnvironmentPayload> ID = new CustomPayload.Id<>(Identifier.of(MOD_ID, "bind_environment"));
         public static final PacketCodec<RegistryByteBuf, BindEnvironmentPayload> CODEC = PacketCodec.tuple(

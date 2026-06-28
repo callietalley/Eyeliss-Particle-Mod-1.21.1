@@ -64,6 +64,8 @@ public class ModItemGroups {
                         entries.add(ModTrinkets.SADIMS_IRON);
                         entries.add(ModTrinkets.BLOOD_STONE_ITEM);
                         entries.add(ModTrinkets.RIFT_GEM);
+                        entries.add(ModTrinkets.NAMESPACE_WARPER);
+                        entries.add(ModTrinkets.HIDDEN_CLOAK);
                     })
                     .build()
     );

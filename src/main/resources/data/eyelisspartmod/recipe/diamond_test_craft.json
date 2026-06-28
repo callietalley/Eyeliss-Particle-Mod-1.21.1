@@ -1,6 +1,6 @@
 {
   "type": "eyelisspartmod:weapon_smithing",
-  "order": 0,
+  "order": 30,
   "ingredients": [
     { "id": "minecraft:diamond", "count": 2 },
     { "id": "minecraft:iron_ingot", "count": 3 },

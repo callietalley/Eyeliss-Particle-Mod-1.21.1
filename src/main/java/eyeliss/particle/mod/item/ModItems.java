@@ -112,7 +112,7 @@ public class ModItems {
         @Override
         public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, net.minecraft.item.tooltip.TooltipType type) {
             tooltip.add(Text.literal("Used in creating a Shriving Stone.").formatted(Formatting.GRAY));
-            tooltip.add(Text.literal("Crafted in an Advanced Smithing Table").formatted(Formatting.GRAY));
+            tooltip.add(Text.literal("Crafted at an Advanced Smithing Table").formatted(Formatting.GRAY));
 
             super.appendTooltip(stack, context, tooltip, type);
         }
